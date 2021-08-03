@@ -1,0 +1,13 @@
+// Endpoints
+
+// All users
+GET /api/user/
+
+// User homepage
+GET /api/user/:id
+    
+// User feed
+GET /api/user/:id/feed
+
+// User favorites
+GET /api/user/:id/favorites

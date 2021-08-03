@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,17 +21,24 @@ namespace Capstone.Controllers
         }
         // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<string> Get()
         {
-            List<User> users = _context.Users.ToList();
+            List<string> users = _context.Users.Select(u => u.FirstName).ToList();
             return users;
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<PageData> Get(int id)
         {
-            return "value";
+            return PackagePageData(id, p => p.User.UserId == id);
+        }
+
+        // GET api/<UserController>/5
+        [HttpGet("{id}/feed")]
+        public ActionResult<PageData> GetFeed(int id)
+        {
+            return PackagePageData(id, p => p.User.UserId >= 0);
         }
 
         // POST api/<UserController>
@@ -49,6 +57,30 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        private PageData PackagePageData(int id, Expression<Func<Photo, bool>> predicate)
+        {
+            User user = _context.Users.First(u => u.UserId == id);
+            PageData data = new PageData();
+            data.Username = user.Username;
+            data.Firstname = user.FirstName;
+            data.Lastname = user.LastName;
+
+            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
+            foreach (var photo in photos)
+            {
+                data.Photos.Add(new PhotoData
+                {
+                    Url = photo.Url,
+                    Username = user.Username,
+                    UserId = user.UserId,
+                    Comments = null,
+                    Likes = null
+                });
+
+            }
+            return data;
         }
     }
 }

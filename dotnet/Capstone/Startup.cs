@@ -7,10 +7,12 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Capstone.DAO;
 using Capstone.Security;
 using Microsoft.EntityFrameworkCore;
 using Capstone.Models;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using System;
 
 namespace Capstone
 {

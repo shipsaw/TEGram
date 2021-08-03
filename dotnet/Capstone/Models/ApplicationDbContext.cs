@@ -10,6 +10,15 @@ namespace Capstone.Models
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder options) { }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Photo>()
+                .Property(p => p.CreatedDate)
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("GETUTCDATE()");
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
