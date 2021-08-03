@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Capstone.DAO;
 using Capstone.Models;
 using Capstone.Security;
 
@@ -11,13 +10,13 @@ namespace Capstone.Controllers
     {
         private readonly ITokenGenerator tokenGenerator;
         private readonly IPasswordHasher passwordHasher;
-        private readonly IUserDao userDao;
+        private ApplicationDbContext _context;
 
-        public LoginController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, IUserDao _userDao)
+        public LoginController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, ApplicationDbContext context)
         {
             tokenGenerator = _tokenGenerator;
             passwordHasher = _passwordHasher;
-            userDao = _userDao;
+            _context = context;
         }
 
         [HttpPost]
@@ -27,7 +26,7 @@ namespace Capstone.Controllers
             IActionResult result = Unauthorized(new { message = "Username or password is incorrect" });
 
             // Get the user by username
-            User user = userDao.GetUser(userParam.Username);
+            User user = _context.Users.Find(userParam.Username);
 
             // If we found a user and the password hash matches
             if (user != null && passwordHasher.VerifyHashMatch(user.PasswordHash, userParam.Password, user.Salt))
@@ -50,14 +49,21 @@ namespace Capstone.Controllers
         {
             IActionResult result;
 
-            User existingUser = userDao.GetUser(userParam.Username);
+            User existingUser = _context.Users.Find(userParam.Username);
             if (existingUser != null)
             {
                 return Conflict(new { message = "Username already taken. Please choose a different username." });
             }
 
-            User user = userDao.AddUser(userParam.Username, userParam.Password, userParam.Role);
-            if (user != null)
+            User user = new User
+            {
+                Username = userParam.Username,
+                PasswordHash = userParam.Password,
+                Role = userParam.Role
+            };
+
+            var retUser = _context.Users.Add(user);
+            if (retUser != null)
             {
                 result = Created(user.Username, null); //values aren't read on client
             }

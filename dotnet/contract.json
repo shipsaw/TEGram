@@ -1,0 +1,15 @@
+{
+    "username": "",
+    "userProfileUrl": "",
+    "firstname": "",
+    "lastname": "",
+    "photos" : [
+        {
+            "url" : "",
+            "username" : "",
+            "userId" : 0,
+            "comments" : ["",""],
+            "likes" : ["usernames"]
+        }
+    ]
+}

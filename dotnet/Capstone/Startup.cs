@@ -7,8 +7,12 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Capstone.DAO;
 using Capstone.Security;
+using Microsoft.EntityFrameworkCore;
+using Capstone.Models;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using System;
 
 namespace Capstone
 {
@@ -35,7 +39,8 @@ namespace Capstone
                     });
             });
 
-            string connectionString = Configuration.GetConnectionString("Project");
+            //string connectionString = Configuration.GetConnectionString("Project");
+            var dbConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
             // configure jwt authentication
             var key = Encoding.ASCII.GetBytes(Configuration["JwtSecret"]);
@@ -62,7 +67,9 @@ namespace Capstone
             // Dependency Injection configuration
             services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
             services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
-            services.AddTransient<IUserDao>(m => new UserSqlDao(connectionString));
+            //services.AddTransient<IUserDao>(m => new UserSqlDao(connectionString));
+            services.AddDbContext<ApplicationDbContext>
+                (options => options.UseSqlServer(dbConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,7 +88,7 @@ namespace Capstone
 
             app.UseCors();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

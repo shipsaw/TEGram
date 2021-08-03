@@ -29,3 +29,25 @@ INSERT INTO users (username, password_hash, salt, user_role) VALUES ('user','Jg4
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
 
 GO
+
+
+BEGIN TRANSACTION;
+
+CREATE TABLE users (
+	user_id int IDENTITY(1,1) NOT NULL,
+	username varchar(50) NOT NULL,
+	firstname varchar(50) NOT NULL,
+	lastname varchar(100) NOT NULL,
+	email varchar(100) NOT NULL,
+	profilepic int,
+	isactive BIT NOT NULL,
+	password_hash varchar(200) NOT NULL,
+	salt varchar(200) NOT NULL,
+	user_role varchar(50) NOT NULL
+
+
+	CONSTRAINT PK_user PRIMARY KEY (user_id)
+)
+
+ROLLBACK;
+--COMMIT;
