@@ -1,11 +1,31 @@
-﻿namespace Capstone.Models
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Capstone.Models
 {
     public class User
     {
         public int UserId { get; set; }
+        [Required]
+        [MaxLength(100)]
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
+        [MaxLength(50)]
+        public string FirstName { get; set; }
+        [MaxLength(100)]
+        public string LastName { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Email { get; set; }
+        public string ProfileUrl { get; set; }
+        [InverseProperty("User")]
+        public List<Photo> Photos { get; set; }
+        [InverseProperty("UsersFavorited")]
+        public List<Photo> FavPhotos { get; set; }
+        [InverseProperty("Likes")]
+        public List<Photo> Likes { get; set; }
         public string Role { get; set; }
     }
 
