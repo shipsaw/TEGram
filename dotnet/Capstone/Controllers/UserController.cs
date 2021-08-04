@@ -1,4 +1,5 @@
 ﻿using Capstone.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Capstone.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[EnableCors("AllowSpecificOrigin")]
     public class UserController : ControllerBase
     {
         private ApplicationDbContext _context;
@@ -74,8 +76,7 @@ namespace Capstone.Controllers
                 data.Photos.Add(new PhotoData
                 {
                     Url = photo.Url,
-                    Username = user.Username,
-                    UserId = user.UserId,
+                    UserId = photo.UserId,
                     Comments = null,
                     Likes = null
                 });
