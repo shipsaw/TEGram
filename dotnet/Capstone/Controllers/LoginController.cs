@@ -25,8 +25,19 @@ namespace Capstone.Controllers
             // Default to bad username/password message
             IActionResult result = Unauthorized(new { message = "Username or password is incorrect" });
 
-            // Get the user by username
-            User user = _context.Users.Find(userParam.Username);
+            // Get the user by username  -- ApplicationDbContext --> User objects --> list of attrbutes
+            //foreach loop to look for username in each user object, return user if userparam.username exists
+            User user = null;
+   
+            foreach (User u in _context.Users)
+            {
+                if(u.Username == userParam.Username)
+                {
+                    user = u;
+                }
+
+            }
+
 
             // If we found a user and the password hash matches
             if (user != null && passwordHasher.VerifyHashMatch(user.PasswordHash, userParam.Password, user.Salt))
@@ -49,7 +60,17 @@ namespace Capstone.Controllers
         {
             IActionResult result;
 
-            User existingUser = _context.Users.Find(userParam.Username);
+            User existingUser = null;
+
+            foreach (User u in _context.Users)
+            {
+                if (u.Username == userParam.Username)
+                {
+                    existingUser = u;
+                }
+
+            }
+          
             if (existingUser != null)
             {
                 return Conflict(new { message = "Username already taken. Please choose a different username." });

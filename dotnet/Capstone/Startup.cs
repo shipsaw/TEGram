@@ -88,7 +88,7 @@ namespace Capstone
 
             app.UseCors();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
