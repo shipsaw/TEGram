@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Photo</title>
+</head>
+<body>
+    <!--List out the various ways to accept an image input-->
+
+    <!--Option 1. Ask for a URL-->
+
+
+    <!--Option 2. File Input-->
+    <input type="file" accept="image/*" id="file-input">
+    <script>
+    const fileInput = document.getElementById('file-input');
+
+    fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+    </script>
+
+    <!--Option 3. Get an Image from the camera-->
+    <input type="file" accept="image/*" capture>
+    <script>
+    const fileInput = document.getElementById('file-input');
+
+    fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+    </script>
+
+
+
+</body>
+</html>
