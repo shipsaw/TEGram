@@ -34,9 +34,10 @@ img{
     align-items: center;
     margin:auto;
     background-color:red;
-    height: 500px;
+    height: 100%;
     width: 500px;
     margin-bottom: 50px;
+    overflow-y:auto
 
 }
 </style>

@@ -24,10 +24,11 @@ export default {
 .home-div { 
     
 background: rgba(255, 255, 255, 255);
-
-    height: 100vh;
-    width: 75%;
-    margin: auto;
+height: 900px;
+width: 75%;
+margin: auto;
+padding-top: 50px;
+padding-bottom: 50px;
 }
 
 </style>

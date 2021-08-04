@@ -29,7 +29,8 @@ export default {
 <style>
 
 #app{ 
-  background-image:url("images/yellow.png");
+  background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
+    background-size: cover;
     height: 100%;
 }
 </style>
