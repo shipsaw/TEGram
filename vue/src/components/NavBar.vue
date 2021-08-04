@@ -13,38 +13,14 @@
 
         </b-dropdown>
       </b-container>
-
-      
     </nav>
   </div>
 </template>
 <script>
-import imgService from "../services/PhotoService.js";
-
 export default {
-
-data(){
-  return {
-    User: {
-      id: 0,
-      username:"",
-      profileUrl:""
-    }
-}
-},
-methods:{
-  getPic() {
-    imgService.get(this.id).then((response) => {
-      this.User = response.data
-    });
+  data() {
+    return {};
   },
-
-created(){
-  this.getPic();
-}
-
-},
-
 
   // computed: {
   //   profileURL() {

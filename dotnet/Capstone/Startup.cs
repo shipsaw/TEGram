@@ -28,7 +28,6 @@ namespace Capstone
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
 
             services.AddCors(options =>
             {
@@ -38,6 +37,8 @@ namespace Capstone
                         builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                     });
             });
+
+            services.AddControllers();
 
             //string connectionString = Configuration.GetConnectionString("Project");
             var dbConnectionString = Configuration.GetConnectionString("DefaultConnection");

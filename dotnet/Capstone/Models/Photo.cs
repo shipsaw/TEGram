@@ -11,6 +11,7 @@ namespace Capstone.Models
         public int PhotoId { get; set; }
         public string Url { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int UserId { get; set; }
         [InverseProperty("Photos")]
         public User User { get; set; }
         [InverseProperty("FavPhotos")]

@@ -20,13 +20,23 @@ export default new Vuex.Store({
     state: {
 
         token: currentToken || '',
-        user: currentUser || {},
-        photoCards: [], //for sample feed
-        photo: {
-            url: '',
-            caption: '',
-            comments: [], //for each photo in feed
-        }
+        user: currentUser || {
+
+            username: "",
+            userProfileUrl: "",
+            firstName: "",
+            lastName: "",
+            photos: [{
+                url: "",
+                username: "",
+                userId: 0,
+                comments: [],
+                likes: []
+            }]
+        },
+
+
+
 
     },
     mutations: {
@@ -36,7 +46,9 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         },
         SET_USER(state, user) {
+            console.log(user);
             state.user = user;
+            console.log(state.user)
             localStorage.setItem('user', JSON.stringify(user));
         },
         LOGOUT(state) {
