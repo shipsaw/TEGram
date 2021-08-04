@@ -63,6 +63,7 @@ namespace Capstone.Controllers
         {
             User user = _context.Users.First(u => u.UserId == id);
             PageData data = new PageData();
+            data.UserProfileUrl = user.ProfileUrl;
             data.Username = user.Username;
             data.Firstname = user.FirstName;
             data.Lastname = user.LastName;
