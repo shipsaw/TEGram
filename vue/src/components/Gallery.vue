@@ -1,6 +1,6 @@
 <template>
 <div></div>
-  <!-- nav bar
+  <!-- 
   grid full of pics by user id -->
 </template>
 

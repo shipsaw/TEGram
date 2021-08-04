@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Welcome! {{user.username}}</h1>
+    <h1>Welcome!</h1>
     
 <home-feed/>
 
@@ -28,10 +28,13 @@ export default {
   width: 80%;
   margin: auto;
 text-align: center;
+border-radius: 1%;
+ margin-top:25px;
 
 }
 
 h1{
+ 
   padding: 15px;
 
 }
