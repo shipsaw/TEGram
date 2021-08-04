@@ -54,7 +54,7 @@ const router = new Router({
             }
         },
         {
-            path: "/api/:id",
+            path: "/api/User/:id",
             name: "picById",
             component: NavBar,
 
