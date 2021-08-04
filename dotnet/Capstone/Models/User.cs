@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Capstone.Controllers;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -44,7 +45,7 @@ namespace Capstone.Models
     /// </summary>
     public class LoginResponse
     {
-        public ReturnUser User { get; set; }
+        public PageData User { get; set; }
         public string Token { get; set; }
     }
 
@@ -53,6 +54,7 @@ namespace Capstone.Models
     /// </summary>
     public class LoginUser
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
     }

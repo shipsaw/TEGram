@@ -1,4 +1,5 @@
 ﻿using Capstone.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Capstone.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[EnableCors("AllowSpecificOrigin")]
     public class UserController : ControllerBase
     {
         private ApplicationDbContext _context;
@@ -31,14 +33,14 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public ActionResult<PageData> Get(int id)
         {
-            return PackagePageData(id, p => p.User.UserId == id);
+            return PackageUser(id, p => p.User.UserId == id);
         }
 
         // GET api/<UserController>/5
         [HttpGet("feed")]
         public ActionResult<PageData> GetFeed(int id)
         {
-            return PackagePageData(id, p => p.User.UserId >= 0);
+            return PackageUser(id, p => p.User.UserId >= 0);
         }
 
         // POST api/<UserController>
@@ -59,11 +61,12 @@ namespace Capstone.Controllers
         {
         }
 
-        private PageData PackagePageData(int id, Expression<Func<Photo, bool>> predicate)
+        private PageData PackageUser(int id, Expression<Func<Photo, bool>> predicate)
         {
             User user = _context.Users.First(u => u.UserId == id);
             PageData data = new PageData();
             data.UserProfileUrl = user.ProfileUrl;
+            data.UserId = user.UserId;
             data.Username = user.Username;
             data.Firstname = user.FirstName;
             data.Lastname = user.LastName;
@@ -74,8 +77,7 @@ namespace Capstone.Controllers
                 data.Photos.Add(new PhotoData
                 {
                     Url = photo.Url,
-                    Username = user.Username,
-                    UserId = user.UserId,
+                    UserId = photo.UserId,
                     Comments = null,
                     Likes = null
                 });
