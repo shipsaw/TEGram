@@ -7,8 +7,6 @@ const http = axios.create({
 export default {
 
     get(id) {
-        return http.get(`/api/${id}`)
+        return http.get(`/api/User/${id}`)
     }
-
-
 }

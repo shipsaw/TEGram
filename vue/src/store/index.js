@@ -22,11 +22,11 @@ export default new Vuex.Store({
         token: currentToken || '',
         user: currentUser || {
 
-            username: "",
-            userProfileURL: "",
-            firstname: "",
-            lastname: "",
-            photos: [{
+            Username: "",
+            UserProfileUrl: "",
+            FirstName: "",
+            LastName: "",
+            Photos: [{
                 url: "",
                 username: "",
                 userId: 0,
@@ -56,8 +56,8 @@ export default new Vuex.Store({
             state.user = {};
             axios.defaults.headers.common = {};
         },
-        SET_PIC(state, data) {
-            state.user = data;
-        }
+        // SET_PIC(state, data) {
+        //     state.user = data;
+        // }
     }
 })

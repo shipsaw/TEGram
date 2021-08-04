@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
-    <p>This is the Home view </p>
+    <h1>Welcome! {{user.username}}</h1>
+    
 <home-feed/>
 
   </div>
@@ -27,5 +27,12 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   width: 80%;
   margin: auto;
+text-align: center;
+
+}
+
+h1{
+  padding: 15px;
+
 }
 </style>
