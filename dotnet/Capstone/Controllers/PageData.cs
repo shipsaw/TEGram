@@ -7,6 +7,7 @@ namespace Capstone.Controllers
 {
     public class PageData
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
         public string UserProfileUrl { get; set; }
         public string Firstname { get; set; }
