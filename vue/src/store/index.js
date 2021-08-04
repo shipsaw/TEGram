@@ -20,23 +20,13 @@ export default new Vuex.Store({
     state: {
 
         token: currentToken || '',
-        user: currentUser || {
-
-            Username: "",
-            UserProfileUrl: "",
-            FirstName: "",
-            LastName: "",
-            Photos: [{
-                url: "",
-                username: "",
-                userId: 0,
-                comments: [],
-                likes: []
-            }]
-        },
-
-
-
+        user: currentUser || {},
+        photoCards: [], //for sample feed
+        photo: {
+            url: '',
+            caption: '',
+            comments: [], //for each photo in feed
+        }
 
     },
     mutations: {
@@ -59,5 +49,13 @@ export default new Vuex.Store({
         // SET_PIC(state, data) {
         //     state.user = data;
         // }
+
+        SET_PHOTO_CARDS(state, data) {
+            state.photoCards = data;
+        },
+
+        SET_PHOTO(state, data) {
+            state.photo = data;
+        }
     }
 })

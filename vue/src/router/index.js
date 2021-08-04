@@ -6,6 +6,9 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import NavBar from '@/components/NavBar.vue'
+import HomeFeed from '@/components/HomeFeed.vue';
+import Gallery from '@/components/Gallery.vue';
+import FavoriteList from '@/components/FavoriteList.vue';
 
 Vue.use(Router)
 
@@ -57,8 +60,37 @@ const router = new Router({
             path: "/api/User/:id",
             name: "picById",
             component: NavBar,
+            meta: {
+                requiresAuth: false
+            }
 
         },
+        {
+            path: "/api/User/feed",
+            name: "pic-feed",
+            component: HomeFeed,
+            meta: {
+                requiresAuth: false
+            }
+
+        },
+        {
+            path: "/api/User/gallery",
+            name: "user-gallery",
+            component: Gallery,
+            meta: {
+                requiresAuth: false
+            }
+        },
+        {
+            path: "/api/User/favorites",
+            name: "user-faves",
+            component: FavoriteList,
+            meta: {
+                requiresAuth: false
+            }
+        },
+
 
         // insert route to get profile pic
 

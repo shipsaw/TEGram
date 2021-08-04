@@ -1,13 +1,16 @@
 <template>
   <div>
     <nav class="nav-div">
+      <router-link v-bind:to="{ name: 'home' }">  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
       
-      <img src="@/images/logo.png" class="logo-pic" />
 
       <b-container >
-        <b-dropdown class="dropdown">
-          <b-dropdown-item>My Profile</b-dropdown-item>
-          <b-dropdown-item>My Favorites</b-dropdown-item>
+        <b-dropdown class="dropdown ">
+          <b-dropdown-item>  <router-link v-bind:to="{name: 'user-gallery'}">My Profile Gallery</router-link>     </b-dropdown-item>
+          <b-dropdown-item>  <router-link v-bind:to="{name: 'user-faves'}">My Favorites</router-link></b-dropdown-item>
+        <b-dd-divider></b-dd-divider>
+          <b-dropdown-item>  <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link></b-dropdown-item>
+
         </b-dropdown>
       </b-container>
 
@@ -16,7 +19,7 @@
   </div>
 </template>
 <script>
-import imgService from "../services/PhotoService";
+import imgService from "../services/PhotoService.js";
 
 export default {
 
@@ -25,15 +28,23 @@ data(){
     User: {
       id: 0,
       username:"",
+      profileUrl:""
     }
 }
 },
-
-  created() {
+methods:{
+  getPic() {
     imgService.get(this.id).then((response) => {
       this.User = response.data
     });
-  }
+  },
+
+created(){
+  this.getPic();
+}
+
+},
+
 
   // computed: {
   //   profileURL() {
@@ -49,8 +60,7 @@ data(){
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
-  opacity: 0.6;
+  background: rgba(0, 0, 0, 0.6);
   height: 120px;
   width: 100%;
 }
@@ -60,6 +70,11 @@ data(){
   width: 100px;
   padding: 10px;
   float: right;
+   width:190px;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
 }
 
 .logo-pic {

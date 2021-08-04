@@ -1,5 +1,19 @@
 <template>
+
+
 <div class="card" > 
+
+<!-- //grab sample of pics and v-for through to render -->
+
+<div class="picCard" v-for="pic in picFeed" v-bind:key="pic.id">
+{{pic.url}}
+{{pic.comments}}
+ <i class="fa fa-dribbble fa-4x"></i>
+</div>
+
+
+
+
     <img src="@/images/logo.png" alt="">
     <img src="@/images/cat0.png" alt="">
     <img src="@/images/cutekitten.png" alt="">
@@ -16,7 +30,8 @@
 
 <script>
 export default {
-
+ name: 'pics-list',
+  props: ['pics']
 }
 </script>
 
@@ -35,7 +50,7 @@ img{
     margin:auto;
     background-color:red;
     height: 100%;
-    width: 500px;
+    width: 75%;
     margin-bottom: 50px;
     overflow-y:auto
 

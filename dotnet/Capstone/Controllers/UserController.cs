@@ -35,7 +35,7 @@ namespace Capstone.Controllers
         }
 
         // GET api/<UserController>/5
-        [HttpGet("{id}/feed")]
+        [HttpGet("feed")]
         public ActionResult<PageData> GetFeed(int id)
         {
             return PackagePageData(id, p => p.User.UserId >= 0);
