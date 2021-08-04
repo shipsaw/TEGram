@@ -1,39 +1,27 @@
 <template>
   <div>
     <nav class="nav-div">
-      
       <img src="@/images/logo.png" class="logo-pic" />
 
-      <b-container >
+      <b-container>
         <b-dropdown class="dropdown">
+          <div slot="button-content">
+            <img
+              :src="this.$store.state.user.userProfileUrl"
+            />
+          </div>
           <b-dropdown-item>My Profile</b-dropdown-item>
           <b-dropdown-item>My Favorites</b-dropdown-item>
         </b-dropdown>
       </b-container>
-
-      
     </nav>
   </div>
 </template>
 <script>
-import imgService from "../services/PhotoService";
-
 export default {
-
-data(){
-  return {
-    User: {
-      id: 0,
-      username:"",
-    }
-}
-},
-
-  created() {
-    imgService.get(this.id).then((response) => {
-      this.User = response.data
-    });
-  }
+  data() {
+    return {};
+  },
 
   // computed: {
   //   profileURL() {

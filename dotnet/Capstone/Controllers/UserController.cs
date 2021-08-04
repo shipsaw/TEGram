@@ -33,14 +33,14 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public ActionResult<PageData> Get(int id)
         {
-            return PackagePageData(id, p => p.User.UserId == id);
+            return PackageUser(id, p => p.User.UserId == id);
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}/feed")]
         public ActionResult<PageData> GetFeed(int id)
         {
-            return PackagePageData(id, p => p.User.UserId >= 0);
+            return PackageUser(id, p => p.User.UserId >= 0);
         }
 
         // POST api/<UserController>
@@ -61,7 +61,7 @@ namespace Capstone.Controllers
         {
         }
 
-        private PageData PackagePageData(int id, Expression<Func<Photo, bool>> predicate)
+        private PageData PackageUser(int id, Expression<Func<Photo, bool>> predicate)
         {
             User user = _context.Users.First(u => u.UserId == id);
             PageData data = new PageData();

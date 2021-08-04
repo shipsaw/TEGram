@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Capstone.Models;
 using Capstone.Security;
+using System.Linq.Expressions;
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace Capstone.Controllers
 {
@@ -44,9 +48,10 @@ namespace Capstone.Controllers
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
+                PageData packagedUser = PackageUser(user.UserId, p => p.User.UserId == user.UserId);
 
                 // Create a ReturnUser object to return to the client
-                LoginResponse retUser = new LoginResponse() { User = new ReturnUser() { UserId = user.UserId, Username = user.Username, Role = user.Role }, Token = token };
+                LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };
 
                 // Switch to 200 OK
                 result = Ok(retUser);
@@ -95,5 +100,31 @@ namespace Capstone.Controllers
 
             return result;
         }
+
+        private PageData PackageUser(int id, Expression<Func<Photo, bool>> predicate)
+        {
+            User user = _context.Users.First(u => u.UserId == id);
+            PageData data = new PageData();
+            data.UserProfileUrl = user.ProfileUrl;
+            data.UserId = user.UserId;
+            data.Username = user.Username;
+            data.Firstname = user.FirstName;
+            data.Lastname = user.LastName;
+
+            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
+            foreach (var photo in photos)
+            {
+                data.Photos.Add(new PhotoData
+                {
+                    Url = photo.Url,
+                    UserId = photo.UserId,
+                    Comments = null,
+                    Likes = null
+                });
+
+            }
+            return data;
+        }
+
     }
 }

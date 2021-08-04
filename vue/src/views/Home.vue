@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Welcome! {{user.username}}</h1>
+    <h1>Welcome! {{ this.$store.state.user.username }}</h1>
     
 <home-feed/>
 
