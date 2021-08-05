@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Capstone.Controllers
 {
@@ -30,25 +31,14 @@ namespace Capstone.Controllers
             IActionResult result = Unauthorized(new { message = "Username or password is incorrect" });
 
             // Get the user by username  -- ApplicationDbContext --> User objects --> list of attrbutes
-            //foreach loop to look for username in each user object, return user if userparam.username exists
-            User user = null;
-   
-            foreach (User u in _context.Users)
-            {
-                if(u.Username == userParam.Username)
-                {
-                    user = u;
-                }
-
-            }
-
+            User user = _context.Users.FirstOrDefault(u => u.Username == userParam.Username);
 
             // If we found a user and the password hash matches
             if (user != null && passwordHasher.VerifyHashMatch(user.PasswordHash, userParam.Password, user.Salt))
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
-                PageData packagedUser = PackageUser(user.UserId, p => p.User.UserId == user.UserId);
+                UserInfoResponse packagedUser = PackageUser(user.UserId, p => p.User.UserId == user.UserId);
 
                 // Create a ReturnUser object to return to the client
                 LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };
@@ -65,17 +55,8 @@ namespace Capstone.Controllers
         {
             IActionResult result;
 
-            User existingUser = null;
+            User existingUser = _context.Users.FirstOrDefault(u => u.Username == userParam.Username);
 
-            foreach (User u in _context.Users)
-            {
-                if (u.Username == userParam.Username)
-                {
-                    existingUser = u;
-                }
-
-            }
-          
             if (existingUser != null)
             {
                 return Conflict(new { message = "Username already taken. Please choose a different username." });
@@ -101,10 +82,10 @@ namespace Capstone.Controllers
             return result;
         }
 
-        private PageData PackageUser(int id, Expression<Func<Photo, bool>> predicate)
+        private UserInfoResponse PackageUser(int id, Expression<Func<Photo, bool>> predicate)
         {
             User user = _context.Users.First(u => u.UserId == id);
-            PageData data = new PageData();
+            UserInfoResponse data = new UserInfoResponse();
             data.UserProfileUrl = user.ProfileUrl;
             data.UserId = user.UserId;
             data.Username = user.Username;
@@ -114,7 +95,7 @@ namespace Capstone.Controllers
             List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
             foreach (var photo in photos)
             {
-                data.Photos.Add(new PhotoData
+                data.Photos.Add(new PhotoDataResponse
                 {
                     Url = photo.Url,
                     UserId = photo.UserId,

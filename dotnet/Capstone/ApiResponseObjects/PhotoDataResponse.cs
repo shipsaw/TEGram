@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Capstone.Controllers
 {
-    public class PhotoData
+    public class PhotoDataResponse
     {
         public string Url { get; set; }
         public string Username { get; set; }

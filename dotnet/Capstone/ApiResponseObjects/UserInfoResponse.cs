@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Capstone.Controllers
 {
-    public class PageData
+    public class UserInfoResponse
     {
         public int UserId { get; set; }
         public string Username { get; set; }
         public string UserProfileUrl { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public List<PhotoData> Photos {get; set;} = new List<PhotoData>();
+        public List<PhotoDataResponse> Photos {get; set;} = new List<PhotoDataResponse>();
     }
 }
