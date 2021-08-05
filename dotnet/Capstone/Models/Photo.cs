@@ -17,7 +17,7 @@ namespace Capstone.Models
         [InverseProperty("FavPhotos")]
         public virtual List<User> UsersFavorited { get; set; }
         public List<Comment> Comments { get; set; }
-        [InverseProperty("Likes")]
-        public List<User> Likes { get; set; }
+        [InverseProperty("UserLikes")]
+        public List<User> PhotoLikes { get; set; }
     }
 }
