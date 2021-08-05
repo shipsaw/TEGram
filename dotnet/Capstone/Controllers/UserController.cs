@@ -1,4 +1,5 @@
-﻿using Capstone.Models;
+﻿using Capstone.ApiResponseObjects;
+using Capstone.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,9 +18,11 @@ namespace Capstone.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly PackagingHelper packagingHelper;
         public UserController(ApplicationDbContext context)
         {
             _context = context;
+            packagingHelper = new PackagingHelper(context);
         }
         // GET: api/<UserController>
         [HttpGet]
@@ -30,7 +33,7 @@ namespace Capstone.Controllers
 
         // GET api/<UserController>/:id
         [HttpGet("{id}")]
-        public ActionResult<UserInfoResponse> Get(int id)
+        public ActionResult<UserDataResponse> Get(int id)
         {
             return null;
         }
@@ -39,7 +42,7 @@ namespace Capstone.Controllers
         [HttpGet("feed")]
         public ActionResult<List<PhotoDataResponse>> GetFeed(int id)
         {
-            return PackagePhotos(p => p.UserId > 0);
+            return packagingHelper.PackagePhotos(p => p.UserId > 0);
         }
 
         // POST api/<UserController>
@@ -58,23 +61,6 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-        private List<PhotoDataResponse> PackagePhotos(Expression<Func<Photo, bool>> predicate)
-        {
-            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
-            List<PhotoDataResponse> retPhotos = new List<PhotoDataResponse>();
-            foreach (var photo in photos)
-            {
-                retPhotos.Add(new PhotoDataResponse
-                {
-                    Url = photo.Url,
-                    UserId = photo.UserId,
-                    Comments = null,
-                    Likes = null
-                });
-
-            }
-            return retPhotos;
         }
 
     }

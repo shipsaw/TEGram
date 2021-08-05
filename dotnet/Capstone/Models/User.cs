@@ -1,4 +1,5 @@
-﻿using Capstone.Controllers;
+﻿using Capstone.ApiResponseObjects;
+using Capstone.Controllers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,7 +36,7 @@ namespace Capstone.Models
     /// </summary>
     public class LoginResponse
     {
-        public UserInfoResponse User { get; set; }
+        public UserDataResponse User { get; set; }
         public string Token { get; set; }
     }
 
