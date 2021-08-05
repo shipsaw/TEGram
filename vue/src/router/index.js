@@ -5,9 +5,9 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import NavBar from '@/components/NavBar.vue'
+// import NavBar from '@/components/NavBar.vue'
 import HomeFeed from '@/components/HomeFeed.vue'
-import Gallery from '@/components/Gallery.vue'
+import Gallery from '@/views/Gallery.vue'
 import FavoriteList from '@/components/FavoriteList.vue'
 import PhotoForm from '@/components/PhotoForm.vue'
 
@@ -57,15 +57,15 @@ const router = new Router({
                 requiresAuth: false
             }
         },
-        {
-            path: "/api/User/:id",
-            name: "picById",
-            component: NavBar,
-            meta: {
-                requiresAuth: false
-            }
+        // {
+        //     path: "/api/User/:id",
+        //     name: "picById",
+        //     component: NavBar,
+        //     meta: {
+        //         requiresAuth: false
+        //     }
 
-        },
+        // },
         {
             path: "/api/User/feed",
             name: "pic-feed",
