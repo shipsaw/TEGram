@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Capstone.Controllers
+namespace Capstone.ApiResponseObjects
+
 {
     public class PhotoDataResponse
     {

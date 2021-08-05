@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using Capstone.ApiResponseObjects;
 
 namespace Capstone.Controllers
 {
@@ -15,13 +16,15 @@ namespace Capstone.Controllers
     {
         private readonly ITokenGenerator tokenGenerator;
         private readonly IPasswordHasher passwordHasher;
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly PackagingHelper packagingHelper;
 
         public LoginController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, ApplicationDbContext context)
         {
             tokenGenerator = _tokenGenerator;
             passwordHasher = _passwordHasher;
             _context = context;
+            packagingHelper = new PackagingHelper(context);
         }
 
         [HttpPost]
@@ -38,7 +41,7 @@ namespace Capstone.Controllers
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
-                UserInfoResponse packagedUser = PackageUser(user.UserId, p => p.User.UserId == user.UserId);
+                UserDataResponse packagedUser = packagingHelper.PackageUser(user.UserId, p => p.User.UserId == user.UserId);
 
                 // Create a ReturnUser object to return to the client
                 LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };
@@ -82,30 +85,6 @@ namespace Capstone.Controllers
             return result;
         }
 
-        private UserInfoResponse PackageUser(int id, Expression<Func<Photo, bool>> predicate)
-        {
-            User user = _context.Users.First(u => u.UserId == id);
-            UserInfoResponse data = new UserInfoResponse();
-            data.UserProfileUrl = user.ProfileUrl;
-            data.UserId = user.UserId;
-            data.Username = user.Username;
-            data.Firstname = user.FirstName;
-            data.Lastname = user.LastName;
-
-            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
-            foreach (var photo in photos)
-            {
-                data.Photos.Add(new PhotoDataResponse
-                {
-                    Url = photo.Url,
-                    UserId = photo.UserId,
-                    Comments = null,
-                    Likes = null
-                });
-
-            }
-            return data;
-        }
 
     }
 }
