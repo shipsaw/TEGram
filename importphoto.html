@@ -139,7 +139,7 @@
             let photoId = getElementById('photoId').innerText;
             const fileName = file.name;
             // unique photo name to upload to S3 bucket
-            let photoKey = userName + '/' + 'photoId' + '-' + fileName;
+            let photoKey = userName + '/' + photoId + '-' + fileName;
             const uploadURL = 'https://' + bucketName + '.s3.' + bucketRegion + '.amazonaws.com/' + photoKey;
 
             // add code to do a PUT to the above URL
