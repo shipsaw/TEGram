@@ -6,9 +6,10 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import NavBar from '@/components/NavBar.vue'
-import HomeFeed from '@/components/HomeFeed.vue';
-import Gallery from '@/components/Gallery.vue';
-import FavoriteList from '@/components/FavoriteList.vue';
+import HomeFeed from '@/components/HomeFeed.vue'
+import Gallery from '@/components/Gallery.vue'
+import FavoriteList from '@/components/FavoriteList.vue'
+import PhotoForm from '@/components/PhotoForm.vue'
 
 Vue.use(Router)
 
@@ -90,9 +91,14 @@ const router = new Router({
                 requiresAuth: false
             }
         },
-
-
-        // insert route to get profile pic
+        {
+            path: "/api/User/newPhoto",
+            name: "new-photo",
+            component: PhotoForm,
+            meta: {
+                requiresAuth: false
+            }
+        },
 
     ]
 })
