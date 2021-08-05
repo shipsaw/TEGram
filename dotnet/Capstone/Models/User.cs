@@ -31,21 +31,11 @@ namespace Capstone.Models
     }
 
     /// <summary>
-    /// Model of user data to return upon successful login
-    /// </summary>
-    public class ReturnUser
-    {
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public string Role { get; set; }
-    }
-
-    /// <summary>
     /// Model to return upon successful login (user data + token)
     /// </summary>
     public class LoginResponse
     {
-        public PageData User { get; set; }
+        public UserInfoResponse User { get; set; }
         public string Token { get; set; }
     }
 

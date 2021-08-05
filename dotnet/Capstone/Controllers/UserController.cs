@@ -16,7 +16,7 @@ namespace Capstone.Controllers
     //[EnableCors("AllowSpecificOrigin")]
     public class UserController : ControllerBase
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         public UserController(ApplicationDbContext context)
         {
             _context = context;
@@ -25,22 +25,22 @@ namespace Capstone.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            List<string> users = _context.Users.Select(u => u.FirstName).ToList();
-            return users;
+            return _context.Users.Select(u => u.FirstName).ToList();
         }
 
-        // GET api/<UserController>/5
+        // GET api/<UserController>/:id
         [HttpGet("{id}")]
-        public ActionResult<PageData> Get(int id)
+        public ActionResult<UserInfoResponse> Get(int id)
         {
-            return PackageUser(id, p => p.User.UserId == id);
+            return null;
         }
 
-        // GET api/<UserController>/5
+        // GET api/<UserController>/:id
         [HttpGet("feed")]
-        public ActionResult<PageData> GetFeed(int id)
+        public ActionResult<UserInfoResponse> GetFeed(int id)
         {
-            return PackageUser(id, p => p.User.UserId >= 0);
+            //TODO fix: return PackageUser(id, p => p.User.UserId >= 0);
+            return null;
         }
 
         // POST api/<UserController>
@@ -61,29 +61,5 @@ namespace Capstone.Controllers
         {
         }
 
-        private PageData PackageUser(int id, Expression<Func<Photo, bool>> predicate)
-        {
-            User user = _context.Users.First(u => u.UserId == id);
-            PageData data = new PageData();
-            data.UserProfileUrl = user.ProfileUrl;
-            data.UserId = user.UserId;
-            data.Username = user.Username;
-            data.Firstname = user.FirstName;
-            data.Lastname = user.LastName;
-
-            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
-            foreach (var photo in photos)
-            {
-                data.Photos.Add(new PhotoData
-                {
-                    Url = photo.Url,
-                    UserId = photo.UserId,
-                    Comments = null,
-                    Likes = null
-                });
-
-            }
-            return data;
-        }
     }
 }
