@@ -45,29 +45,42 @@ namespace Capstone.Controllers
         {
         }
 
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
+        [HttpGet("like/{id}")]
         [Authorize]
-        public string Put(int id/*, [FromBody] int userId*/)
+        public bool GetLike(int id)
         {
-            string username = HttpContext.User?.FindFirstValue("name")?.ToString() ?? "Not Found";
             string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
             int userId = int.Parse(userIdStr);
 
             var photo = _context.Photos.Include(p => p.PhotoLikes).FirstOrDefault(p => p.PhotoId == id);
 
+            if (photo.PhotoLikes.FirstOrDefault(p => p.UserId == userId) != null)
+                return true;
+            else
+                return false;
+        }
+
+        // PUT api/<ValuesController>/5
+        [HttpPut("like/{id}")]
+        [Authorize]
+        public string Put(int id)
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            int userId = int.Parse(userIdStr);
+
+            var photo = _context.Photos.Include(p => p.PhotoLikes).FirstOrDefault(p => p.PhotoId == id);
 
             if (photo.PhotoLikes.FirstOrDefault(p => p.UserId == userId) != null)
             {
                 photo.PhotoLikes.Remove(_context.Users.Find(userId));
                 _context.SaveChanges();
-                return $"Like Found, removing entry, userId: {userId}, photoId: {id}";
+                return "unliked";
             }
             else
             {
                 photo.PhotoLikes.Add(_context.Users.Find(userId));
                 _context.SaveChanges();
-                return $"No Like Found, adding entry, userId: {userId}, photoId: {id}";
+                return "liked";
             }
         }
 
