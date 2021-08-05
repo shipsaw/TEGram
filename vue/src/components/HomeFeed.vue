@@ -1,21 +1,19 @@
 <template>
   <!-- should we add a shuffle in case of spammers? -->
   <div class="home-div">
-
+<!-- 
        <div class="photo-list">
     <div v-for="photo in photos" v-bind:key="photo.url" class="photo">
         <img src: photos.url >
        <p>{{photos.caption}}</p> 
         {{photos.likes}}
        <p>{{photos.comments}}</p> 
-    </div>
+    </div> -->
 
 
-  <img src="@/images/logo.png" alt="">
-    <img src="@/images/cat0.png" alt="">
 
-
-  </div>
+<photo-card />
+  <!-- </div> -->
      
  
     
@@ -25,12 +23,12 @@
 </template>
 
 <script>
-// import PhotoCard from "@/components/PhotoCard.vue";
+import PhotoCard from "@/components/PhotoCard.vue";
 import photoService from "../services/PhotoService.js";
 
 export default {
   components: {
-    // PhotoCard,
+    PhotoCard,
   },
   name:'photo-list',
   data(){

@@ -4,12 +4,12 @@
 <div class="card" > 
 
 <!-- //grab sample of pics and v-for through to render -->
-
+<!-- 
 <div class="picCard" v-for="pic in picFeed" v-bind:key="pic.id">
 {{pic.url}}
 {{pic.comments}}
  <i class="fa fa-dribbble fa-4x"></i>
-</div>
+</div> -->
 
 
 
@@ -48,7 +48,6 @@ img{
     flex-direction: column;
     align-items: center;
     margin:auto;
-    background-color:red;
     height: 100%;
     width: 75%;
     margin-bottom: 50px;
