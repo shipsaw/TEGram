@@ -1,4 +1,5 @@
-﻿using Capstone.Controllers;
+﻿using Capstone.ApiResponseObjects;
+using Capstone.Controllers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,8 +26,8 @@ namespace Capstone.Models
         public List<Photo> Photos { get; set; }
         [InverseProperty("UsersFavorited")]
         public List<Photo> FavPhotos { get; set; }
-        [InverseProperty("Likes")]
-        public List<Photo> Likes { get; set; }
+        [InverseProperty("PhotoLikes")]
+        public List<Photo> UserLikes { get; set; }
         public string Role { get; set; }
     }
 
@@ -35,7 +36,7 @@ namespace Capstone.Models
     /// </summary>
     public class LoginResponse
     {
-        public UserInfoResponse User { get; set; }
+        public UserDataResponse User { get; set; }
         public string Token { get; set; }
     }
 
