@@ -23,8 +23,12 @@ export default {
 
 <style>
 
+h1{
+  color: white;
+}
+
 .home{
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 10, 102, 0.596);
   width: 80%;
   margin: auto;
 text-align: center;

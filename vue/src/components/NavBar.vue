@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="nav-div">
-      <router-link v-bind:to="{ name: 'home' }">  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
+      <router-link v-bind:to="{ name: 'home' }" >  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
       
 
       <b-container >
@@ -36,7 +36,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(25, 153, 46, 0.25);
   height: 120px;
   width: 100%;
 }
@@ -58,6 +58,8 @@ export default {
   height: 150px;
   width: 150px;
   padding: 25px;
-  margin-left: 100px;
+  margin-left: 70px;
+  
+ 
 }
 </style>
