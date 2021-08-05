@@ -37,10 +37,9 @@ namespace Capstone.Controllers
 
         // GET api/<UserController>/:id
         [HttpGet("feed")]
-        public ActionResult<UserInfoResponse> GetFeed(int id)
+        public ActionResult<List<PhotoDataResponse>> GetFeed(int id)
         {
-            //TODO fix: return PackageUser(id, p => p.User.UserId >= 0);
-            return null;
+            return PackagePhotos(p => p.UserId > 0);
         }
 
         // POST api/<UserController>
@@ -59,6 +58,23 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+        private List<PhotoDataResponse> PackagePhotos(Expression<Func<Photo, bool>> predicate)
+        {
+            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
+            List<PhotoDataResponse> retPhotos = new List<PhotoDataResponse>();
+            foreach (var photo in photos)
+            {
+                retPhotos.Add(new PhotoDataResponse
+                {
+                    Url = photo.Url,
+                    UserId = photo.UserId,
+                    Comments = null,
+                    Likes = null
+                });
+
+            }
+            return retPhotos;
         }
 
     }
