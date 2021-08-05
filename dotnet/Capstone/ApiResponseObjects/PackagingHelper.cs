@@ -30,16 +30,22 @@ namespace Capstone.ApiResponseObjects
         }
         public List<PhotoDataResponse> PackagePhotos(Expression<Func<Photo, bool>> predicate)
         {
-            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
+            List<Photo> photos = _context.Photos
+                .Include(p => p.PhotoLikes)
+                .Where(predicate)
+                .OrderByDescending(p => p.CreatedDate)
+                .ToList();
+
             List<PhotoDataResponse> retPhotos = new List<PhotoDataResponse>();
             foreach (var photo in photos)
             {
                 retPhotos.Add(new PhotoDataResponse
                 {
+                    PhotoId = photo.PhotoId,
                     Url = photo.Url,
                     UserId = photo.UserId,
                     Comments = null,
-                    Likes = null
+                    Likes = photo.PhotoLikes.Select(p => p.UserId).ToList()
                 });
 
             }
