@@ -1,4 +1,5 @@
-﻿using Capstone.Models;
+﻿using Capstone.ApiResponseObjects;
+using Capstone.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,9 +18,11 @@ namespace Capstone.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly PackagingHelper packagingHelper;
         public UserController(ApplicationDbContext context)
         {
             _context = context;
+            packagingHelper = new PackagingHelper(context);
         }
         // GET: api/<UserController>
         [HttpGet]
@@ -30,17 +33,16 @@ namespace Capstone.Controllers
 
         // GET api/<UserController>/:id
         [HttpGet("{id}")]
-        public ActionResult<UserInfoResponse> Get(int id)
+        public ActionResult<UserDataResponse> Get(int id)
         {
             return null;
         }
 
         // GET api/<UserController>/:id
         [HttpGet("feed")]
-        public ActionResult<UserInfoResponse> GetFeed(int id)
+        public ActionResult<List<PhotoDataResponse>> GetFeed(int id)
         {
-            //TODO fix: return PackageUser(id, p => p.User.UserId >= 0);
-            return null;
+            return packagingHelper.PackagePhotos(p => p.UserId > 0);
         }
 
         // POST api/<UserController>
