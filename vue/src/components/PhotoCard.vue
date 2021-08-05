@@ -4,10 +4,14 @@
 <div class="card" > 
 
 
-<div class="picCard" v-for="pic in " v-bind:key="pic.id">
+<div class="picCard" v-for="pic in photoList" v-bind:key="pic.url">
+
 {{pic.url}}
+
+<i class="fas fa-heart"></i>
+<!-- update to see # of likes -->
+<i></i>
 {{pic.comments}}
- <i class="fa fa-dribbble fa-4x"></i>
 </div>
 
 
@@ -22,12 +26,17 @@ import photoService from '@/services/PhotoService.js'
 
 export default {
  name: 'pics-list',
-  props: ['pics'],
+ data(){
+   return{
+     photoList: []
+   }
+ },
 
 
 methods:{
-  retrieveFeed(){
+  created(){
      photoService.getPhotos().then(response=>{
+       this.photoList = response.data;
        
      })
   }
