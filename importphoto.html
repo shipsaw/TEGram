@@ -1,33 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Import Photo</title>
 </head>
+<header>
+    <h1>Import Photo</h1>
+</header>
+
 <body>
+    <!--Note that currently Option 2 and Option 4 below are functional-->
+    <!--First get their unique username and the id number of the last photo they uploaded-->
+    <div>
+        <p>Please Enter your unique Username and Id# of the last photo you uploaded:</p>
+        <textarea id="username">user</textarea><textarea id="photoId">0</textarea>
+    </div>
     <!--List out the various ways to accept an image input-->
-
+    <h3>Different Ways to Import a Photo</h3>
     <!--Option 1. Ask for a URL-->
+    <div>
+        1. Enter a URL of your photo: <span style="color:red">(NOT YET FUNCTIONAL)</span>
+        <br>
+        <input type="text" id="target-url"></input>
+        <script>
+            const textInput = document.getElementById('target-url');
 
+            textInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    addPhotoByURL(textInput.innerText);
+                }
+            });
+        </script>
+    </div>
+    <br>
 
     <!--Option 2. File Input-->
-    <input type="file" accept="image/*" id="file-input">
-    <script>
-    const fileInput = document.getElementById('file-input');
+    <div>
+        2. File Input: <span style="color:green">(FUNCTIONAL)</span>
+        <br>
+        <input type="file" accept="image/*" id="file-input">
+        <script>
+            const fileInput = document.getElementById('file-input');
 
-    fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
-    </script>
+            fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+        </script>
+    </div>
+    <br>
 
     <!--Option 3. Get an Image from the camera-->
-    <input type="file" accept="image/*" capture>
-    <script>
-    const fileInput = document.getElementById('file-input');
+    <!--Note that this option is for mobile only, desktop will ignore it and treat is as Option 2 above-->
+    <div>
+        3. Get Image From Camera: <span style="color:red">(NOT YET FUNCTIONAL)</span>
+        <br>
+        <input type="file" accept="image/*" capture>
+        <script>
+            const fileInput = document.getElementById('file-input');
 
-    fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+            fileInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+        </script>
+    </div>
+    <br><br>
+
+    <!--Option 4. Drag and Drop-->
+    <div>
+        4. Drag And Drop: <span style="color:green">(FUNCTIONAL)</span>
+        <br>
+        <textarea id="target-drag-drop">Drag an image file here</textarea>
+        <script>
+            const target = document.getElementById('target-drag-drop');
+
+            target.addEventListener('drop', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+
+                doSomethingWithFiles(e.dataTransfer.files);
+            });
+
+            target.addEventListener('dragover', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+
+                e.dataTransfer.dropEffect = 'copy';
+            });
+        </script>
+    </div>
+    <br>
+
+    <!--Option 5. Paste from clipboard-->
+    <div>
+        5. Paste From Clipboard: <span style="color:red">(NOT YET FUNCTIONAL)</span>
+        <br>
+        <textarea id="target-paste">Paste an image here</textarea>
+        <script>
+            const target = document.getElementById('target-paste');
+
+            target.addEventListener('paste', (e) => {
+                e.preventDefault();
+                doSomethingWithFiles(e.clipboardData.files);
+            });
+        </script>
+    </div>
+
+
+    
+
+    <!--  Displays a provided photo in the follow image tag-->
+    <img id="output">
+    
+    <!--Gets the File object from the FileList and displays the file in the image tag-->
+    <script>
+        const output = document.getElementById('output');
+
+        function doSomethingWithFiles(fileList) {
+            let file = null;
+
+            for (let i = 0; i < fileList.length; i++) {
+                if (fileList[i].type.match(/^image\//)) {
+                    file = fileList[i];
+                    break;
+                }
+            }
+        
+            // Display the added photo
+            if (file !== null) {
+                output.src = URL.createObjectURL(file);
+            }
+            
+            // add photo to AWS bucket
+            addPhotoToBucket(file);
+        }
+
+        function addPhotoToBucket(file) {
+            const bucketName = "tegramphotobucket";
+            const bucketRegion = "us-east-2";
+            let userName = getElementById('username').innerText;
+            let photoId = getElementById('photoId').innerText;
+            const fileName = file.name;
+            // unique photo name to upload to S3 bucket
+            let photoKey = userName + '/' + 'photoId' + '-' + fileName;
+            const uploadURL = 'https://' + bucketName + '.s3' + bucketRegion + '.amazonaws.com/' + photoKey;
+
+            // add code to do a PUT to the above URL
+
+        }
+
+        function showPhoto(bucketName, bucketRegion, photoKey) {
+            const imageURL = 'https://' + bucketName + '.s3' + bucketRegion + '.amazonaws.com/' + photoKey;
+            //console.log(imageURL);
+            output.src = imageURL;
+        }
+
     </script>
 
 
 
 </body>
+
 </html>
