@@ -63,27 +63,28 @@ namespace Capstone.Controllers
 
         private PageData PackageUser(int id, Expression<Func<Photo, bool>> predicate)
         {
-            User user = _context.Users.First(u => u.UserId == id);
-            PageData data = new PageData();
-            data.UserProfileUrl = user.ProfileUrl;
-            data.UserId = user.UserId;
-            data.Username = user.Username;
-            data.Firstname = user.FirstName;
-            data.Lastname = user.LastName;
+            return null;
+            //User user = _context.Users.First(u => u.UserId == id);
+            //PageData data = new PageData();
+            //data.UserProfileUrl = user.ProfileUrl;
+            //data.UserId = user.UserId;
+            //data.Username = user.Username;
+            //data.Firstname = user.FirstName;
+            //data.Lastname = user.LastName;
 
-            List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
-            foreach (var photo in photos)
-            {
-                data.Photos.Add(new PhotoData
-                {
-                    Url = photo.Url,
-                    UserId = photo.UserId,
-                    Comments = null,
-                    Likes = null
-                });
+            //List<Photo> photos = _context.Photos.Where(predicate).OrderByDescending(p => p.CreatedDate).ToList();
+            //foreach (var photo in photos)
+            //{
+            //    data.Photos.Add(new PhotoData
+            //    {
+            //        Url = photo.Url,
+            //        UserId = photo.UserId,
+            //        Comments = null,
+            //        Likes = null
+            //    });
 
-            }
-            return data;
+            //}
+            //return data;
         }
     }
 }

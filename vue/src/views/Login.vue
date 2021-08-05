@@ -1,5 +1,7 @@
 <template>
+
   <div id="login" class="text-center">
+        <nav-bar/>
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div
@@ -39,10 +41,13 @@
 
 <script>
 import authService from "../services/AuthService";
+import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: "login",
-  components: {},
+  components: {
+    NavBar
+  },
   data() {
     return {
       user: {
@@ -59,7 +64,9 @@ export default {
         .then(response => {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
-            this.$store.commit("SET_USER", response.data.user); this.$router.push("/"); }
+            this.$store.commit("SET_USER", response.data.user); 
+            this.$router.push("/"); 
+            }
         })
         .catch(error => {
           const response = error.response;
