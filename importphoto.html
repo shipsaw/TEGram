@@ -140,14 +140,14 @@
             const fileName = file.name;
             // unique photo name to upload to S3 bucket
             let photoKey = userName + '/' + 'photoId' + '-' + fileName;
-            const uploadURL = 'https://' + bucketName + '.s3' + bucketRegion + '.amazonaws.com/' + photoKey;
+            const uploadURL = 'https://' + bucketName + '.s3.' + bucketRegion + '.amazonaws.com/' + photoKey;
 
             // add code to do a PUT to the above URL
 
         }
 
         function showPhoto(bucketName, bucketRegion, photoKey) {
-            const imageURL = 'https://' + bucketName + '.s3' + bucketRegion + '.amazonaws.com/' + photoKey;
+            const imageURL = 'https://' + bucketName + '.s3.' + bucketRegion + '.amazonaws.com/' + photoKey;
             //console.log(imageURL);
             output.src = imageURL;
         }
