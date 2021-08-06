@@ -38,13 +38,6 @@ namespace Capstone.Controllers
             return null;
         }
 
-        // GET api/<UserController>/:id
-        [HttpGet("feed")]
-        public ActionResult<List<PhotoDataResponse>> GetFeed(int id)
-        {
-            return packagingHelper.PackagePhotos(p => p.UserId > 0);
-        }
-
         // POST api/<UserController>
         [HttpPost]
         public void Post([FromBody] string value)

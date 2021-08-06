@@ -14,10 +14,11 @@ namespace Capstone.Models
         public int UserId { get; set; }
         [InverseProperty("Photos")]
         public User User { get; set; }
-        [InverseProperty("FavPhotos")]
-        public virtual List<User> UsersFavorited { get; set; }
-        public List<Comment> Comments { get; set; }
+        [InverseProperty("UserFavorites")]
+        public List<User> PhotoFavorites { get; set; }
+
         [InverseProperty("UserLikes")]
         public List<User> PhotoLikes { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
