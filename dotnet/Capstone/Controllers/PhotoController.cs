@@ -41,6 +41,7 @@ namespace Capstone.Controllers
         // GET api/feed
         [AllowAnonymous]
         [HttpGet("feed")]
+        //[Route("/")]
         public ActionResult<List<PhotoDataResponse>> GetFeed()
         {
             return packagingHelper.PackagePhotos(p => p.UserId > 0);
