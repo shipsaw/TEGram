@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace Capstone.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class PhotoController : ControllerBase
@@ -41,6 +41,7 @@ namespace Capstone.Controllers
         // GET api/feed
         [AllowAnonymous]
         [HttpGet("feed")]
+        [Route("/")]
         public ActionResult<List<PhotoDataResponse>> GetFeed()
         {
             return packagingHelper.PackagePhotos(p => p.UserId > 0);
