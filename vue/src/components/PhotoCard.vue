@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="picCard" v-for="pic in photoList" v-bind:key="pic.url">
+    <div class="picCard" v-for="pic in photoList" v-bind:key="pic.photoId">
       <div class="polaroid">
         <img class="photo-single" :src="pic.url" />
          
@@ -9,9 +9,9 @@
           <b-icon
             icon="heart-fill"
             title="like photo"
-            @click="updateLikes($store.state.user.userId)"
+            @click="updateLikes(pic.photoId)"
             class="heartGray"
-            :class="isLiked ? 'heartRed' : 'heartGray'"
+            :class="pic.likes.length() ? 'heartRed' : 'heartGray'"
           ></b-icon>
           <b-icon
             icon="star-fill"
@@ -38,9 +38,10 @@ export default {
   name: "pics-list",
   data() {
     return {
-      photoList: [],
-      isLiked: false,
-      isFavorited: false,
+      photoList: [
+      {photoId: 0},
+      {likes: []},
+      ]
     };
   },
 
@@ -53,9 +54,9 @@ export default {
     updateLikes(id) {
       photoService.updateUserLikes(id).then((response) => {
         if (response.data) {
-          this.isLiked = true;
+          this.photoList.find(p => p.photoId == id).isLiked = true;
         } else {
-          this.isLiked = false;
+          this.photoList.find(p => p.photoId == id).isLiked = false;
         }
       });
     },
