@@ -79,3 +79,15 @@ export default {
   }
 };
 </script>
+
+<style>
+.text-center{
+  height: 100vh;
+  padding: 1px 50px 300px 100px;
+}
+
+.form-control{
+
+  margin-top: 50px;
+}
+</style>
