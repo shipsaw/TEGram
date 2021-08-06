@@ -1,15 +1,18 @@
 <template>
   <div class="card">
-    <div class="picCard" v-for="pic in photoList" v-bind:key="pic.url">
+    <div class="picCard" v-for="pic in photoList" v-bind:key="pic" :class="{aciveclass: !pic.isLiked}">
       <div class="polaroid">
-        <img class="photo-single" :src="pic.url" />
-         
+
+        <img class="photo-single" :src="pic.url"/> 
+<!--          
+         call click listener method that takes photo id and uses it to route to a new window -->
           
         <div class="icons">
           <b-icon
             icon="heart-fill"
             title="like photo"
-            @click="updateLikes($store.state.user.userId)"
+            @click="updateLikes(pic.PhotoId)"
+     
             class="heartGray"
             :class="isLiked ? 'heartRed' : 'heartGray'"
           ></b-icon>
@@ -39,7 +42,7 @@ export default {
   data() {
     return {
       photoList: [],
-      isLiked: false,
+      // isLiked: false,
       isFavorited: false,
     };
   },
