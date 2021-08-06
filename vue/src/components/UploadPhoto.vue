@@ -6,63 +6,106 @@
     <input
       type="file"
       accept="image/*"
-      id="file-input"
-      :value="fileList"
+      id="fileInput"
+      v-bind:value="fileList"
       v-on:change="uploadFile()"
     />
+    <input
+      type="checkbox"
+      id="photoInputSelection"
+      name="profilepic"
+      v-bind:value="isProfilePhoto"
+    />
+    <label for="profilepic">Make Profile Pic</label>
   </div>
 </template>
 
 <script>
+//import photoService from "@/services/PhotoService.js";
+import axios from "axios";
+
 export default {
-  name: "upload",
   data() {
-    return {
-      file,
-    };
   },
   methods: {
-    uploadFile(fileList) {
+    uploadFile(fileList, isProfilePhoto) {
       // since user could input multiple files iterate through to find the first image file
       let file = null;
       for (let i = 0; i < fileList.length; i++) {
-        if (fileList[i].type.match(/^image\//)) {
+        // check if the file is an image
+        if (fileList[i].type.match("image.*")) {
           file = fileList[i];
           break;
         }
       }
       if (file !== null) {
-        const bucketName = "tegramphotobucket";
-        const bucketRegion = "us-east-2";
-        let userName = this.$store.state.user.username;
-        // TODO check if photoId on the line below needs a +1 to be a unique photoId
-        let photoId = this.$store.state.user.photoFeedLength;
-        // TODO remove hardcoded value below
-        photoId = 9001;
-        const fileName = file.name;
-        // unique photo name to upload to S3 bucket
-        const photoKey = userName + "/" + photoId + "-" + fileName;
-        const uploadURL =
-          "https://" +
-          bucketName +
-          ".s3." +
-          bucketRegion +
-          ".amazonaws.com/" +
-          photoKey;
-        axios
-          .put(uploadURL, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          // just checking if it works or not
-          .then(function () {
-            alert("Successful Upload!");
-          })
-          .catch(function () {
-            alert("Failure!");
-          });
+        if (isProfilePhoto) {
+          this.uploadProfilePhoto(file);
+        } else {
+          this.uploadUserPhoto(file);
+        }
       }
+    },
+    uploadProfilePhoto(file) {
+      const bucketName = "tegramprofilephotobucket";
+      const bucketRegion = "us-east-2";
+      const userName = this.$store.state.user.username;
+      const fileName = file.name;
+      // profile photo name only needs to include userName to be unique since there is only one active profile photo per user
+      const photoKey = userName + "/" + fileName;
+      const uploadURL =
+        "https://" +
+        bucketName +
+        ".s3." +
+        bucketRegion +
+        ".amazonaws.com/" +
+        photoKey;
+      axios
+        .put(uploadURL, file, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function (result) {
+          // TO DO upload profile photo to database
+          console.log(result);
+          alert("Successful Profile Photo Upload to AWS!");
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Failure to Upload Profile Photo to AWS!");
+        });
+    },
+    uploadUserPhoto(file) {
+      const bucketName = "tegramphotobucket";
+      const bucketRegion = "us-east-2";
+      const userName = this.$store.state.user.username;
+      const photoId = this.$store.state.user.photos.length;
+      const fileName = file.name;
+      // unique photo name to upload to S3 bucket
+      const photoKey = userName + "/" + photoId + "-" + fileName;
+      const uploadURL =
+        "https://" +
+        bucketName +
+        ".s3." +
+        bucketRegion +
+        ".amazonaws.com/" +
+        photoKey;
+      axios
+        .put(uploadURL, file, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function (result) {
+          // TO DO upload photo to database
+          console.log(result);
+          alert("Successful User Photo Upload to AWS!");
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Failure to Upload User Photo to AWS!");
+        });
     },
   },
 };
