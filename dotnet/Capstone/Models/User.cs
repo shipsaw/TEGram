@@ -24,10 +24,13 @@ namespace Capstone.Models
         public string ProfileUrl { get; set; }
         [InverseProperty("User")]
         public List<Photo> Photos { get; set; }
-        [InverseProperty("UsersFavorited")]
-        public List<Photo> FavPhotos { get; set; }
+
+        [InverseProperty("PhotoFavorites")]
+        public List<Photo> UserFavorites { get; set; }
+
         [InverseProperty("PhotoLikes")]
         public List<Photo> UserLikes { get; set; }
+
         public string Role { get; set; }
     }
 
