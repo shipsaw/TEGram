@@ -23,7 +23,7 @@ export default new Vuex.Store({
         user: currentUser || {
 
 
-
+            //userId
             // username: "",
             // userProfileUrl: "",
             // firstName: "",
