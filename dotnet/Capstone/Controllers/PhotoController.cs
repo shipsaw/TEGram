@@ -46,22 +46,6 @@ namespace Capstone.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        //[Authorize]
-        public string Put(int id/*, [FromBody] int userId*/)
-        {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
-            int userId = int.Parse(userIdStr);
-
-            var photo = _context.Photos.Include(p => p.PhotoLikes).FirstOrDefault(p => p.PhotoId == id);
-
-            if (photo.PhotoLikes.FirstOrDefault(p => p.UserId == userId) != null)
-                return true;
-            else
-                return false;
-        }
-
-        // PUT api/<ValuesController>/5
         [HttpPut("like/{id}")]
         [Authorize]
         public bool Put(int id)

@@ -15,6 +15,6 @@ export default {
     },
 
     updateUserLikes(id) {
-        return http.put(`/api/Photo/${id}`)
+        return http.put(`/api/Photo/like/${id}`)
     }
 }
