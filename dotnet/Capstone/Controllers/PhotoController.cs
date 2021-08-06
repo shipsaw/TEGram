@@ -45,25 +45,10 @@ namespace Capstone.Controllers
         {
         }
 
-        [HttpGet("like/{id}")]
-        [Authorize]
-        public bool GetLike(int id)
-        {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
-            int userId = int.Parse(userIdStr);
-
-            var photo = _context.Photos.Include(p => p.PhotoLikes).FirstOrDefault(p => p.PhotoId == id);
-
-            if (photo.PhotoLikes.FirstOrDefault(p => p.UserId == userId) != null)
-                return true;
-            else
-                return false;
-        }
-
         // PUT api/<ValuesController>/5
         [HttpPut("like/{id}")]
         [Authorize]
-        public string Put(int id)
+        public bool Put(int id)
         {
             string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
             int userId = int.Parse(userIdStr);
@@ -74,13 +59,13 @@ namespace Capstone.Controllers
             {
                 photo.PhotoLikes.Remove(_context.Users.Find(userId));
                 _context.SaveChanges();
-                return "unliked";
+                return false;
             }
             else
             {
                 photo.PhotoLikes.Add(_context.Users.Find(userId));
                 _context.SaveChanges();
-                return "liked";
+                return true;
             }
         }
 

@@ -12,5 +12,9 @@ export default {
 
     getPhotos() {
         return http.get(`/api/User/feed`)
+    },
+
+    updateUserLikes(id) {
+        return http.put(`/api/Photo/like/${id}`)
     }
 }

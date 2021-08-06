@@ -7,11 +7,6 @@
      <nav-bar/>
       <router-view />
     </div>
- 
-
-
-
-
   </div>
 </template>
 
