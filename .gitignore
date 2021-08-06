@@ -81,3 +81,6 @@ cypress/videos
 
 #needed for week 5 .net
 !TechElevatorSqlRunner.dll
+
+#References local machine appsettings.json
+/dotnet/Capstone/appsettings.json

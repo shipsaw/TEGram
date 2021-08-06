@@ -19,10 +19,10 @@ namespace Capstone.Models
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("GETUTCDATE()");
 
-            builder.Entity<User>()
-                .HasMany(u => u.UserLikes)
-                .WithMany(u => u.PhotoLikes)
-                .UsingEntity(j => j.ToTable("PhotoUser"));
+            //builder.Entity<User>()
+            //    .HasMany(u => u.UserLikes)
+            //    .WithMany(u => u.PhotoLikes)
+            //    .UsingEntity(j => j.ToTable("PhotoUser"));
         }
 
         public DbSet<User> Users { get; set; }

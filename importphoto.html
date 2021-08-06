@@ -117,7 +117,7 @@
             let file = null;
 
             for (let i = 0; i < fileList.length; i++) {
-                if (fileList[i].type.match(/^image\//)) {
+                if (fileList[i].type.match('image.*')) {
                     file = fileList[i];
                     break;
                 }
