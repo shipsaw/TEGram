@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '../store/index'
 
 const http = axios.create({
     baseURL: "https://localhost:44315"
@@ -15,6 +16,8 @@ export default {
     },
 
     updateUserLikes(id) {
-        return http.put(`/api/Photo/like/${id}`)
+        return http.put(`/api/Photo/like/${id}`, {
+            headers: { "Authorization": `Bearer ${store.state.token}` }
+        })
     }
 }
