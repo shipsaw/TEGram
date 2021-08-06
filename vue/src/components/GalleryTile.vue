@@ -1,7 +1,6 @@
 <template>
-<div>
+<div id="background">
   <h1>{{this.$store.state.user.username}}'s Photo Gallery</h1>
-
   <div class="big-parent">
    
     <div class="parent" v-for="pic in this.$store.state.user.photos" v-bind:key="pic.url">
@@ -44,10 +43,6 @@ export default {
   margin-top: 50px;
 }
 
-h1 {
-text-align: center;
-  text-shadow: 2px 2px rgba(0, 0, 0, 0.4) ;
-}
 
 #grid-tile {
   height: 200px;

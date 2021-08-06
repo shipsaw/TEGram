@@ -1,20 +1,26 @@
 <template>
   <div class="card">
     <div class="picCard" v-for="pic in photoList" v-bind:key="pic.url">
-      <img :src="pic.url" />
-      <div class="icons">
-        <b-icon
-          icon="heart-fill"
-          id="heart"
-          title="look, it works!!!"
-          @click="updateLikes($store.state.user.userId), (isLiked = false)"
-        ></b-icon>
-        <b-icon
-          icon="star-fill"
-          id="star"
-          v-on:
-          click="addToFavorites()"
-        ></b-icon>
+      <div class="polaroid">
+        <img class="photo-single" :src="pic.url" />
+         
+          
+        <div class="icons">
+          <b-icon
+            icon="heart-fill"
+            title="like photo"
+            @click="updateLikes($store.state.user.userId)"
+            class="heartGray"
+            :class="isLiked ? 'heartRed' : 'heartGray'"
+          ></b-icon>
+          <b-icon
+            icon="star-fill"
+            title="add to favorites"
+            @click="addToFavorites()"
+            class="starGray"
+            :class="isFavorited ? 'starYellow' : 'starGray'"
+          ></b-icon>
+       </div>
       </div>
 
       <!-- update to see # of likes -->
@@ -22,88 +28,95 @@
       {{ pic.comments }}
     </div>
   </div>
-  <!-- in feed: pic, who posted it, first two comments
-  like icon, add to favorites icon -->
+  <!-- in feed: pic, who posted it, first two comments -->
 </template>
 
 <script>
-
-import photoService from '@/services/PhotoService.js';
+import photoService from "@/services/PhotoService.js";
 
 export default {
- name: 'pics-list',
- data(){
-   return{
-     photoList: []
-     
-   }
- },
-  created(){
-     photoService.getPhotos().then(response=>{
-       this.photoList = response.data;
-       
-     })
+  name: "pics-list",
+  data() {
+    return {
+      photoList: [],
+      isLiked: false,
+      isFavorited: false,
+    };
   },
-  methods:{
-    
-updateLikes(id){
-  photoService.updateUserLikes(id).then(response=>{
-    if(response.data){
-      this.isLiked = true;
-      this.classList.add('heart-red');
 
-    }else{
-      this.isLiked = false;
-      this.classList.remove('heart-red');
-    }
-  })
-}
+  created() {
+    photoService.getPhotos().then((response) => {
+      this.photoList = response.data;
+    });
   },
-}
-
+  methods: {
+    updateLikes(id) {
+      photoService.updateUserLikes(id).then((response) => {
+        if (response.data) {
+          this.isLiked = true;
+        } else {
+          this.isLiked = false;
+        }
+      });
+    },
+  },
+};
 </script>
 
 <style>
-#heart-gray {
-  color: gray;
+
+.polaroid{
+  height: 100%;
+  margin-top:5px;
 }
 
-#heart-red {
-  color: red;
+.heartGray,
+.starGray {
+  color: gray;
+  float: left;
+  height: 30px;
+  width: auto;
+  margin: 10px;
+}
+
+.heartRed {
+  color: gold;
+}
+.starYellow {
+  color: yellow;
 }
 
 .icons {
+border-top: 2px solid gray;
+   background-image: linear-gradient(to bottom right, lightgray, gray);
   height: 55px;
-  width: auto;
+  margin-top:5px;
+  
 }
 
-img {
+.photo-single {
   height: auto;
-  width: 100%;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  width:100%;
+  max-width: 650px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
 }
 
 .picCard {
-  display: flex;
-  flex-direction: column;
+width: 100%;
+   border: 2px solid gray;
 }
 .card {
+
   display: flex;
   flex-direction: column;
   margin: auto;
   height: 100%;
-  width: 75%;
-  margin-bottom: 50px;
+  width: 95%;
+  margin-bottom: 40px;
   overflow-y: auto;
 }
-.heart,
-.star {
-  float: left;
-  color: gray;
-  height: 40px;
-  width: auto;
-  margin: 15px;
+.card::-webkit-scrollbar {
+  display: none;
 }
 </style>
 
