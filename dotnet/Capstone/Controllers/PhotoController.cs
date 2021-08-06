@@ -47,7 +47,7 @@ namespace Capstone.Controllers
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        [Authorize]
+        //[Authorize]
         public string Put(int id/*, [FromBody] int userId*/)
         {
             string username = HttpContext.User?.FindFirstValue("name")?.ToString() ?? "Not Found";
