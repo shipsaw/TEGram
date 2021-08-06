@@ -19,9 +19,9 @@ export default {
 
 <style>
 .home-div {
-  background: rgba(255, 255, 255, 255);
-  height: 900px;
-  width: 75%;
+  background: rgba(25, 153, 46, 0);
+  height: 910px;
+  width: 80%;
   margin: auto;
   padding-top: 50px;
   padding-bottom: 50px;
