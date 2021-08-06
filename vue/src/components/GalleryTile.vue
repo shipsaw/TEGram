@@ -4,7 +4,7 @@
 
   <div class="big-parent">
    
-    <div class="parent" v-for="pic in this.$store.state.user.photos" v-bind:key="pic.Url">
+    <div class="parent" v-for="pic in this.$store.state.user.photos" v-bind:key="pic.url">
       <div id="grid-tile">
         <img :src= pic.url >
       </div>
