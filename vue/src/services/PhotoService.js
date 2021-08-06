@@ -8,16 +8,21 @@ const http = axios.create({
 export default {
 
     get(id) {
-        return http.get(`/api/User/${id}`)
+        return http.get(`/api/User/${id}`, {
+            headers: { "Authorization": `Bearer ${store.state.token}` }
+        })
     },
 
     getPhotos() {
-        return http.get(`/api/User/feed`)
+        return http.get(`/api/photo/feed`, {
+            headers: { "Authorization": `Bearer ${store.state.token}` }
+        })
     },
 
     updateUserLikes(id) {
-        return http.put(`/api/Photo/like/${id}`, {
-            headers: { "Authorization": `Bearer ${store.state.token}` }
-        })
+        return http.put(`/api/Photo/${id}`, {
+            headers: { "Authorization": `Bearer ${store.state.token}` }},
+            { params: { action: id } }
+        )
     }
 }
