@@ -2,7 +2,7 @@ import axios from 'axios';
 import store from '../store/index'
 
 const http = axios.create({
-    baseURL: "https://localhost:44315"
+    baseURL: "https://capstonetegram.azurewebsites.net"
 });
 
 // export default {
@@ -34,16 +34,25 @@ export default {
         })
     },
 
+
+
+
     updateUserLikes(id) {
+
         return http.put(`/api/photo/${id}`, {
+
             headers: { "Authorization": `Bearer ${store.state.token}` }
         }, { params: { action: 'like' } })
+
     },
 
     updateUserFavorites(id) {
-        return http.put(`/api/photo/${id}`, { params: { action: 'favorite' } }, {
+
+        return http.put(`/api/photo/${id}`, {
+
             headers: { "Authorization": `Bearer ${store.state.token}` }
-        }, )
+        }, { params: { action: 'like' } })
+
 
     },
 

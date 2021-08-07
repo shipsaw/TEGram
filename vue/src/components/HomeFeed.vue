@@ -1,19 +1,35 @@
 <template>
   <!-- should we add a shuffle in case of spammers? -->
-  <div class="home-div">
-<photo-card />
+  <div class="home-div" >
+    <div v-for="pic in photoList" v-bind:key="pic.url">
+      <photo-card v-bind:pic="pic"/>
+    </div>
+
   </div>
 </template>
 
 <script>
 import PhotoCard from "@/components/PhotoCard.vue";
+import photoService from "@/services/PhotoService.js";
 
 export default {
   components: {
     PhotoCard,
   },
   name:'photo-list',
+data(){
+  return{
+     photoList: [
+      ]
+  }
+},
 
+
+  created() {
+    photoService.getPhotos().then((response) => {
+      this.photoList = response.data;
+    });
+  },
 };
 </script>
 
@@ -28,6 +44,7 @@ export default {
   border-radius: 1%;
 
   display: flex;
+  flex-direction: column;
 
 }
 </style>
