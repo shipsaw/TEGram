@@ -2,21 +2,23 @@
   <div class="card">
     <div class="picCard" v-for="pic in photoList" v-bind:key="pic.url">
       <div class="polaroid">
-        <img class="photo-single" :src="pic.url" />
-         
+
+        <img class="photo-single" :src="pic.url"/> 
+<!--          
+         call click listener method that takes photo id and uses it to route to a new window -->
           
         <div class="icons">
           <b-icon
             icon="heart-fill"
             title="like photo"
-            @click="updateLikes($store.state.user.userId)"
+            @click="updateLikes(pic.photoId)"
             class="heartGray"
             :class="isLiked ? 'heartRed' : 'heartGray'"
           ></b-icon>
           <b-icon
             icon="star-fill"
             title="add to favorites"
-            @click="addToFavorites()"
+            @click="updateFavorites(pic.photoId)"
             class="starGray"
             :class="isFavorited ? 'starYellow' : 'starGray'"
           ></b-icon>
@@ -38,7 +40,8 @@ export default {
   name: "pics-list",
   data() {
     return {
-      photoList: [],
+      photoList: [
+      ],
       isLiked: false,
       isFavorited: false,
     };
@@ -49,18 +52,39 @@ export default {
       this.photoList = response.data;
     });
   },
+
+//if liked, isLIked is true, button toggled, likes plus one in DB
+
   methods: {
     updateLikes(id) {
       photoService.updateUserLikes(id).then((response) => {
+    
         if (response.data) {
-          this.isLiked = true;
+         this.isLiked = true;
+
         } else {
-          this.isLiked = false;
+        this.isLiked = false;
         }
       });
     },
   },
+
+    updateFavorites(id) {
+      photoService.updateUserFavorites(id).then((response) => {
+    
+        if (response.data) {
+         this.isFavorited = true;
+
+        } else {
+        this.isFavorited = false;
+        }
+      });
+    },
 };
+
+
+
+
 </script>
 
 <style>
