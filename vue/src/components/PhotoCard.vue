@@ -8,8 +8,9 @@
         id="heartIcon"
           icon="heart-fill"
           title="like photo"
+             class="heartGray"
           @click="updateLikes(pic.photoId)"
-          class="heartGray"
+        
           :class="isLiked ? 'heartRed' : 'heartGray'"
         ></b-icon>
         <b-icon
@@ -44,21 +45,9 @@ export default {
    }
   },
 
-  created() {
-  //  this.retrievePhoto();
-  },
-
   methods: {
-     retrievePhoto() {
-      photoService.getPhoto(this.$route.params.photoId)
-        .then(response => {
-          this.$store.commit("SET_PHOTO", response.data);
-        })
-        
-    },
 
     updateLikes(id) {
-
       photoService.updateUserLikes(id).then((response) => {
         if (response.data) {
           this.isLiked = true;
@@ -73,12 +62,27 @@ export default {
     photoService.updateUserFavorites(id).then((response) => {
       if (response.data) {
         this.isFavorited = true;
+        this.pic.likes.appendChild(id)
       } else {
         this.isFavorited = false;
       }
     });
   },
+
+mounted(){
+  
+    if(this.pic.likes.includes(this.$store.state.user.userId)){
+      return this.isLiked = true;
+    }
+    else{
+      return this.isLiked = false;
+    }
+  
+}
+
 },
+
+
 
 };
 </script>
@@ -130,11 +134,8 @@ export default {
   height: 100%;
   width: 95%;
   margin-bottom: 40px;
-  overflow-y: auto;
 }
-.card::-webkit-scrollbar {
-  display: none;
-} 
+
 </style>
 
 
