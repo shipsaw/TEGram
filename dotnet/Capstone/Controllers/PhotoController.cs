@@ -32,12 +32,12 @@ namespace Capstone.Controllers
         }
 
         // GET api/<ValuesController>/5
-        //[HttpGet]
-        //[Route("/api/photo/{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet]
+        [Route("/api/photo/{id}")]
+        public ActionResult<PhotoDataResponse> Get(int id)
+        {
+            return packagingHelper.PackagePhoto(id);
+        }
 
         // GET api/feed
         [AllowAnonymous]

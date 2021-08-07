@@ -14,5 +14,6 @@ namespace Capstone.ApiResponseObjects
         public int UserId { get; set; }
         public List<string> Comments { get; set; } = new List<string>();
         public List<int> Likes { get; set; } = new List<int>();
+        public List<int> Favorites { get; set; } = new List<int>();
     }
 }
