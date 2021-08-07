@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Capstone.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     //[EnableCors("AllowSpecificOrigin")]
     public class UserController : ControllerBase
@@ -26,35 +25,36 @@ namespace Capstone.Controllers
         }
         // GET: api/<UserController>
         [HttpGet]
+        [Route("/api/user")]
         public IEnumerable<string> Get()
         {
             return _context.Users.Select(u => u.FirstName).ToList();
         }
 
         // GET api/<UserController>/:id
-        [HttpGet("{id}")]
-        public ActionResult<UserDataResponse> Get(int id)
-        {
-            return null;
-        }
+        //[HttpGet("{id}")]
+        //public ActionResult<UserDataResponse> Get(int id)
+        //{
+        //    return null;
+        //}
 
-        // POST api/<UserController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //// POST api/<UserController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/<UserController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/<UserController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
 
     }
 }

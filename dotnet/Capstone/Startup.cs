@@ -28,7 +28,7 @@ namespace Capstone
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddSwaggerGen();
+            services.AddSwaggerGen();
 
             services.AddCors(options =>
             {
@@ -82,7 +82,7 @@ namespace Capstone
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseSwagger();
+            app.UseSwagger();
 
             app.UseAuthentication();
 

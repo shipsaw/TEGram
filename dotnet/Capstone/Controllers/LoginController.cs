@@ -10,7 +10,6 @@ using Capstone.ApiResponseObjects;
 
 namespace Capstone.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
@@ -28,6 +27,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost]
+        [Route("/login")]
         public IActionResult Authenticate(LoginUser userParam)
         {
             // Default to bad username/password message
@@ -53,7 +53,8 @@ namespace Capstone.Controllers
             return result;
         }
 
-        [HttpPost("/register")]
+        [HttpPost]
+        [Route("/register")]
         public IActionResult Register(RegisterUser userParam)
         {
             IActionResult result;
@@ -84,7 +85,5 @@ namespace Capstone.Controllers
 
             return result;
         }
-
-
     }
 }
