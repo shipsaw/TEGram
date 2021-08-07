@@ -34,16 +34,25 @@ export default {
         })
     },
 
+
+
+
     updateUserLikes(id) {
+
         return http.put(`/api/photo/${id}`, {
+
             headers: { "Authorization": `Bearer ${store.state.token}` }
         }, { params: { action: 'like' } })
+
     },
 
     updateUserFavorites(id) {
-        return http.put(`/api/photo/${id}`, { params: { action: 'favorite' } }, {
+
+        return http.put(`/api/photo/${id}`, {
+
             headers: { "Authorization": `Bearer ${store.state.token}` }
-        }, )
+        }, { params: { action: 'like' } })
+
 
     },
 
