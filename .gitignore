@@ -83,4 +83,4 @@ cypress/videos
 !TechElevatorSqlRunner.dll
 
 #References local machine appsettings.json
-/dotnet/Capstone/appsettings.json
+*/appsettings.json
