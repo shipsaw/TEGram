@@ -9,7 +9,7 @@ import store from '../store/index'
 import HomeFeed from '@/components/HomeFeed.vue'
 import Gallery from '@/views/Gallery.vue'
 import FavoriteList from '@/components/FavoriteList.vue'
-import PhotoForm from '@/components/PhotoForm.vue'
+import UploadPhoto from '@/components/UploadPhoto.vue'
 
 Vue.use(Router)
 
@@ -94,7 +94,7 @@ const router = new Router({
         {
             path: "/api/User/newPhoto",
             name: "new-photo",
-            component: PhotoForm,
+            component: UploadPhoto,
             meta: {
                 requiresAuth: false
             }

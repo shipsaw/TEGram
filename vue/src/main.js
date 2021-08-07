@@ -6,7 +6,6 @@ import store from './store/index'
 import axios from 'axios'
 
 
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
