@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <h1>Upload Photo</h1>
     File Input:
     <br />
@@ -17,72 +17,51 @@
       v-bind:value="isProfilePhoto"
     />
     <label for="profilepic">Make Profile Pic</label>
+  </div> -->
+  <!-- <div>
+        File Input:
+        <br>
+        <input type="file" accept="image/*" id="file-input">       
+  </div> -->
+  <div class="container">
+    <div class="large-12 medium-12 small-12 cell">
+      <label
+        >File
+        <input
+          type="file"
+          id="file"
+          ref="file"
+          v-on:change="handleFileUpload()"
+        />
+      </label>
+      <button v-on:click="submitFile()">Submit</button>
+    </div>
   </div>
 </template>
 
 <script>
 //import photoService from "@/services/PhotoService.js";
-import axios from "axios";
+//import axios from "axios";
+//import express from "express";
 
 export default {
   data() {
+    return {
+      file: "",
+    };
   },
   methods: {
-    uploadFile(fileList, isProfilePhoto) {
-      // since user could input multiple files iterate through to find the first image file
-      let file = null;
-      for (let i = 0; i < fileList.length; i++) {
-        // check if the file is an image
-        if (fileList[i].type.match("image.*")) {
-          file = fileList[i];
-          break;
-        }
-      }
-      if (file !== null) {
-        if (isProfilePhoto) {
-          this.uploadProfilePhoto(file);
-        } else {
-          this.uploadUserPhoto(file);
-        }
-      }
+    handleFileUpload() {
+      // will only get the first photo
+      this.file = this.$refs.file.files[0];
+      console.log("selected file: " + this.file.name);
     },
-    uploadProfilePhoto(file) {
-      const bucketName = "tegramprofilephotobucket";
-      const bucketRegion = "us-east-2";
-      const userName = this.$store.state.user.username;
-      const fileName = file.name;
-      // profile photo name only needs to include userName to be unique since there is only one active profile photo per user
-      const photoKey = userName + "/" + fileName;
-      const uploadURL =
-        "https://" +
-        bucketName +
-        ".s3." +
-        bucketRegion +
-        ".amazonaws.com/" +
-        photoKey;
-      axios
-        .put(uploadURL, file, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then(function (result) {
-          // TO DO upload profile photo to database
-          console.log(result);
-          alert("Successful Profile Photo Upload to AWS!");
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert("Failure to Upload Profile Photo to AWS!");
-        });
-    },
-    uploadUserPhoto(file) {
+    submitFile() {
       const bucketName = "tegramphotobucket";
       const bucketRegion = "us-east-2";
       const userName = this.$store.state.user.username;
+      const fileName = this.file.name;
       const photoId = this.$store.state.user.photos.length;
-      const fileName = file.name;
-      // unique photo name to upload to S3 bucket
       const photoKey = userName + "/" + photoId + "-" + fileName;
       const uploadURL =
         "https://" +
@@ -91,22 +70,24 @@ export default {
         bucketRegion +
         ".amazonaws.com/" +
         photoKey;
-      axios
-        .put(uploadURL, file, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then(function (result) {
-          // TO DO upload photo to database
-          console.log(result);
-          alert("Successful User Photo Upload to AWS!");
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert("Failure to Upload User Photo to AWS!");
-        });
-    },
-  },
+      console.log(uploadURL);
+      // let options = {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   }
+      // }
+      // let file = this.file;
+      // let formData = new FormData();
+
+      // const AWS = require("aws-sdk");
+
+      // const s3 = new AWS.S3({
+      //   accessKeyId: "AKIA47LN56X3N4QKKMAE",
+      //   secretAccessKey: "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",
+      // });
+
+      
+    }
+  }
 };
 </script>
