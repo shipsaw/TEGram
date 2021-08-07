@@ -30,6 +30,7 @@ export default new Vuex.Store({
             // lastName: "",
 
             // photos: [{
+            // photoId
             //     url: "",
             //     userId: 0,
             //     comments: [],
@@ -50,8 +51,6 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         },
         SET_USER(state, user) {
-            //DELETE LINE 54 LATER
-            user.photos[0].comments = ["hello", "world"];
             console.log(user);
             state.user = user;
             console.log(state.user)

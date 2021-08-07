@@ -11,10 +11,10 @@
     <button id="upload-button">Upload to S3</button>
     <div id="results"></div>
     <script type="text/javascript">
-    AWS.config.region = 'us-east-1'; // 1. Enter your region
+    AWS.config.region = 'us-east-1'; 
 
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'us-east-1:eb060943-1a5a-45a8-b66c-a8245dc242e7' // 2. Enter your identity pool
+        IdentityPoolId: 'us-east-1:eb060943-1a5a-45a8-b66c-a8245dc242e7' 
     });
 
     AWS.config.credentials.get(function(err) {
@@ -22,7 +22,7 @@
         console.log(AWS.config.credentials);
     });
 
-    var bucketName = 'tegramphotobucket'; // Enter your bucket name
+    var bucketName = 'tegramphotobucket'; 
     var bucket = new AWS.S3({
         params: {
             Bucket: bucketName
@@ -39,7 +39,7 @@
         if (file) {
 
             results.innerHTML = '';
-            var objKey = 'testing4/' + file.name;  // set objKey to same as prefix below
+            var objKey = 'testing5/' + file.name;  // set objKey to same as prefix below
             var params = {
                 Key: objKey,
                 ContentType: file.type,
@@ -59,7 +59,7 @@
         }
     }, false);
     function listObjs() {
-        var prefix = 'testing4';   // set this to the same as objKey
+        var prefix = 'testing5';   // set this to the same as objKey
         bucket.listObjects({
             Prefix: prefix
         }, function(err, data) {
