@@ -2,7 +2,7 @@ import axios from 'axios';
 import store from '../store/index'
 
 const http = axios.create({
-    baseURL: "https://localhost:44315"
+    baseURL: "https://capstonetegram.azurewebsites.net"
 });
 
 // export default {
