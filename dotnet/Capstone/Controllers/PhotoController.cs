@@ -32,12 +32,12 @@ namespace Capstone.Controllers
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet]
-        [Route("/api/photo/{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //[HttpGet]
+        //[Route("/api/photo/{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // GET api/feed
         [AllowAnonymous]
@@ -57,9 +57,9 @@ namespace Capstone.Controllers
 
         // PUT api/<ValuesController>/5
         //[HttpPut("like/{id}")]
-        [HttpPut("{id}")] // Pass the fact we want to change like in the query string
+        [HttpPut] // Pass the fact we want to change like in the query string
         [Route("/api/photo/{id}")]
-        protected bool Put(int id, string action)
+        public bool Put(int id, string action)
         {
             switch (action)
             {
