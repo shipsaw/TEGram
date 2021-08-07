@@ -1,13 +1,17 @@
 <template>
   <div class="container">
     <div class="large-12 medium-12 small-12 cell">
+      <!-- alternate input and button options are commented out in the following few lines-->
       <!-- <input type="file" id="file-chooser" accept="image/*" @change="uploadFile" ref="file" />
        -->
       <input type="file" id="file-chooser" />
       <!-- <button id="upload-button">Upload to S3</button> -->
       <button id="upload-button" @click="uploadFile">Upload Photo</button>
       <div id="results"></div>
-      <img id="output" />
+      <div>
+        <!--displays the photo if it is uploaded -->
+        <img id="output" />
+      </div>
     </div>
   </div>
 </template>
@@ -22,10 +26,6 @@ export default {
   //    };
   // },
   methods: {
-    // uploadFile() {
-    //   this.file = this.$refs.file.files[0];
-    //   console.log("selected file: " + this.file.name);
-    // },
     uploadFile() {
       const fileChooser = document.getElementById("file-chooser");
       //var button = document.getElementById("upload-button");
@@ -38,7 +38,20 @@ export default {
         const userName = this.$store.state.user.username;
         const fileName = file.name;
         const photoId = this.$store.state.user.photos.length;
-        const photoKey = userName + "/" + photoId + "-" + fileName;
+        // generate a long file name that is difficult to guess
+        const length = 50;
+        let randomString = "";
+        const characters =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+          randomString += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+          );
+        }
+
+        const photoKey =
+          userName + "/" + photoId + "-" + randomString + "-" + fileName;
 
         AWS.config.region = "us-east-1"; // not us-east-2 ???
 
