@@ -11,7 +11,6 @@ using System.Security.Claims;
 
 namespace Capstone.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class PhotoController : ControllerBase
@@ -26,13 +25,15 @@ namespace Capstone.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
+        [Route("/api/photo")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("/api/photo/{id}")]
         public string Get(int id)
         {
             return "value";
@@ -40,23 +41,25 @@ namespace Capstone.Controllers
 
         // GET api/feed
         [AllowAnonymous]
-        [HttpGet("feed")]
+        [HttpGet]
+        [Route("/api/photo/feed")]
         //[Route("/")]
         public ActionResult<List<PhotoDataResponse>> GetFeed()
         {
             return packagingHelper.PackagePhotos(p => p.UserId > 0);
         }
 
-        // POST api/<ValuesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //// POST api/<ValuesController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
         // PUT api/<ValuesController>/5
         //[HttpPut("like/{id}")]
         [HttpPut("{id}")] // Pass the fact we want to change like in the query string
-        public bool Put(int id, string action)
+        [Route("/api/photo/{id}")]
+        protected bool Put(int id, string action)
         {
             switch (action)
             {
@@ -74,10 +77,10 @@ namespace Capstone.Controllers
         // /api/feed
 
         // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
 
         private bool ToggleLike(int photoId)
         {
