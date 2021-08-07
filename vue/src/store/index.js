@@ -64,13 +64,6 @@ export default new Vuex.Store({
             state.user = {};
             axios.defaults.headers.common = {};
         },
-        // SET_PIC(state, data) {
-        //     state.user = data;
-        // }
-
-        SET_PHOTO_CARDS(state, data) {
-            state.photoCards = data;
-        },
 
         SET_PHOTO(state, data) {
             state.photo = data;
