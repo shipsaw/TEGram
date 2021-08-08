@@ -2,21 +2,25 @@
   <div class="container">
     <div class="large-12 medium-12 small-12 cell">
       <div class="upload">
-        <!-- alternate input and button options are commented out in the following few lines-->
+        <!-- 
+          alternate input and button options are commented out in the following few lines
+          -->
         <!-- <input type="file" id="file-chooser" accept="image/*" @change="uploadFile" ref="file" />
        -->
+        <!-- <br />
         <textarea
           id="target-drag-drop"
           rows="3"
-          @drop="uploadFile"
+          @drop.prevent="uploadFile"
           v-bind="fileDrop"
         >
-Drag and Drop</textarea
-        >
-        <br />
+        Drag and Drop</textarea> -->
+        <!--
+          copy Paste not currently functional -->
+        <!-- <br />
         <textarea id="target-paste" @paste="uploadFile" v-bind="fileDrop">
 Paste</textarea
-        >
+        > -->
         <br />
         <input class="button" type="file" id="file-chooser" />
         <br />
@@ -38,7 +42,7 @@ Paste</textarea
         <div id="results"></div>
         <br />
         <div>
-          <!--displays the photo if it is uploaded -->
+          <!--the below image tag will display the photo if it is uploaded -->
           <img id="output" />
         </div>
       </div>
@@ -49,7 +53,8 @@ Paste</textarea
 <style>
 .upload {
   display: grid;
-  margin-left: 20%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .flexy {
@@ -88,8 +93,8 @@ export default {
   data() {
     return {
       checked: "",
-      fileDrop: null
-    }
+      fileDrop: null,
+    };
   },
   methods: {
     uploadFile() {
@@ -97,19 +102,17 @@ export default {
       //var button = document.getElementById("upload-button");
       let results = document.getElementById("results");
       let file = null;
-      if (this.fileDrop){
-        if (this.fileDrop[i].type.match('image.*')){
+      if (this.fileDrop) {
+        if (this.fileDrop[i].type.match("image.*")) {
           file = this.fileDrop[0];
         }
-      }
-      else {
-        if (fileChooser.files[0].type.match('image.*')){
+      } else {
+        if (fileChooser.files[0].type.match("image.*")) {
           file = fileChooser.files[0];
+        } else {
+          results.innerHTML = "Please select an Image";
         }
-        else {
-          results.innerHTML = "Please select an Image"
-        }
-      //var file = fileChooser.files[0];
+        //var file = fileChooser.files[0];
       }
       if (file) {
         const bucketRegion = "us-east-2";
@@ -162,11 +165,10 @@ export default {
               results.innerHTML = "ERROR: " + err;
             } else {
               // display uploaded photo
-              output.src = URL.createObjectURL(file);             
+              output.src = URL.createObjectURL(file);
               if (checked === true) {
                 // TODO upload photoURL to User table in Database
-              }
-              else {
+              } else {
                 // TODO upload photoURL to Photos table in Database
               }
             }
