@@ -10,6 +10,7 @@ import HomeFeed from '@/components/HomeFeed.vue'
 import Gallery from '@/views/Gallery.vue'
 import FavoriteList from '@/components/FavoriteList.vue'
 import UploadPhoto from '@/components/UploadPhoto.vue'
+import PhotoDetails from '@/components/PhotoDetails.vue'
 
 Vue.use(Router)
 
@@ -99,6 +100,14 @@ const router = new Router({
                 requiresAuth: false
             }
         },
+        {
+            path: "/api/User/details",
+            name: "full-details",
+            component: PhotoDetails,
+            meta: {
+                requiresAuth: false
+            }
+        }
 
     ]
 })
@@ -119,6 +128,3 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
-
-
-
