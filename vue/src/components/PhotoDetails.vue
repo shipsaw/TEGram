@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="photo-details">
   <img class="photo-single" :src="pic.url" />
 {{pic.comments}}
 {{pic.userId}}
@@ -21,6 +21,17 @@
     <b-col lg="4" class="pb-2"><b-button type="submit" size="sm" variant="outline-warning">Small Button</b-button></b-col>
 </b-container> 
 
+<div>
+ <form action="https://capstonetegram.azurewebsites.net/api/photo/comments" method="POST">>
+        <p style="white-space: pre-line;">{{ message }}</p>
+        <br>
+        <textarea v-model="comment" placeholder="Add a comment..."></textarea> 
+    <div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+     </form>
+    </div>
+
 
 
   </div>
@@ -28,6 +39,13 @@
 
 <script>
 export default {
+ 
+  data() {
+    return{
+    comment: "",
+    }
+  },
+ name: "photo-details", 
  props: {
     pic: Object,    
   },
@@ -37,3 +55,6 @@ export default {
 <style>
 
 </style>
+
+<!--this.$router.push({ name: "user", params: { username: "dan" } });
+this.$router.push({ path: "register", query: { plan: "private" } });-->

@@ -101,7 +101,7 @@ const router = new Router({
             }
         },
         {
-            path: "/api/User/newPhoto",
+            path: "/api/User/details",
             name: "full-details",
             component: PhotoDetails,
             meta: {
