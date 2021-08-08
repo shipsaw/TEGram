@@ -1,20 +1,46 @@
 <template>
   <div class="container">
     <div class="large-12 medium-12 small-12 cell">
+      <div class="upload">
       <!-- alternate input and button options are commented out in the following few lines-->
       <!-- <input type="file" id="file-chooser" accept="image/*" @change="uploadFile" ref="file" />
        -->
-      <input type="file" id="file-chooser" />
+       <br>
+      <input class="button" type="file" id="file-chooser" />
+      <br>
       <!-- <button id="upload-button">Upload to S3</button> -->
-      <button id="upload-button" @click="uploadFile">Upload Photo</button>
+      <button class="button button-upload" @click="uploadFile">Upload Photo</button>
+      <br>
       <div id="results"></div>
+      <br>
       <div>
         <!--displays the photo if it is uploaded -->
         <img id="output" />
       </div>
+      </div>
     </div>
   </div>
 </template>
+
+<style>
+.upload {   
+    display: grid;
+    margin-left: 20%;
+}
+
+.button {
+  width: 225px;
+  background-image: linear-gradient(yellow, orange);
+  opacity: 0.8;
+  border-radius: 2px;
+}
+
+.button-upload{
+  background-image: linear-gradient(to right, yellow, green)
+}
+
+</style>
+
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.961.0.min.js"></script>
 
