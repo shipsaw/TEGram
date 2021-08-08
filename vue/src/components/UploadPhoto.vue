@@ -2,30 +2,46 @@
   <div class="container">
     <div class="large-12 medium-12 small-12 cell">
       <div class="upload">
-      <!-- alternate input and button options are commented out in the following few lines-->
-      <!-- <input type="file" id="file-chooser" accept="image/*" @change="uploadFile" ref="file" />
+        <!-- alternate input and button options are commented out in the following few lines-->
+        <!-- <input type="file" id="file-chooser" accept="image/*" @change="uploadFile" ref="file" />
        -->
-       <br>
-      <input class="button" type="file" id="file-chooser" />
-      <br>
-      <!-- <button id="upload-button">Upload to S3</button> -->
-      <button class="button button-upload" @click="uploadFile">Upload Photo</button>
-      <br>
-      <div id="results"></div>
-      <br>
-      <div>
-        <!--displays the photo if it is uploaded -->
-        <img id="output" />
-      </div>
+        <br />
+        <input class="button" type="file" id="file-chooser" />
+        <br />
+        <!-- <button id="upload-button">Upload to S3</button> -->
+        <button class="button button-upload" @click="uploadFile">
+          Upload Photo
+        </button>
+        <br />
+        <div class="flexy">
+          <input
+            type="checkbox"
+            id="profile-photo"
+            name="profile-photo"
+            value="profilePic"
+            v-model="checked"
+          />
+          <label for="profile-photo">Make Profile Photo</label>
+        </div>
+        <div id="results"></div>
+        <br />
+        <div>
+          <!--displays the photo if it is uploaded -->
+          <img id="output" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style>
-.upload {   
-    display: grid;
-    margin-left: 20%;
+.upload {
+  display: grid;
+  margin-left: 20%;
+}
+
+.flexy {
+  display: inline-block;
 }
 
 .button {
@@ -35,10 +51,17 @@
   border-radius: 2px;
 }
 
-.button-upload{
-  background-image: linear-gradient(to right, yellow, green)
+label {
+  margin: 3px;
 }
 
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.button-upload {
+  background-image: linear-gradient(to right, orange, yellow, yellow, green);
+}
 </style>
 
 
@@ -46,11 +69,11 @@
 
 <script>
 export default {
-  // data() {
-  //   return {
-  //      file: "",
-  //    };
-  // },
+  data() {
+    return {
+      checked: "",
+    };
+  },
   methods: {
     uploadFile() {
       const fileChooser = document.getElementById("file-chooser");
@@ -110,13 +133,22 @@ export default {
               results.innerHTML = "ERROR: " + err;
             } else {
               // display uploaded photo
-              output.src = URL.createObjectURL(file);
+              output.src = URL.createObjectURL(file);             
+              if (checked === true) {
+                // TODO upload photoURL to User table in Database
+              }
+              else {
+                // TODO upload photoURL to Photos table in Database
+              }
             }
           });
         } else {
           results.innerHTML = "Nothing to upload.";
         }
       }
+    },
+    makeProfilePic() {
+      //
     },
   },
 };
