@@ -30,6 +30,8 @@ namespace Capstone.Models
 
         [InverseProperty("PhotoLikes")]
         public List<Photo> UserLikes { get; set; }
+        [InverseProperty("User")]
+        public List<Comment> UserComments { get; set; }
 
         public string Role { get; set; }
     }

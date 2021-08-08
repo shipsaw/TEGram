@@ -49,6 +49,17 @@ namespace Capstone.Controllers
             return packagingHelper.PackagePhotos(p => p.UserId > 0);
         }
 
+        [HttpGet]
+        [Route("/api/photo/favorites")]
+        //[Route("/")]
+        public ActionResult<List<PhotoDataResponse>> GetFavorites()
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            int userId = int.Parse(userIdStr);
+
+            return packagingHelper.PackagePhotos(p => p.PhotoFavorites.Any(u => u.UserId == userId));
+        }
+
         //// POST api/<ValuesController>
         //[HttpPost]
         //public void Post([FromBody] string value)

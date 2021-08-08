@@ -34,6 +34,8 @@ namespace Capstone.ApiResponseObjects
             Photo photo = _context.Photos
                 .Include(p => p.PhotoLikes)
                 .Include(p => p.PhotoFavorites)
+                .Include(p => p.PhotoComments)
+                .ThenInclude(c => c.User)
                 .FirstOrDefault(p => p.PhotoId == photoId);
 
             if (photo != null)
@@ -43,7 +45,8 @@ namespace Capstone.ApiResponseObjects
                     PhotoId = photo.PhotoId,
                     Url = photo.Url,
                     UserId = photo.UserId,
-                    Comments = null,
+                    Comments = photo.PhotoComments.Select(c => PackageComment(c)).ToList(),
+                    //Comments = null,
                     Likes = photo.PhotoLikes.Select(p => p.UserId).ToList(),
                     Favorites = photo.PhotoFavorites.Select(p => p.UserId).ToList()
                 };
@@ -59,6 +62,8 @@ namespace Capstone.ApiResponseObjects
             List<Photo> photos = _context.Photos
                 .Include(p => p.PhotoLikes)
                 .Include(p => p.PhotoFavorites)
+                .Include(p => p.PhotoComments)
+                .ThenInclude(c => c.User)
                 .Where(predicate)
                 .OrderByDescending(p => p.CreatedDate)
                 .ToList();
@@ -71,7 +76,8 @@ namespace Capstone.ApiResponseObjects
                     PhotoId = photo.PhotoId,
                     Url = photo.Url,
                     UserId = photo.UserId,
-                    Comments = null,
+                    Comments = photo.PhotoComments.Select(c => PackageComment(c)).ToList(),
+                    //Comments = null,
                     Likes = photo.PhotoLikes.Select(p => p.UserId).ToList(),
                     Favorites = photo.PhotoFavorites.Select(p => p.UserId).ToList()
                 });
@@ -79,6 +85,18 @@ namespace Capstone.ApiResponseObjects
             }
             return retPhotos;
         }
+
+        public CommentDataResponse PackageComment(Comment comment)
+        {
+            return new CommentDataResponse
+            {
+                CommentId = comment.CommentId,
+                Username = comment.User.Username,
+                Content = comment.Content
+            };
+        }
+
+
 
     }
 }
