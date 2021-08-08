@@ -1,5 +1,6 @@
 <template>
-  <photo-details v-bind:photoId="parseInt($route.params.pic.photoId)"/>
+  <photo-details/>
+  
 </template>
 
 <script>
@@ -9,9 +10,12 @@ export default {
         PhotoDetails
     }
 
+    
+
 }
 </script>
 
 <style>
 
 </style>
+

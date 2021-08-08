@@ -2,9 +2,9 @@
   <div class="card">
     <div class="polaroid">
 
-      <router-link v-bind:to="{name: 'full-details', params: {id: pic.photoId}}">
-      <img class="photo-single" :src="pic.url" />
-</router-link >
+
+      <img @click="sharePhotoId(pic.photoId)" class="photo-single" :src="pic.url" />
+
       <div class="icons">
         <b-icon
         id="heartIcon"
@@ -49,6 +49,10 @@ export default {
 
   methods: {
 
+    sharePhotoId(id){
+      this.$router.push({name:"full-details", params:{data: id}})
+    },
+
     updateLikes(id) {
       photoService.updateUserLikes(id).then((response) => {
         if (response.data) {
@@ -89,11 +93,6 @@ mounted(){
     }
   
 }
-
-
-
-
-
 };
 </script>
 
