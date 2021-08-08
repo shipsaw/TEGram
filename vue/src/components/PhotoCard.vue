@@ -1,8 +1,10 @@
 <template>
   <div class="card">
     <div class="polaroid">
-      <img class="photo-single" :src="pic.url" />
 
+      <router-link v-bind:to="{name: 'full-details'}">
+      <img class="photo-single" :src="pic.url" />
+</router-link >
       <div class="icons">
         <b-icon
         id="heartIcon"
@@ -62,25 +64,33 @@ export default {
     photoService.updateUserFavorites(id).then((response) => {
       if (response.data) {
         this.isFavorited = true;
-        this.pic.likes.appendChild(id)
       } else {
         this.isFavorited = false;
       }
     });
   },
 
+
+},
 mounted(){
   
     if(this.pic.likes.includes(this.$store.state.user.userId)){
-      return this.isLiked = true;
+    this.isLiked = true;
     }
     else{
-      return this.isLiked = false;
+       this.isLiked = false;
+    }
+    
+    if(this.pic.favorites.includes(this.$store.state.user.userId)){
+      this.isFavorited = true;
+    }
+    else{
+     this.isFavorited = false;
     }
   
 }
 
-},
+
 
 
 
