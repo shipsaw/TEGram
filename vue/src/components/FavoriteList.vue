@@ -4,9 +4,8 @@
     <div class="big-parent">
       <div
         class="parent"
-        v-for="pic in this.$store.state.user.photos"
-        v-bind:key="pic.url"
-      >
+        v-for="pic in favoritesList"
+        v-bind:key="pic.url">
         <div id="grid-tile">
           <img :src="pic.url" />
         </div>
@@ -16,8 +15,21 @@
 </template>
 
 <script>
-export default {
 
+import photoService from '../services/PhotoService.js';
+
+export default {
+data(){
+   return{
+favoritesList:[]
+   }
+},
+
+  created() {
+    photoService.getPhotoFaves().then((response) => {
+      this.favoritesList = response.data;
+    });
+  },
 methods:{
 
 //delete photo on-click?

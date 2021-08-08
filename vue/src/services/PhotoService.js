@@ -34,6 +34,11 @@ export default {
         })
     },
 
+    getPhotoFaves() {
+        return http.get(`/api/photo/favorites`, {
+            headers: { "Authorization": `Bearer ${store.state.token}` }
+        })
+    },
 
 
 
@@ -51,7 +56,7 @@ export default {
         return http.put(`/api/photo/${id}`, {
 
             headers: { "Authorization": `Bearer ${store.state.token}` }
-        }, { params: { action: 'like' } })
+        }, { params: { action: 'favorite' } })
 
 
     },
