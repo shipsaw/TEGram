@@ -5,6 +5,18 @@
         <!-- alternate input and button options are commented out in the following few lines-->
         <!-- <input type="file" id="file-chooser" accept="image/*" @change="uploadFile" ref="file" />
        -->
+        <textarea
+          id="target-drag-drop"
+          rows="3"
+          @drop="uploadFile"
+          v-bind="fileDrop"
+        >
+Drag and Drop</textarea
+        >
+        <br />
+        <textarea id="target-paste" @paste="uploadFile" v-bind="fileDrop">
+Paste</textarea
+        >
         <br />
         <input class="button" type="file" id="file-chooser" />
         <br />
@@ -44,6 +56,10 @@
   display: inline-block;
 }
 
+.target-drag-drop {
+  height: auto;
+}
+
 .button {
   width: 225px;
   background-image: linear-gradient(yellow, orange);
@@ -72,16 +88,29 @@ export default {
   data() {
     return {
       checked: "",
-    };
+      fileDrop: null
+    }
   },
   methods: {
     uploadFile() {
-      const fileChooser = document.getElementById("file-chooser");
+      let fileChooser = document.getElementById("file-chooser");
       //var button = document.getElementById("upload-button");
-      const results = document.getElementById("results");
-
-      var file = fileChooser.files[0];
-
+      let results = document.getElementById("results");
+      let file = null;
+      if (this.fileDrop){
+        if (this.fileDrop[i].type.match('image.*')){
+          file = this.fileDrop[0];
+        }
+      }
+      else {
+        if (fileChooser.files[0].type.match('image.*')){
+          file = fileChooser.files[0];
+        }
+        else {
+          results.innerHTML = "Please select an Image"
+        }
+      //var file = fileChooser.files[0];
+      }
       if (file) {
         const bucketRegion = "us-east-2";
         const userName = this.$store.state.user.username;
