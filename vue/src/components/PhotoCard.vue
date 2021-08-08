@@ -2,7 +2,7 @@
   <div class="card">
     <div class="polaroid">
 
-      <router-link v-bind:to="{name: 'full-details'}">
+      <router-link v-bind:to="{name: 'full-details', params: {id: pic.photoId}}">
       <img class="photo-single" :src="pic.url" />
 </router-link >
       <div class="icons">
