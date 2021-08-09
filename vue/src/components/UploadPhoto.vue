@@ -89,10 +89,12 @@ input[type="checkbox"] {
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.961.0.min.js"></script>
 
 <script>
+import photoService from '../services/PhotoService.js';
+
 export default {
   data() {
     return {
-      checked: "",
+      checked: false,
       fileDrop: null,
     };
   },
@@ -166,10 +168,33 @@ export default {
             } else {
               // display uploaded photo
               output.src = URL.createObjectURL(file);
-              if (checked === true) {
-                // TODO upload photoURL to User table in Database
-              } else {
-                // TODO upload photoURL to Photos table in Database
+              // generate the upload URL for the photo
+              const uploadURL = "https://" + bucketName + ".s3." + bucketRegion + ".amazonaws.com/" + photoKey;
+              console.log("Upload URL: " + uploadURL);
+              // update database with photo URL and whether checked is true or
+              let profileCheckBox = document.getElementById("profile-photo");
+              if (profileCheckBox.checked) {
+                console.log("We checked the box! YAY!!!");
+                photoService.addProfilePhoto(uploadURL);
+                console.log("updated Profile Photo");
+              } 
+              else {
+                photoService.addGalleryPhoto(uploadURL).then(response => {
+                  if (response.status === 201)
+                  {
+                    // TODO update the store
+                    console.log("added Photo to Gallery");
+                  }
+                }).catch(error => {
+                  if(error.response){
+                    console.log("Error updating database for new photo.  Response:" + error.response.statusText);
+                  } else if (error.request){
+                    console.log("Error contacting the server:" + error.request.statusText);
+                  } else {
+                    console.log("ERROR");
+                  }
+                });
+                
               }
             }
           });

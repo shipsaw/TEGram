@@ -67,10 +67,16 @@ export default {
 
     },
 
-    // addNewPhoto(id) {
-    //     return http.put(`/api/Photo/like/${id}`, {
-    //         headers: { "Authorization": `Bearer ${store.state.token}` }
-    //     })
-    // }
+    addProfilePhoto(profilePhotoURL) {
+        return http.post(`/api/photo`, profilePhotoURL, {
+            headers: { "Authorization": `Bearer ${store.state.token}` }
+        }, { params: { isProfile: true}})
+    },
+
+    addGalleryPhoto(galleryPhotoURL) {
+        return http.post(`/api/photo`, galleryPhotoURL, {
+            headers: { "content-type": "text/plain", "Authorization": `Bearer ${store.state.token}` }
+        }, { params: { isProfile: false}})
+    }
 
 }
