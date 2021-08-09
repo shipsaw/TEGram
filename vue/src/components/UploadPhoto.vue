@@ -82,6 +82,7 @@ input[type="checkbox"] {
 
 .button-upload {
   background-image: linear-gradient(to right, orange, yellow, yellow, green);
+  text-align: center;
 }
 </style>
 
