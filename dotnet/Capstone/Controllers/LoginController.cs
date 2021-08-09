@@ -74,6 +74,7 @@ namespace Capstone.Controllers
             if (retUser != null)
             {
                 result = Created(user.Username, null); //values aren't read on client
+                _context.SaveChanges();
             }
             else
             {
