@@ -23,7 +23,7 @@ const http = axios.create({
 export default {
 
     get(id) {
-        return http.get(`/api/User/${id}`, {
+        return http.get(`/api/user/${id}`, {
             headers: { "Authorization": `Bearer ${store.state.token}` }
         })
     },
