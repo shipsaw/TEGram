@@ -68,14 +68,14 @@ export default {
     },
 
     addProfilePhoto(profilePhotoURL) {
-        return http.post(`/api/photo`, profilePhotoURL, {
-            headers: { "Authorization": `Bearer ${store.state.token}` }
+        return http.post(`/api/photo`, "\"" + profilePhotoURL + "\"", {
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
         }, { params: { isProfile: true}})
     },
 
     addGalleryPhoto(galleryPhotoURL) {
-        return http.post(`/api/photo`, galleryPhotoURL, {
-            headers: { "content-type": "text/plain", "Authorization": `Bearer ${store.state.token}` }
+        return http.post(`/api/photo`, "\"" + galleryPhotoURL + "\"", {
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
         }, { params: { isProfile: false}})
     }
 
