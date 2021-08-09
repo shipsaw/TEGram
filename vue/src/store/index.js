@@ -28,6 +28,7 @@ export default new Vuex.Store({
             // userProfileUrl: "",
             // firstName: "",
             // lastName: "",
+            //favorite photos
 
             // photos: [{
             // photoId

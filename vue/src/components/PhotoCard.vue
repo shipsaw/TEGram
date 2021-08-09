@@ -1,15 +1,18 @@
 <template>
   <div class="card">
     <div class="polaroid">
-      <img class="photo-single" :src="pic.url" />
+
+
+      <img @click="sharePhotoId(pic.photoId)" class="photo-single" :src="pic.url" />
 
       <div class="icons">
         <b-icon
         id="heartIcon"
           icon="heart-fill"
           title="like photo"
+             class="heartGray"
           @click="updateLikes(pic.photoId)"
-          class="heartGray"
+        
           :class="isLiked ? 'heartRed' : 'heartGray'"
         ></b-icon>
         <b-icon
@@ -44,21 +47,13 @@ export default {
    }
   },
 
-  created() {
-  //  this.retrievePhoto();
-  },
-
   methods: {
-     retrievePhoto() {
-      photoService.getPhoto(this.$route.params.photoId)
-        .then(response => {
-          this.$store.commit("SET_PHOTO", response.data);
-        })
-        
+
+    sharePhotoId(id){
+      this.$router.push({name:"full-details", params:{data: id}})
     },
 
     updateLikes(id) {
-
       photoService.updateUserLikes(id).then((response) => {
         if (response.data) {
           this.isLiked = true;
@@ -78,8 +73,26 @@ export default {
       }
     });
   },
-},
 
+
+},
+mounted(){
+  
+    if(this.pic.likes.includes(this.$store.state.user.userId)){
+    this.isLiked = true;
+    }
+    else{
+       this.isLiked = false;
+    }
+    
+    if(this.pic.favorites.includes(this.$store.state.user.userId)){
+      this.isFavorited = true;
+    }
+    else{
+     this.isFavorited = false;
+    }
+  
+}
 };
 </script>
 
@@ -130,11 +143,8 @@ export default {
   height: 100%;
   width: 95%;
   margin-bottom: 40px;
-  overflow-y: auto;
 }
-.card::-webkit-scrollbar {
-  display: none;
-} 
+
 </style>
 
 

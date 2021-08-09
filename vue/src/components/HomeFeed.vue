@@ -1,8 +1,8 @@
 <template>
   <!-- should we add a shuffle in case of spammers? -->
   <div class="home-div" >
-    <div v-for="pic in photoList" v-bind:key="pic.url">
-      <photo-card v-bind:pic="pic"/>
+    <div v-for="pic in photoList" v-bind:key="pic.photoId">
+      <photo-card v-bind:pic="pic" />
     </div>
 
   </div>
@@ -42,9 +42,12 @@ data(){
   padding-top: 50px;
   padding-bottom: 50px;
   border-radius: 1%;
-
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-
 }
+
+.home-div::-webkit-scrollbar {
+  display: none;
+} 
 </style>
