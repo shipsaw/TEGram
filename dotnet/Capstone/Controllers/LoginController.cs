@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Capstone.Models;
 using Capstone.Security;
-using System.Linq.Expressions;
 using System.Linq;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using Capstone.ApiResponseObjects;
 
@@ -84,6 +81,11 @@ namespace Capstone.Controllers
             }
 
             return result;
+        }
+        private int GetUserIdFromJwt()
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            return int.Parse(userIdStr);
         }
     }
 }
