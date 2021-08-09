@@ -9,9 +9,9 @@ namespace Capstone.Models
     public class Comment
     {
         public int CommentId { get; set; }
-        [InverseProperty("PhotoComments")]
+        public int PhotoId { get; set; }
         public Photo Photo { get; set; }
-        [InverseProperty("UserComments")]
+        public int UserId { get; set; }
         public User User { get; set; }
         public string Content { get; set; }
     }
