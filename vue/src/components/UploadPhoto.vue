@@ -173,28 +173,40 @@ export default {
               console.log("Upload URL: " + uploadURL);
               // update database with photo URL and whether checked is true or
               let profileCheckBox = document.getElementById("profile-photo");
+              // update the profile photo scenario
               if (profileCheckBox.checked) {
-                console.log("We checked the box! YAY!!!");
-                photoService.addProfilePhoto(uploadURL);
-                console.log("updated Profile Photo");
-              } 
-              else {
-                photoService.addGalleryPhoto(uploadURL).then(response => {
+                photoService.addProfilePhoto(uploadURL).then(response => {
                   if (response.status === 201)
                   {
-                    // TODO update the store
-                    console.log("added Photo to Gallery");
+                    console.log("Database updated!  Added Photo to Profile");
                   }
                 }).catch(error => {
                   if(error.response){
-                    console.log("Error updating database for new photo.  Response:" + error.response.statusText);
+                    console.log("Error updating database for new profile photo. Response:" + error.response.statusText);
                   } else if (error.request){
                     console.log("Error contacting the server:" + error.request.statusText);
                   } else {
                     console.log("ERROR");
                   }
-                });
-                
+                });               
+              } 
+              // update the photo gallery scenario
+              else {
+                photoService.addGalleryPhoto(uploadURL).then(response => {
+                  if (response.status === 201)
+                  {
+                    // TODO update the store
+                    console.log("Database updated! Added Photo to Gallery");
+                  }
+                }).catch(error => {
+                  if(error.response){
+                    console.log("Error updating database for new photo. Response:" + error.response.statusText);
+                  } else if (error.request){
+                    console.log("Error contacting the server:" + error.request.statusText);
+                  } else {
+                    console.log("ERROR");
+                  }
+                });               
               }
             }
           });
@@ -202,9 +214,6 @@ export default {
           results.innerHTML = "Nothing to upload.";
         }
       }
-    },
-    makeProfilePic() {
-      //
     },
   },
 };
