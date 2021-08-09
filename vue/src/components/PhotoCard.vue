@@ -1,18 +1,19 @@
 <template>
   <div class="card">
     <div class="polaroid">
+      <img
+        @click="sharePhotoId(pic.photoId)"
+        class="photo-single"
+        :src="pic.url"
+      />
 
-      <router-link v-bind:to="{name: 'full-details', params: {id: pic.photoId}}">
-      <img class="photo-single" :src="pic.url" />
-</router-link >
       <div class="icons">
         <b-icon
-        id="heartIcon"
+          id="heartIcon"
           icon="heart-fill"
           title="like photo"
-             class="heartGray"
+          class="heartGray"
           @click="updateLikes(pic.photoId)"
-        
           :class="isLiked ? 'heartRed' : 'heartGray'"
         ></b-icon>
         <b-icon
@@ -23,11 +24,16 @@
           :class="isFavorited ? 'starYellow' : 'starGray'"
         ></b-icon>
       </div>
-
-      <!-- update to see # of likes -->
-
-      {{ pic.comments }}
+      comments
+<div class="comment-section" v-for="c in displayComments" :key="c.username">
+         {{c.username}} : 
+      {{ c.content }}
     </div>
+
+    </div>
+
+    <!-- display first two comments from comment object inside photo obj -->
+    
   </div>
   <!-- in feed: pic, who posted it, first two comments -->
 </template>
@@ -38,16 +44,40 @@ import photoService from "@/services/PhotoService.js";
 export default {
   name: "photo-card",
   props: {
-    pic: Object,    
+    pic: Object,
   },
   data() {
-   return {
-     isLiked: false,
-     isFavorited: false
-   }
+    return {
+      isLiked: false,
+      isFavorited: false,
+    };
+  },
+  //target only the last two comments
+  //if last comment is not null, push it to comment array
+
+  computed: {
+    displayComments() {
+      let commentArray = [];
+
+      if (this.pic.comments != [] && this.pic.comments.length >= 1) {
+         commentArray.push(this.pic.comments[this.pic.comments.length - 1])
+        // commentArray.push(this.pic.comments[this.pic.comments.length - 1].content);
+       
+      }
+
+      if (this.pic.comments != [] && this.pic.comments.length >= 2) {
+         commentArray.push(this.pic.comments[this.pic.comments.length - 2])
+        // commentArray.push(this.pic.comments[this.pic.comments.length - 2].content);
+      }
+
+      return commentArray;
+    },
   },
 
   methods: {
+    sharePhotoId(id) {
+      this.$router.push({ name: "full-details", params: { data: id } });
+    },
 
     updateLikes(id) {
       photoService.updateUserLikes(id).then((response) => {
@@ -58,46 +88,40 @@ export default {
         }
       });
     },
-  
 
-  updateFavorites(id) {
-    photoService.updateUserFavorites(id).then((response) => {
-      if (response.data) {
-        this.isFavorited = true;
-      } else {
-        this.isFavorited = false;
-      }
-    });
+    updateFavorites(id) {
+      photoService.updateUserFavorites(id).then((response) => {
+        if (response.data) {
+          this.isFavorited = true;
+        } else {
+          this.isFavorited = false;
+        }
+      });
+    },
   },
-
-
-},
-mounted(){
-  
-    if(this.pic.likes.includes(this.$store.state.user.userId)){
-    this.isLiked = true;
+  mounted() {
+    if (this.pic.likes.includes(this.$store.state.user.userId)) {
+      this.isLiked = true;
+    } else {
+      this.isLiked = false;
     }
-    else{
-       this.isLiked = false;
-    }
-    
-    if(this.pic.favorites.includes(this.$store.state.user.userId)){
+
+    if (this.pic.favorites.includes(this.$store.state.user.userId)) {
       this.isFavorited = true;
+    } else {
+      this.isFavorited = false;
     }
-    else{
-     this.isFavorited = false;
-    }
-  
-}
-
-
-
-
-
+  },
 };
 </script>
 
 <style>
+
+.comment-section{
+ border-bottom: 2px solid gray;
+ text-align:left;
+}
+
 .polaroid {
   height: 100%;
   margin-top: 5px;
@@ -145,7 +169,6 @@ mounted(){
   width: 95%;
   margin-bottom: 40px;
 }
-
 </style>
 
 
