@@ -5,7 +5,7 @@
    
     <div class="parent" v-for="pic in this.$store.state.user.photos" v-bind:key="pic.url">
       <div id="grid-tile">
-        <img :src= pic.url >
+        <img  @click="sharePhotoId(pic.photoId)" :src= pic.url >
       </div>
     </div>
 
@@ -16,6 +16,12 @@
 
 <script>
 export default {
+
+  methods: {
+    sharePhotoId(id) {
+      this.$router.push({ name: "full-details", params: { data: id } });
+    },
+  }
   
 };
 </script>
@@ -51,6 +57,11 @@ img {
   width: auto;
   margin: auto;
   overflow: hidden;
+
+}
+
+#grid-tile:hover img{
+  color: yellow;
 }
 
 </style>
