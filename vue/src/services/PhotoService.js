@@ -73,4 +73,10 @@ export default {
     //     })
     // }
 
+    addNewComment(comment, id) {
+        return http.post(`/api/photo/${id}/comment`, comment, {  
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
+    })
+    }
+
 }
