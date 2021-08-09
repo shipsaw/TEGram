@@ -1,39 +1,25 @@
 <template>
   <div class="photo-details">
-      <div class="photo-url">
-
-    <img
-      @click="shareUserId(currentPhoto.userId)"
-      
-      :src="currentPhoto.url"
-    />
-
-      </div>
-
-<div class="comments">
-
-    <div
-     
-      v-for="comment in currentPhoto.comments"
-      v-bind:key="comment.commentId"
-    >
-      {{ comment.username }} : 
-
-      {{ comment.content }}
-      <hr>
+    <div class="photo-url">
+      <img @click="shareUserId(currentPhoto.userId)" :src="currentPhoto.url" />
     </div>
 
-</div>
-
+    <div class="comments">
+      <div
+        v-for="comment in currentPhoto.comments" v-bind:key="comment.commentId">
+        {{ comment.username }} :
+        {{ comment.content }}
+        <hr />
+      </div>
+    </div>
 
     <div>
       <form
-   
-        action="https://capstonetegram.azurewebsites.net/api/photo/{photoId}/comments"
+        action="https://capstonetegram.azurewebsites.net/api/photo/id/comments"
         method="POST"
       >
         <!-- fix dis action link!! -->
-        <p style="white-space: pre-line"></p>
+        <p style="white-space: pre-line">{{ message }}</p>
         <br />
         <textarea v-model="comment" placeholder="Add a comment..."></textarea>
         <div>
@@ -76,27 +62,24 @@ export default {
 </script>
 
 <style>
-
-
-.photo-details{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
+.photo-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
-.photo-url{
-    height: 400px;
+.photo-url {
+  height: 400px;
 
-box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
-    margin-top:60px;
-    
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 60px;
 }
-.comments{
-    background-color:rgb(255, 255, 250);
-    border-radius: 2%;
-    padding: 20px;
-    border: 2px solid black;
-    margin-top: 70px;
+.comments {
+  background-color: rgb(255, 255, 250);
+  border-radius: 2%;
+  padding: 20px;
+  border: 2px solid black;
+  margin-top: 70px;
 }
 </style>
 
