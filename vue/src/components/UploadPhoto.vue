@@ -176,9 +176,9 @@ export default {
               // update the profile photo scenario
               if (profileCheckBox.checked) {
                 photoService.addProfilePhoto(uploadURL).then(response => {
-                  if (response.status === 201)
+                  if (true)  //change later maybe
                   {
-                    console.log("Database updated!  Added Photo to Profile");
+                    console.log("Database updated! Added Photo to Profile");
                   }
                 }).catch(error => {
                   if(error.response){
@@ -193,9 +193,8 @@ export default {
               // update the photo gallery scenario
               else {
                 photoService.addGalleryPhoto(uploadURL).then(response => {
-                  if (response.status === 201)
+                  if (true)  //change later maybe
                   {
-                    // TODO update the store
                     console.log("Database updated! Added Photo to Gallery");
                   }
                 }).catch(error => {
@@ -206,7 +205,7 @@ export default {
                   } else {
                     console.log("ERROR");
                   }
-                });               
+                });                               
               }
             }
           });
