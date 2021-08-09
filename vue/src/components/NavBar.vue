@@ -6,9 +6,9 @@
 
       <b-container >
         <b-dropdown class="dropdown ">
-          <b-dropdown-item>  <router-link v-bind:to="{name: 'user-gallery'}">My Profile Gallery</router-link>     </b-dropdown-item>
+          <b-dropdown-item>  <router-link v-bind:to="{name: 'user-gallery'}">My Gallery</router-link>     </b-dropdown-item>
           <b-dropdown-item>  <router-link v-bind:to="{name: 'user-faves'}">My Favorites</router-link></b-dropdown-item>
-           <b-dropdown-item>  <router-link v-bind:to="{name: 'new-photo'}">Add New Photo</router-link></b-dropdown-item>
+           <b-dropdown-item>  <router-link v-bind:to="{name: 'new-photo'}">Add Photo</router-link></b-dropdown-item>
      <b-dd-divider></b-dd-divider>
           <b-dropdown-item>  <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link></b-dropdown-item>
 
