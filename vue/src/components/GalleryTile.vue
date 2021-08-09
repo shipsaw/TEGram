@@ -16,15 +16,7 @@
 
 <script>
 export default {
-  // computed: {
-  //   getPics() {
-  //     let picUrl;
-  //     this.$store.state.user.photos.forEach((pic) => {
-  //       picUrl = pic.url;
-  //     });
-  //     return picUrl;
-  //   },
-  // },
+  
 };
 </script>
 
