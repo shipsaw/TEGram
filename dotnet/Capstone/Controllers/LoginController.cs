@@ -63,10 +63,12 @@ namespace Capstone.Controllers
                 return Conflict(new { message = "Username already taken. Please choose a different username." });
             }
 
+            var passwordHash = passwordHasher.ComputeHash(userParam.Password);
             User user = new User
             {
                 Username = userParam.Username,
-                PasswordHash = userParam.Password,
+                PasswordHash = passwordHash.Password,
+                Salt = passwordHash.Salt,
                 Role = userParam.Role
             };
 
@@ -82,11 +84,6 @@ namespace Capstone.Controllers
             }
 
             return result;
-        }
-        private int GetUserIdFromJwt()
-        {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
-            return int.Parse(userIdStr);
         }
     }
 }
