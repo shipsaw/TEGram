@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Capstone.Models;
 using Capstone.Security;
-using System.Linq.Expressions;
 using System.Linq;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using Capstone.ApiResponseObjects;
 
@@ -66,10 +63,12 @@ namespace Capstone.Controllers
                 return Conflict(new { message = "Username already taken. Please choose a different username." });
             }
 
+            var passwordHash = passwordHasher.ComputeHash(userParam.Password);
             User user = new User
             {
                 Username = userParam.Username,
-                PasswordHash = userParam.Password,
+                PasswordHash = passwordHash.Password,
+                Salt = passwordHash.Salt,
                 Role = userParam.Role
             };
 
@@ -77,6 +76,7 @@ namespace Capstone.Controllers
             if (retUser != null)
             {
                 result = Created(user.Username, null); //values aren't read on client
+                _context.SaveChanges();
             }
             else
             {
