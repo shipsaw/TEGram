@@ -1,23 +1,38 @@
 <template>
   <div class="photo-details">
-    <img class="photo-url" :src="currentPhoto.url" />
+      <div class="photo-url">
 
-    <div class="comment-section" v-for="comment in currentPhoto.comments" v-bind:key="comment.commentId">
-<router-link v-bind:to="{name:'pic-feed'}">{{comment.username}} </router-link>
-    {{ comment.content }}
+    <img
+      @click="shareUserId(currentPhoto.userId)"
+      
+      :src="currentPhoto.url"
+    />
 
+      </div>
+
+<div class="comments">
+
+    <div
+     
+      v-for="comment in currentPhoto.comments"
+      v-bind:key="comment.commentId"
+    >
+      {{ comment.username }} : 
+
+      {{ comment.content }}
+      <hr>
     </div>
 
+</div>
 
-
-    <!-- figure out how to display username -->
 
     <div>
       <form
-        action="https://capstonetegram.azurewebsites.net/api/photo/comments"
+   
+        action="https://capstonetegram.azurewebsites.net/api/photo/{photoId}/comments"
         method="POST"
       >
-        >
+        <!-- fix dis action link!! -->
         <p style="white-space: pre-line"></p>
         <br />
         <textarea v-model="comment" placeholder="Add a comment..."></textarea>
@@ -47,6 +62,10 @@ export default {
         this.currentPhoto = response.data;
       });
     },
+
+    shareUserId(id) {
+      this.$router.push({ name: "friends-gallery", params: { data: id } });
+    },
   },
 
   created() {
@@ -57,6 +76,28 @@ export default {
 </script>
 
 <style>
+
+
+.photo-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.photo-url{
+    height: 400px;
+
+box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+    margin-top:60px;
+    
+}
+.comments{
+    background-color:rgb(255, 255, 250);
+    border-radius: 2%;
+    padding: 20px;
+    border: 2px solid black;
+    margin-top: 70px;
+}
 </style>
 
 <!--this.$router.push({ name: "user", params: { username: "dan" } });

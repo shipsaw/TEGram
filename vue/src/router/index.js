@@ -10,6 +10,8 @@ import Gallery from '@/views/Gallery.vue'
 import FavoriteList from '@/components/FavoriteList.vue'
 import UploadPhoto from '@/components/UploadPhoto.vue'
 import PhotoDetails from '@/components/PhotoDetails.vue'
+import FriendGallery from '@/views/FriendGallery.vue'
+
 
 Vue.use(Router)
 
@@ -94,6 +96,15 @@ const router = new Router({
             path: "/api/User/details/:id",
             name: "full-details",
             component: PhotoDetails,
+            meta: {
+                requiresAuth: false
+            }
+        },
+
+        {
+            path: "/api/User/:id",
+            name: 'friends-gallery',
+            component: FriendGallery,
             meta: {
                 requiresAuth: false
             }
