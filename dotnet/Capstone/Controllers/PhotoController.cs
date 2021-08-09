@@ -32,12 +32,12 @@ namespace Capstone.Controllers
         }
 
         // GET api/<ValuesController>/5
-        //[HttpGet]
-        //[Route("/api/photo/{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet]
+        [Route("/api/photo/{id}")]
+        public ActionResult<PhotoDataResponse> Get(int id)
+        {
+            return packagingHelper.PackagePhoto(id);
+        }
 
         // GET api/feed
         [AllowAnonymous]
@@ -49,11 +49,30 @@ namespace Capstone.Controllers
             return packagingHelper.PackagePhotos(p => p.UserId > 0);
         }
 
-        //// POST api/<ValuesController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        [HttpGet]
+        [Route("/api/photo/favorites")]
+        //[Route("/")]
+        public ActionResult<List<PhotoDataResponse>> GetFavorites()
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            int userId = int.Parse(userIdStr);
+
+            return packagingHelper.PackagePhotos(p => p.PhotoFavorites.Any(u => u.UserId == userId));
+        }
+
+        // POST api/<ValuesController>
+        [HttpPost]
+        [Route("/api/photo/{id}/comment")]
+        public ActionResult PostComment([FromBody] string value, int id)
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            int userId = int.Parse(userIdStr);
+
+            var comment = new Comment { UserId = userId, PhotoId = id, Content = value };
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
+            return Ok();
+        }
 
         // PUT api/<ValuesController>/5
         //[HttpPut("like/{id}")]
