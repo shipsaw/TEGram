@@ -4,6 +4,8 @@ using Capstone.Security;
 using System.Linq;
 using System.Security.Claims;
 using Capstone.ApiResponseObjects;
+using Microsoft.EntityFrameworkCore;
+using Capstone.DataTransferObjects;
 
 namespace Capstone.Controllers
 {
@@ -38,7 +40,11 @@ namespace Capstone.Controllers
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
-                UserDto packagedUser = packagingHelper.PackageUser(user.UserId, p => p.User.UserId == user.UserId);
+                UserDto packagedUser = _context.Users
+                    .AsNoTracking()
+                    .Include(u => u.Photos)
+                    .MapUserToDto()
+                    .FirstOrDefault(u => u.UserId == user.UserId);
 
                 // Create a ReturnUser object to return to the client
                 LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };

@@ -1,4 +1,5 @@
 ﻿using Capstone.ApiResponseObjects;
+using Capstone.DataTransferObjects;
 using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,6 @@ namespace Capstone.Controllers
         public PhotoController(ApplicationDbContext context)
         {
             _context = context;
-            packagingHelper = new PackagingHelper(context);
         }
 
         // Get photo by specific photo ID
@@ -30,7 +30,7 @@ namespace Capstone.Controllers
         [Route("/api/photo/{id}")]
         public ActionResult<PhotoDto> Get(int id)
         {
-            return packagingHelper.PackagePhoto(id);
+            return _context.Photos.AsNoTracking().MapPhotoToDto().FirstOrDefault(p => p.PhotoId == id);
         }
 
         // Get the universal photo feed
@@ -40,7 +40,7 @@ namespace Capstone.Controllers
         [Route("/api/photo/feed")]
         public ActionResult<List<PhotoDto>> GetFeed()
         {
-            return packagingHelper.PackagePhotos(p => p.UserId > 0);
+            return _context.Photos.AsNoTracking().MapPhotoToDto().ToList();
         }
 
         [HttpGet]
@@ -50,25 +50,22 @@ namespace Capstone.Controllers
         {
             int userId = GetUserIdFromJwt();
 
-            return packagingHelper.PackagePhotos(p => p.PhotoFavorites.Any(u => u.UserId == userId));
+            return _context.Photos
+                .AsNoTracking()
+                .Include(p => p.PhotoFavorites)
+                .Where(p => p.PhotoFavorites.Any(u => u.UserId == userId))
+                .MapPhotoToDto()
+                .ToList();
         }
 
         // Post new photos to the database
         // POST /api/photo
         [HttpPost]
         [Route("/api/photo")]
-        public ActionResult<PhotoDto> PostPhoto([FromBody] string photoUrl, string isProfile)
+        public ActionResult PostPhoto([FromBody] string photoUrl)
         {
             int userId = GetUserIdFromJwt();
 
-            if (isProfile == "true")
-            {
-                _context.Users.FirstOrDefault(u => u.UserId == userId).ProfileUrl = photoUrl;
-                _context.SaveChanges();
-                return Ok();
-            }
-            else
-            {
                 Photo newPhoto = new Photo
                 {
                     UserId = userId,
@@ -78,8 +75,7 @@ namespace Capstone.Controllers
                 _context.Photos.Add(newPhoto);
                 _context.SaveChanges();
 
-                return packagingHelper.PackagePhoto(newPhoto.PhotoId);
-            }
+            return Ok();
         }
 
         // POST api/<ValuesController>

@@ -7,12 +7,8 @@ namespace Capstone.DataTransferObjects
 {
     public class CommentDto
     {
-        public class CommentDataResponse
-        {
             public int CommentId { get; set; }
             public string Content { get; set; }
             public string Username { get; set; }
-        }
-
     }
 }

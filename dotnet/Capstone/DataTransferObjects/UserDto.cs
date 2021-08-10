@@ -14,6 +14,4 @@ namespace Capstone.DataTransferObjects
         public string Lastname { get; set; }
         public List<PhotoDto> Photos {get; set;}
     }
-
-   }
 }

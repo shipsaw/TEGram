@@ -1,7 +1,11 @@
 ﻿using Capstone.ApiResponseObjects;
+using Capstone.DataTransferObjects;
 using Capstone.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,20 +27,15 @@ namespace Capstone.Controllers
         [Route("/api/user/{id}")]
         public UserDto GetUserById(int id)
         {
-            return packagingHelper.PackageUser(id, p => p.User.UserId == id);
+            return _context.Users.AsNoTracking().MapUserToDto().FirstOrDefault(u => u.UserId == id);
         }
 
         [HttpGet]
         [Route("/api/user")]
         public UserDto GetMyUserInfo()
         {
-            int userId = GetUserFromJwt();
-            return packagingHelper.PackageUser(userId, p => p.User.UserId == userId);
-        }
-
-        private int GetUserFromJwt()
-        {
-            throw new NotImplementedException();
+            int userId = GetUserIdFromJwt();
+            return _context.Users.AsNoTracking().MapUserToDto().FirstOrDefault(u => u.UserId == userId);
         }
 
         // GET api/<UserController>/:id
@@ -63,6 +62,11 @@ namespace Capstone.Controllers
         //public void Delete(int id)
         //{
         //}
+        private int GetUserIdFromJwt()
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            return int.Parse(userIdStr);
+        }
 
     }
 }

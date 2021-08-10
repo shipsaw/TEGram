@@ -1,4 +1,5 @@
-﻿using Capstone.Models;
+﻿using Capstone.DataTransferObjects;
+using Capstone.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -86,9 +87,9 @@ namespace Capstone.ApiResponseObjects
             return retPhotos;
         }
 
-        public CommentDataResponse PackageComment(Comment comment)
+        public CommentDto PackageComment(Comment comment)
         {
-            return new CommentDataResponse
+            return new CommentDto
             {
                 CommentId = comment.CommentId,
                 Username = comment.User.Username,

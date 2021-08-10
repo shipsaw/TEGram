@@ -16,8 +16,8 @@ namespace Capstone.Models
         public List<User> PhotoFavorites { get; set; }
 
         [InverseProperty("UserLikes")]
-        public List<User> PhotoLikes { get; set; }
+        public ICollection<User> PhotoLikes { get; set; }
         [InverseProperty("Photo")]
-        public List<Comment> PhotoComments { get; set; }
+        public ICollection<Comment> PhotoComments { get; set; }
     }
 }

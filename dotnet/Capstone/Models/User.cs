@@ -1,4 +1,5 @@
 ﻿using Capstone.ApiResponseObjects;
+using Capstone.DataTransferObjects;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,7 +22,7 @@ namespace Capstone.Models
         public string Email { get; set; }
         public string ProfileUrl { get; set; }
         [InverseProperty("User")]
-        public List<Photo> Photos { get; set; }
+        public ICollection<Photo> Photos { get; set; }
 
         [InverseProperty("PhotoFavorites")]
         public List<Photo> UserFavorites { get; set; }
