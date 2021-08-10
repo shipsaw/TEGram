@@ -67,8 +67,8 @@ export default {
 
     },
 
-    addProfilePhoto(profilePhotoURL) {
-        return http.put(`/api/photo`, "\"" + profilePhotoURL + "\"", {
+    addProfilePhoto(profilePhotoURL, id) {
+        return http.post(`/api/user/${id}/profile`, "\"" + profilePhotoURL + "\"", {
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
         })
     },

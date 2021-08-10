@@ -38,6 +38,7 @@ Paste</textarea
             v-model="checked"
           />
           <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>
+          <p>- provide square image for best experience -</p>
         </div>
         <div id="results"></div>
         <br />
@@ -88,6 +89,7 @@ export default {
         const userName = this.$store.state.user.username;
         const fileName = file.name;
         const photoId = this.$store.state.user.photos.length;
+        const userId = this.$store.state.user.userId;
         // generate a long file name that is difficult to guess
         const length = 50;
         let randomString = "";
@@ -142,7 +144,7 @@ export default {
               let profileCheckBox = document.getElementById("profile-photo");
               // update the profile photo scenario
               if (profileCheckBox.checked) {
-                photoService.addProfilePhoto(uploadURL, this.$store.state.user.userId).then(response => {
+                photoService.addProfilePhoto(uploadURL, userId).then(response => {
                   if (true)  //change later maybe
                   {
                     console.log("Database updated! Added Photo to Profile");
