@@ -27,7 +27,7 @@ img{
 opacity: 1;
 }
 img:hover{
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 .app{ 
@@ -35,6 +35,7 @@ img:hover{
     background-size: cover;
     height: 100%;
     padding-bottom: 50px;
+    opacity: .9;
 }
 
 </style>
