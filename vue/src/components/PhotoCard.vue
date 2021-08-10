@@ -136,10 +136,24 @@ export default {
   margin: 10px;
 }
 
+.starGray:hover,
+.heartGray:hover {
+  color: pink;
+}
+
 .heartRed {
   color: gold;
 }
+
+.heartRed:hover {
+  color: gold;
+}
+
 .starYellow {
+  color: yellow;
+}
+
+.starYellow:hover {
   color: yellow;
 }
 
