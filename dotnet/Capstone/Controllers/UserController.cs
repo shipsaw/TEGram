@@ -1,6 +1,7 @@
 ﻿using Capstone.ApiResponseObjects;
 using Capstone.DataTransferObjects;
 using Capstone.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +13,7 @@ using System.Security.Claims;
 namespace Capstone.Controllers
 {
     [ApiController]
-    //[EnableCors("AllowSpecificOrigin")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -37,7 +38,6 @@ namespace Capstone.Controllers
             int userId = GetUserIdFromJwt();
             return _context.Users.AsNoTracking().MapUserToDto().FirstOrDefault(u => u.UserId == userId);
         }
-
         // GET api/<UserController>/:id
         //[HttpGet("{id}")]
         //public ActionResult<UserDataResponse> Get(int id)
@@ -51,10 +51,12 @@ namespace Capstone.Controllers
         //{
         //}
 
-        //// PUT api/<UserController>/5
-        //[HttpPut("{id}")]
+        // PUT api/<UserController>/5
+        //[HttpPut]
+        //[Route("api/user/{id}/profile")]
         //public void Put(int id, [FromBody] string value)
         //{
+
         //}
 
         //// DELETE api/<UserController>/5

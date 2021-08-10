@@ -62,7 +62,7 @@ namespace Capstone.Controllers
         // POST /api/photo
         [HttpPost]
         [Route("/api/photo")]
-        public ActionResult PostPhoto([FromBody] string photoUrl)
+        public ActionResult<PhotoDataResponse> PostPhoto([FromBody] string photoUrl)
         {
             int userId = GetUserIdFromJwt();
 
@@ -75,7 +75,8 @@ namespace Capstone.Controllers
                 _context.Photos.Add(newPhoto);
                 _context.SaveChanges();
 
-            return Ok();
+                return packagingHelper.PackagePhoto(newPhoto.PhotoId);
+        }
         }
 
         // POST api/<ValuesController>
@@ -108,11 +109,24 @@ namespace Capstone.Controllers
             return false;
         }
 
-        // DELETE api/<ValuesController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<UserController>/5
+        [HttpDelete]
+        [Route("/api/photo/{id}")]
+        public ActionResult Delete(int id)
+        {
+            int requestingUserId = GetUserIdFromJwt();
+            Photo photo = _context.Photos.Include(p => p.UserId).FirstOrDefault(u => u.PhotoId == id);
+            if (photo != null && requestingUserId == photo.UserId)
+            {
+                photo.IsDeleted = true;
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
 
         private bool ToggleLike(int photoId)
         {

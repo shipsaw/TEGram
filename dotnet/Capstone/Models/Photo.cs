@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Capstone.Models
@@ -18,6 +19,10 @@ namespace Capstone.Models
         [InverseProperty("UserLikes")]
         public ICollection<User> PhotoLikes { get; set; }
         [InverseProperty("Photo")]
-        public ICollection<Comment> PhotoComments { get; set; }
+        public List<Comment> PhotoComments { get; set; }
+        [Required]
+        public bool IsDeleted { get; set; }
+        [Required]
+        public bool IsPrivate { get; set; }
     }
 }

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Capstone.ApiResponseObjects
 {
@@ -37,6 +36,7 @@ namespace Capstone.ApiResponseObjects
                 .Include(p => p.PhotoFavorites)
                 .Include(p => p.PhotoComments)
                 .ThenInclude(c => c.User)
+                .Where(p => p.IsDeleted == false)
                 .FirstOrDefault(p => p.PhotoId == photoId);
 
             if (photo != null)
@@ -66,6 +66,7 @@ namespace Capstone.ApiResponseObjects
                 .Include(p => p.PhotoComments)
                 .ThenInclude(c => c.User)
                 .Where(predicate)
+                .Where(p => p.IsDeleted == false)
                 .OrderByDescending(p => p.CreatedDate)
                 .ToList();
 
