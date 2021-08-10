@@ -1,5 +1,4 @@
-﻿using Capstone.ApiResponseObjects;
-using Capstone.DataTransferObjects;
+﻿using Capstone.DataTransferObjects;
 using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +16,6 @@ namespace Capstone.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly PackagingHelper packagingHelper;
         public UserController(ApplicationDbContext context)
         {
             _context = context;

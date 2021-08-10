@@ -1,5 +1,4 @@
-﻿using Capstone.ApiResponseObjects;
-using Capstone.DataTransferObjects;
+﻿using Capstone.DataTransferObjects;
 using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +17,6 @@ namespace Capstone.Controllers
     public class PhotoController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly PackagingHelper packagingHelper;
         public PhotoController(ApplicationDbContext context)
         {
             _context = context;

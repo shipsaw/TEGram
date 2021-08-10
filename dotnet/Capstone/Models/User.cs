@@ -1,5 +1,4 @@
-﻿using Capstone.ApiResponseObjects;
-using Capstone.DataTransferObjects;
+﻿using Capstone.DataTransferObjects;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -3,7 +3,6 @@ using Capstone.Models;
 using Capstone.Security;
 using System.Linq;
 using System.Security.Claims;
-using Capstone.ApiResponseObjects;
 using Microsoft.EntityFrameworkCore;
 using Capstone.DataTransferObjects;
 
@@ -15,14 +14,12 @@ namespace Capstone.Controllers
         private readonly ITokenGenerator tokenGenerator;
         private readonly IPasswordHasher passwordHasher;
         private readonly ApplicationDbContext _context;
-        private readonly PackagingHelper packagingHelper;
 
         public LoginController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, ApplicationDbContext context)
         {
             tokenGenerator = _tokenGenerator;
             passwordHasher = _passwordHasher;
             _context = context;
-            packagingHelper = new PackagingHelper(context);
         }
 
         [HttpPost]
