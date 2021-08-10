@@ -68,6 +68,10 @@ export default new Vuex.Store({
 
         SET_PHOTO(state, data) {
             state.photo = data;
+        },
+
+        NEW_PROFILE_PICTURE (state, newUrl) {
+            state.user.userProfileUrl = newUrl;
         }
     }
 })

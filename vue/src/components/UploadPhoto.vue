@@ -64,9 +64,13 @@ export default {
     return {
       checked: false,
       fileDrop: null,
+      newUrl: "",
     };
   },
   methods: {
+    updateProfilePic(newUrl) {
+      this.$store.commit('NEW_PROFILE_PICTURE', newUrl);
+    },
     uploadFile() {
       let fileChooser = document.getElementById("file-chooser");
       //var button = document.getElementById("upload-button");
@@ -147,6 +151,8 @@ export default {
                 photoService.addProfilePhoto(uploadURL, userId).then(response => {
                   if (true)  //change later maybe
                   {
+                    this.newUrl = uploadURL;
+                    updateProfilePic(this.newUrl);
                     console.log("Database updated! Added Photo to Profile");
                   }
                 }).catch(error => {
