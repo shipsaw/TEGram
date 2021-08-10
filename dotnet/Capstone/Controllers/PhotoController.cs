@@ -1,6 +1,7 @@
 ﻿using Capstone.ApiResponseObjects;
 using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -23,15 +24,8 @@ namespace Capstone.Controllers
             packagingHelper = new PackagingHelper(context);
         }
 
-        // GET: api/<ValuesController>
-        [HttpGet]
-        [Route("/api/photo")]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<ValuesController>/5
+        // Get photo by specific photo ID
+        //GET api/<ValuesController>/5
         [HttpGet]
         [Route("/api/photo/{id}")]
         public ActionResult<PhotoDataResponse> Get(int id)
@@ -39,11 +33,11 @@ namespace Capstone.Controllers
             return packagingHelper.PackagePhoto(id);
         }
 
+        // Get the universal photo feed
         // GET api/feed
         [AllowAnonymous]
         [HttpGet]
         [Route("/api/photo/feed")]
-        //[Route("/")]
         public ActionResult<List<PhotoDataResponse>> GetFeed()
         {
             return packagingHelper.PackagePhotos(p => p.UserId > 0);
@@ -54,10 +48,38 @@ namespace Capstone.Controllers
         //[Route("/")]
         public ActionResult<List<PhotoDataResponse>> GetFavorites()
         {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
-            int userId = int.Parse(userIdStr);
+            int userId = GetUserIdFromJwt();
 
             return packagingHelper.PackagePhotos(p => p.PhotoFavorites.Any(u => u.UserId == userId));
+        }
+
+        // Post new photos to the database
+        // POST /api/photo
+        [HttpPost]
+        [Route("/api/photo")]
+        public ActionResult<PhotoDataResponse> PostPhoto([FromBody] string photoUrl, bool isProfile)
+        {
+            int userId = GetUserIdFromJwt();
+
+            if (isProfile == true)
+            {
+                _context.Users.FirstOrDefault(u => u.UserId == userId).ProfileUrl = photoUrl;
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                Photo newPhoto = new Photo
+                {
+                    UserId = userId,
+                    Url = photoUrl
+                };
+
+                _context.Photos.Add(newPhoto);
+                _context.SaveChanges();
+
+                return packagingHelper.PackagePhoto(newPhoto.PhotoId);
+            }
         }
 
         // POST api/<ValuesController>
@@ -65,8 +87,7 @@ namespace Capstone.Controllers
         [Route("/api/photo/{id}/comment")]
         public ActionResult PostComment([FromBody] string value, int id)
         {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
-            int userId = int.Parse(userIdStr);
+            int userId = GetUserIdFromJwt();
 
             var comment = new Comment { UserId = userId, PhotoId = id, Content = value };
             _context.Comments.Add(comment);
@@ -74,8 +95,7 @@ namespace Capstone.Controllers
             return Ok();
         }
 
-        // PUT api/<ValuesController>/5
-        //[HttpPut("like/{id}")]
+        // Put request to update photo likes / favorites
         [HttpPut] // Pass the fact we want to change like in the query string
         [Route("/api/photo/{id}")]
         public bool Put(int id, string action)
@@ -92,9 +112,6 @@ namespace Capstone.Controllers
             return false;
         }
 
-        //TODO Feed route /api/photo/feed
-        // /api/feed
-
         // DELETE api/<ValuesController>/5
         //[HttpDelete("{id}")]
         //public void Delete(int id)
@@ -103,8 +120,7 @@ namespace Capstone.Controllers
 
         private bool ToggleLike(int photoId)
         {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
-            int userId = int.Parse(userIdStr);
+            int userId = GetUserIdFromJwt();
 
             var photo = _context.Photos.Include(p => p.PhotoLikes).FirstOrDefault(p => p.PhotoId == photoId);
 
@@ -123,9 +139,7 @@ namespace Capstone.Controllers
         }
         private bool ToggleFavorite(int photoId)
         {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
-            int userId = int.Parse(userIdStr);
-
+            int userId = GetUserIdFromJwt();
             var photo = _context.Photos.Include(p => p.PhotoFavorites).FirstOrDefault(p => p.PhotoId == photoId);
 
             if (photo.PhotoFavorites.FirstOrDefault(p => p.UserId == userId) != null)
@@ -141,6 +155,10 @@ namespace Capstone.Controllers
                 return true;
             }
         }
-
+        private int GetUserIdFromJwt()
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            return int.Parse(userIdStr);
+        }
     }
 }

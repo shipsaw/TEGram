@@ -37,7 +37,7 @@ Paste</textarea
             value="profilePic"
             v-model="checked"
           />
-          <label for="profile-photo">Make Profile Photo</label>
+          <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>
         </div>
         <div id="results"></div>
         <br />
@@ -51,6 +51,7 @@ Paste</textarea
 </template>
 
 <style>
+
 .upload {
   display: grid;
   margin-left: 15%;
@@ -72,6 +73,10 @@ Paste</textarea
   border-radius: 2px;
 }
 
+.button:hover {
+  background-image: linear-gradient(yellow, orange, orange);
+}
+
 label {
   margin: 3px;
 }
@@ -81,8 +86,21 @@ input[type="checkbox"] {
 }
 
 .button-upload {
-  background-image: linear-gradient(to right, orange, yellow, yellow, green);
+  background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
 }
+
+.button-upload:hover {
+  background-image: linear-gradient(to right, orange, yellow, green);
+}
+
+.checkbox-label {
+  font: large;
+}
+
+.checkbox-label:hover {
+  color: green;
+}
+
 </style>
 
 
@@ -176,9 +194,9 @@ export default {
               // update the profile photo scenario
               if (profileCheckBox.checked) {
                 photoService.addProfilePhoto(uploadURL).then(response => {
-                  if (response.status === 201)
+                  if (true)  //change later maybe
                   {
-                    console.log("Database updated!  Added Photo to Profile");
+                    console.log("Database updated! Added Photo to Profile");
                   }
                 }).catch(error => {
                   if(error.response){
@@ -193,9 +211,8 @@ export default {
               // update the photo gallery scenario
               else {
                 photoService.addGalleryPhoto(uploadURL).then(response => {
-                  if (response.status === 201)
+                  if (true)  //change later maybe
                   {
-                    // TODO update the store
                     console.log("Database updated! Added Photo to Gallery");
                   }
                 }).catch(error => {
@@ -206,8 +223,7 @@ export default {
                   } else {
                     console.log("ERROR");
                   }
-                }); 
-                              
+                });                               
               }
             }
           });
