@@ -19,7 +19,7 @@
       <form v-on:submit.prevent class="commentForm">
         <p style="white-space: pre-line"></p>
         <br />
-        <textarea v-model="content" placeholder="Add a comment..."></textarea>
+        <textarea v-model="content" class="commentBox" placeholder="Add a comment..."></textarea>
         <div>
           <button v-on:click="submitForm()" type="submit" class="btn btn-success">Submit</button>
         </div>
@@ -90,5 +90,12 @@ export default {
   border: 2px solid black;
   margin-top: 70px;
 }
+
+.commentBox {
+  width: 500px;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
 </style>
 
