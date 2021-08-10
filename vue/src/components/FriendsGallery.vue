@@ -5,7 +5,7 @@
     <div class="big-parent">
       <div class="parent" v-for="obj in userObject.photos" :key="obj.photoId">
         <div id="grid-tile">
-          <img @click="sharePhotoId(pic.photoId)" :src="obj.url" />
+          <img class="gallery-img" @click="sharePhotoId(obj.photoId)" :src="obj.url" />
         </div>
       </div>
     </div>
@@ -40,5 +40,10 @@ methods:{
 </script>
 
 <style>
-
+.gallery-img{
+opacity: 1;
+}
+.gallery-img:hover{
+  opacity: 0.5;
+}
 </style>

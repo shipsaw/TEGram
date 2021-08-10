@@ -1,11 +1,11 @@
 <template>
 <div id="background">
-  <h1>{{this.$store.state.user.username}}'s Photo Gallery</h1>
+  <h1>{{userObject.username}}'s Photo Gallery</h1>
   <div class="big-parent">
    
-    <div class="parent" v-for="pic in this.$store.state.user.photos" v-bind:key="pic.url">
+    <div class="parent" v-for="obj in userObject.photos" :key="obj.photoId">
       <div id="grid-tile">
-        <img  @click="sharePhotoId(pic.photoId)" :src= pic.url >
+        <img  @click="sharePhotoId(obj.photoId)" :src= obj.photoId >
       </div>
     </div>
 
@@ -15,14 +15,27 @@
 </template>
 
 <script>
+import photoService from "@/services/PhotoService.js";
 export default {
-
+data(){
+  return {
+     userObject: {},
+      userId: 0,
+  }
+ 
+},
   methods: {
     sharePhotoId(id) {
       this.$router.push({ name: "full-details", params: { data: id } });
     },
+  },
+  created(){
+     this.userId = this.$route.params.data;
+
+     photoService.get(this.userId).then((response) => {
+      this.userObject = response.data;
+    });
   }
-  
 };
 </script>
 
