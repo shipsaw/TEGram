@@ -21,14 +21,14 @@ namespace Capstone.Controllers
 
         [HttpGet]
         [Route("/api/user/{id}")]
-        public UserDataResponse GetUserById(int id)
+        public UserDto GetUserById(int id)
         {
             return packagingHelper.PackageUser(id, p => p.User.UserId == id);
         }
 
         [HttpGet]
         [Route("/api/user")]
-        public UserDataResponse GetMyUserInfo()
+        public UserDto GetMyUserInfo()
         {
             int userId = GetUserFromJwt();
             return packagingHelper.PackageUser(userId, p => p.User.UserId == userId);

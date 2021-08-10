@@ -15,10 +15,10 @@ namespace Capstone.ApiResponseObjects
         {
             _context = context;
         }
-        public UserDataResponse PackageUser(int id, Expression<Func<Photo, bool>> predicate)
+        public UserDto PackageUser(int id, Expression<Func<Photo, bool>> predicate)
         {
             User user = _context.Users.First(u => u.UserId == id);
-            UserDataResponse data = new UserDataResponse();
+            UserDto data = new UserDto();
             data.UserProfileUrl = user.ProfileUrl;
             data.UserId = user.UserId;
             data.Username = user.Username;
@@ -29,7 +29,7 @@ namespace Capstone.ApiResponseObjects
             return data;
         }
 
-        public PhotoDataResponse PackagePhoto(int photoId)
+        public PhotoDto PackagePhoto(int photoId)
         {
             Photo photo = _context.Photos
                 .Include(p => p.PhotoLikes)
@@ -40,7 +40,7 @@ namespace Capstone.ApiResponseObjects
 
             if (photo != null)
             {
-                return new PhotoDataResponse
+                return new PhotoDto
                 {
                     PhotoId = photo.PhotoId,
                     Url = photo.Url,
@@ -57,7 +57,7 @@ namespace Capstone.ApiResponseObjects
             }
 
         }
-        public List<PhotoDataResponse> PackagePhotos(Expression<Func<Photo, bool>> predicate)
+        public List<PhotoDto> PackagePhotos(Expression<Func<Photo, bool>> predicate)
         {
             List<Photo> photos = _context.Photos
                 .Include(p => p.PhotoLikes)
@@ -68,10 +68,10 @@ namespace Capstone.ApiResponseObjects
                 .OrderByDescending(p => p.CreatedDate)
                 .ToList();
 
-            List<PhotoDataResponse> retPhotos = new List<PhotoDataResponse>();
+            List<PhotoDto> retPhotos = new List<PhotoDto>();
             foreach (var photo in photos)
             {
-                retPhotos.Add(new PhotoDataResponse
+                retPhotos.Add(new PhotoDto
                 {
                     PhotoId = photo.PhotoId,
                     Url = photo.Url,

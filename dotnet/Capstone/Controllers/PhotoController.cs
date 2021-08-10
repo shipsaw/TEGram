@@ -28,7 +28,7 @@ namespace Capstone.Controllers
         //GET api/<ValuesController>/5
         [HttpGet]
         [Route("/api/photo/{id}")]
-        public ActionResult<PhotoDataResponse> Get(int id)
+        public ActionResult<PhotoDto> Get(int id)
         {
             return packagingHelper.PackagePhoto(id);
         }
@@ -38,7 +38,7 @@ namespace Capstone.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("/api/photo/feed")]
-        public ActionResult<List<PhotoDataResponse>> GetFeed()
+        public ActionResult<List<PhotoDto>> GetFeed()
         {
             return packagingHelper.PackagePhotos(p => p.UserId > 0);
         }
@@ -46,7 +46,7 @@ namespace Capstone.Controllers
         [HttpGet]
         [Route("/api/photo/favorites")]
         //[Route("/")]
-        public ActionResult<List<PhotoDataResponse>> GetFavorites()
+        public ActionResult<List<PhotoDto>> GetFavorites()
         {
             int userId = GetUserIdFromJwt();
 
@@ -57,7 +57,7 @@ namespace Capstone.Controllers
         // POST /api/photo
         [HttpPost]
         [Route("/api/photo")]
-        public ActionResult<PhotoDataResponse> PostPhoto([FromBody] string photoUrl, string isProfile)
+        public ActionResult<PhotoDto> PostPhoto([FromBody] string photoUrl, string isProfile)
         {
             int userId = GetUserIdFromJwt();
 

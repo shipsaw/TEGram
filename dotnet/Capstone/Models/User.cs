@@ -39,7 +39,7 @@ namespace Capstone.Models
     /// </summary>
     public class LoginResponse
     {
-        public UserDataResponse User { get; set; }
+        public UserDto User { get; set; }
         public string Token { get; set; }
     }
 

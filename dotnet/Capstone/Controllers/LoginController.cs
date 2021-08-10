@@ -38,7 +38,7 @@ namespace Capstone.Controllers
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
-                UserDataResponse packagedUser = packagingHelper.PackageUser(user.UserId, p => p.User.UserId == user.UserId);
+                UserDto packagedUser = packagingHelper.PackageUser(user.UserId, p => p.User.UserId == user.UserId);
 
                 // Create a ReturnUser object to return to the client
                 LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };
