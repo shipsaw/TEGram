@@ -68,19 +68,19 @@ export default {
     },
 
     addProfilePhoto(profilePhotoURL) {
-        return http.post(`/api/photo`, "\"" + profilePhotoURL + "\"", {
+        return http.put(`/api/photo`, "\"" + profilePhotoURL + "\"", {
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
-        }, { params: { isProfile: true } })
+        })
     },
 
     addGalleryPhoto(galleryPhotoURL) {
         return http.post(`/api/photo`, "\"" + galleryPhotoURL + "\"", {
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
-        }, { params: { isProfile: false } })
+        })
     },
 
     addNewComment(comment, id) {
-        return http.post(`/api/photo/${id}/comment`, comment, {
+        return http.post(`/api/photo/${id}/comment`, "\"" + comment + "\"", {
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
         })
     }

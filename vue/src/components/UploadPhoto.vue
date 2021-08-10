@@ -50,58 +50,7 @@ Paste</textarea
   </div>
 </template>
 
-<style>
 
-.upload {
-  display: grid;
-  margin-left: 15%;
-  margin-right: 15%;
-}
-
-.flexy {
-  display: inline-block;
-}
-
-.target-drag-drop {
-  height: auto;
-}
-
-.button {
-  width: 225px;
-  background-image: linear-gradient(yellow, orange);
-  opacity: 0.8;
-  border-radius: 2px;
-}
-
-.button:hover {
-  background-image: linear-gradient(yellow, orange, orange);
-}
-
-label {
-  margin: 3px;
-}
-
-input[type="checkbox"] {
-  margin-right: 5px;
-}
-
-.button-upload {
-  background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
-}
-
-.button-upload:hover {
-  background-image: linear-gradient(to right, orange, yellow, green);
-}
-
-.checkbox-label {
-  font: large;
-}
-
-.checkbox-label:hover {
-  color: green;
-}
-
-</style>
 
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.961.0.min.js"></script>
@@ -193,7 +142,7 @@ export default {
               let profileCheckBox = document.getElementById("profile-photo");
               // update the profile photo scenario
               if (profileCheckBox.checked) {
-                photoService.addProfilePhoto(id, uploadURL).then(response => {
+                photoService.addProfilePhoto(uploadURL, this.$store.state.user.userId).then(response => {
                   if (true)  //change later maybe
                   {
                     console.log("Database updated! Added Photo to Profile");
@@ -235,3 +184,60 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.output {
+  max-width: 1000px;
+}
+
+.upload {
+  display: grid;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.flexy {
+  display: inline-block;
+}
+
+.target-drag-drop {
+  height: auto;
+}
+
+.button {
+  width: 225px;
+  background-image: linear-gradient(yellow, orange);
+  opacity: 0.8;
+  border-radius: 2px;
+}
+
+.button:hover {
+  background-image: linear-gradient(yellow, orange, orange);
+}
+
+label {
+  margin: 3px;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.button-upload {
+  background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
+}
+
+.button-upload:hover {
+  background-image: linear-gradient(to right, orange, yellow, green);
+}
+
+.checkbox-label {
+  font: large;
+}
+
+.checkbox-label:hover {
+  color: green;
+}
+
+</style>

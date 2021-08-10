@@ -57,11 +57,11 @@ namespace Capstone.Controllers
         // POST /api/photo
         [HttpPost]
         [Route("/api/photo")]
-        public ActionResult<PhotoDataResponse> PostPhoto([FromBody] string photoUrl, bool isProfile)
+        public ActionResult<PhotoDataResponse> PostPhoto([FromBody] string photoUrl, string isProfile)
         {
             int userId = GetUserIdFromJwt();
 
-            if (isProfile == true)
+            if (isProfile == "true")
             {
                 _context.Users.FirstOrDefault(u => u.UserId == userId).ProfileUrl = photoUrl;
                 _context.SaveChanges();
