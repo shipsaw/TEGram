@@ -2,7 +2,7 @@
   <div>
     <h1>{{ this.$store.state.user.username }}'s Favorite Photos</h1>
     <div class="big-parent">
-      <div
+      <div 
         class="parent"
         v-for="pic in favoritesList"
         v-bind:key="pic.url">

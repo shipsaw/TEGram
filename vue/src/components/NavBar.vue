@@ -4,9 +4,11 @@
       <router-link v-bind:to="{ name: 'home' }" >  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
       
 
-      <b-container >
-        <b-dropdown class="dropdown ">
-          <b-dropdown-item>  <router-link v-bind:to="{name: 'user-gallery'}">My Gallery</router-link>     </b-dropdown-item>
+      <b-container  >
+        <b-dropdown  class="dropdown ">
+          <b-dropdown-item id="button-style">
+            <router-link v-bind:to="{name: 'friends-gallery', params:{data: $store.state.user.userId}}">My Gallery</router-link>
+                  </b-dropdown-item>
           <b-dropdown-item>  <router-link v-bind:to="{name: 'user-faves'}">My Favorites</router-link></b-dropdown-item>
            <b-dropdown-item>  <router-link v-bind:to="{name: 'new-photo'}">Add Photo</router-link></b-dropdown-item>
      <b-dd-divider></b-dd-divider>
@@ -22,6 +24,7 @@ export default {
   data() {
     return {};
   },
+   
 
   // computed: {
   //   profileURL() {
@@ -54,6 +57,18 @@ export default {
     align-items:center;
 }
 
+.dropdown-toggle{
+
+      background-image: linear-gradient(to right, green, yellow, orange,  orange, yellow, green);
+
+}
+.dropown-toggle:hover{
+  background-image: linear-gradient(to right, orange, yellow, green);
+
+
+}
+
+
 .logo-pic {
   border-radius: 90%;
   height: 150px;
@@ -61,6 +76,5 @@ export default {
   padding: 25px;
   margin-left: 70px;
 }
-
 
 </style>
