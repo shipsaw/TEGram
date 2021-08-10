@@ -1,6 +1,7 @@
 <template>
   <!-- should we add a shuffle in case of spammers? -->
   <div class="home-div" >
+   <img :src= $store.state.user.userProfileUrl> 
     <div v-for="pic in photoList" v-bind:key="pic.photoId">
       <photo-card v-bind:pic="pic" />
     </div>

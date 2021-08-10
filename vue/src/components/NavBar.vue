@@ -6,7 +6,9 @@
 
       <b-container >
         <b-dropdown class="dropdown ">
-          <b-dropdown-item>  <router-link v-bind:to="{name: 'user-gallery'}">My Gallery</router-link>     </b-dropdown-item>
+          <b-dropdown-item>
+            <router-link v-bind:to="{name: 'friends-gallery', params:{data: $store.state.user.userId}}">My Gallery</router-link>
+                  </b-dropdown-item>
           <b-dropdown-item>  <router-link v-bind:to="{name: 'user-faves'}">My Favorites</router-link></b-dropdown-item>
            <b-dropdown-item>  <router-link v-bind:to="{name: 'new-photo'}">Add Photo</router-link></b-dropdown-item>
      <b-dd-divider></b-dd-divider>
@@ -22,6 +24,7 @@ export default {
   data() {
     return {};
   },
+   
 
   // computed: {
   //   profileURL() {

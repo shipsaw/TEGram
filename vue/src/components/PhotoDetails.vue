@@ -19,7 +19,7 @@
         method="POST"
       >
         <!-- fix dis action link!! -->
-        <p style="white-space: pre-line">{{ message }}</p>
+        <p style="white-space: pre-line"></p>
         <br />
         <textarea v-model="comment" placeholder="Add a comment..."></textarea>
         <div>
