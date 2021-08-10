@@ -2,8 +2,8 @@
   <div>
     <nav class="nav-div">
       <router-link v-bind:to="{ name: 'home' }" >  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
-      
-
+      <!-- user's profile photo -->
+      <router-link v-bind:to="{name: 'home' }"> <img v-bind:src="$store.state.user.userProfileUrl" class="profile-photo" /> </router-link>
       <b-container  >
         <b-dropdown  class="dropdown ">
           <b-dropdown-item id="button-style">
@@ -35,6 +35,13 @@ export default {
 </script>
 
 <style>
+
+.profile-photo {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
 .nav-div {
   display: flex;
   flex-direction: row;
@@ -58,11 +65,15 @@ export default {
 }
 
 .dropdown-toggle{
-  background-image: linear-gradient(to right, green, yellow, orange,  orange, yellow, green);
-  opacity: .8;
+
+      background-image: linear-gradient(to right, green, yellow, orange,  orange, yellow, green);
+
+
 }
-.dropown-toggle:hover{
-  background-image: linear-gradient(to right, orange, yellow, green);
+.dropdown-toggle:hover{
+  background-image: linear-gradient(to right, green, yellow, orange, yellow, green);
+
+
 }
 
 .logo-pic {
