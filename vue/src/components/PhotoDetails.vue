@@ -14,16 +14,12 @@
     </div>
 
     <div>
-      <form
-        action="https://capstonetegram.azurewebsites.net/api/photo/id/comments"
-        method="POST"
-      >
-        <!-- fix dis action link!! -->
+      <form v-on:submit.prevent class="commentForm">
         <p style="white-space: pre-line"></p>
         <br />
-        <textarea v-model="comment" placeholder="Add a comment..."></textarea>
+        <textarea v-model="content" class="commentBox" placeholder="Add a comment..."></textarea>
         <div>
-          <button type="submit" class="btn btn-success">Submit</button>
+          <button v-on:click="submitForm()" type="submit" class="btn btn-success">Submit</button>
         </div>
       </form>
     </div>
@@ -37,7 +33,7 @@ export default {
     return {
       photoIdNumber: 0,
       currentPhoto: {},
-      comment: "",
+      content: "",
     };
   },
   name: "full-details",
@@ -52,12 +48,23 @@ export default {
     shareUserId(id) {
       this.$router.push({ name: "friends-gallery", params: { data: id } });
     },
-  },
 
-  created() {
-    this.photoIdNumber = this.$route.params.data;
-    this.getCurrentPhoto();
+    submitForm() {
+      let id = this.photoIdNumber;
+      photoService.addNewComment(this.content, id)
+      .then(response => {
+        if(response.status === 200){
+              this.$router.push({ name: "full-details", params: { data: id } });
+        }
+      })
+    }
   },
+    
+  created() {
+    this.photoIdNumber = this.$route.params.data; 
+    this.getCurrentPhoto();
+  }
+    
 };
 </script>
 
@@ -81,9 +88,12 @@ export default {
   border: 2px solid black;
   margin-top: 70px;
 }
+
+.commentBox {
+  width: 500px;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
 </style>
 
-<!--this.$router.push({ name: "user", params: { username: "dan" } });
-this.$router.push({ path: "register", query: { plan: "private" } });
-
-we may have to use the photoId to make a get request to the database-->
