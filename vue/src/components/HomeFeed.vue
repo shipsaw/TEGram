@@ -1,11 +1,15 @@
 <template>
-  <!-- should we add a shuffle in case of spammers? -->
-  <div class="home-div" >
-   <img :src= $store.state.user.userProfileUrl> 
-    <div v-for="pic in photoList" v-bind:key="pic.photoId">
-      <photo-card v-bind:pic="pic" />
+  <div>
+    <!-- should we add a shuffle in case of spammers? -->
+    
+    <div class="home-div">
+      <div class="loading" v-if="isLoading">
+      <img src="../images/yellow2.jpg" />
     </div>
-
+      <div v-for="pic in photoList" v-bind:key="pic.photoId">
+        <photo-card v-bind:pic="pic" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,16 +25,17 @@ export default {
 data(){
   return{
      photoList: [
-      ]
-  }
+      ],
+      isLoading: true
+  };
 },
 
-
-  created() {
-    photoService.getPhotos().then((response) => {
+  created() {    
+    photoService.getPhotos().then(response => {
       this.photoList = response.data;
-    });
-  },
+      this.isLoading = false;        
+    }); 
+  }
 };
 </script>
 
@@ -50,5 +55,5 @@ data(){
 
 .home-div::-webkit-scrollbar {
   display: none;
-} 
+}
 </style>

@@ -2,8 +2,8 @@
   <div>
     <nav class="nav-div">
       <router-link v-bind:to="{ name: 'home' }" >  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
-      <router-link v-bind:to="{name: 'upload' }"> <img src="https://tegramprofilephotobucket.s3.us-east-2.amazonaws.com/cutekitten.jfif" class="profile-photo" /> </router-link>
-
+      <!-- user's profile photo -->
+      <router-link v-bind:to="{name: 'home' }"> <img v-bind:src="$store.state.user.userProfileUrl" class="profile-photo" /> </router-link>
       <b-container  >
         <b-dropdown  class="dropdown ">
           <b-dropdown-item id="button-style">
@@ -75,7 +75,6 @@ export default {
 
 
 }
-
 
 .logo-pic {
   border-radius: 90%;

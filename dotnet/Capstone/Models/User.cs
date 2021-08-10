@@ -1,4 +1,4 @@
-﻿using Capstone.ApiResponseObjects;
+﻿using Capstone.DataTransferObjects;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,17 +21,18 @@ namespace Capstone.Models
         public string Email { get; set; }
         public string ProfileUrl { get; set; }
         [InverseProperty("User")]
-        public List<Photo> Photos { get; set; }
+        public List<Photo> Photos { get; set; } = new List<Photo>();
 
         [InverseProperty("PhotoFavorites")]
-        public List<Photo> UserFavorites { get; set; }
+        public List<Photo> UserFavorites { get; set; } = new List<Photo>();
 
         [InverseProperty("PhotoLikes")]
-        public List<Photo> UserLikes { get; set; }
+        public List<Photo> UserLikes { get; set; } = new List<Photo>();
         [InverseProperty("User")]
-        public List<Comment> UserComments { get; set; }
-
+        public List<Comment> UserComments { get; set; } = new List<Comment>();
         public string Role { get; set; }
+        [Required]
+        public bool IsDeleted { get; set; }
     }
 
     /// <summary>
@@ -39,7 +40,7 @@ namespace Capstone.Models
     /// </summary>
     public class LoginResponse
     {
-        public UserDataResponse User { get; set; }
+        public UserDto User { get; set; }
         public string Token { get; set; }
     }
 
