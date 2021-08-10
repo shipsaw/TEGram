@@ -193,7 +193,7 @@ export default {
               let profileCheckBox = document.getElementById("profile-photo");
               // update the profile photo scenario
               if (profileCheckBox.checked) {
-                photoService.addProfilePhoto(uploadURL).then(response => {
+                photoService.addProfilePhoto(id, uploadURL).then(response => {
                   if (true)  //change later maybe
                   {
                     console.log("Database updated! Added Photo to Profile");
