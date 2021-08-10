@@ -4,6 +4,7 @@ using Capstone.Security;
 using System.Linq;
 using System.Security.Claims;
 using Capstone.ApiResponseObjects;
+using static System.Net.WebRequestMethods;
 
 namespace Capstone.Controllers
 {
@@ -69,7 +70,8 @@ namespace Capstone.Controllers
                 Username = userParam.Username,
                 PasswordHash = passwordHash.Password,
                 Salt = passwordHash.Salt,
-                Role = userParam.Role
+                Role = userParam.Role,
+                ProfileUrl = "https://tegramprofilephotobucket.s3.us-east-2.amazonaws.com/blankprofilephoto.png"
             };
 
             var retUser = _context.Users.Add(user);

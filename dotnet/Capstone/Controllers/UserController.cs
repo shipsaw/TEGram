@@ -1,14 +1,17 @@
 ﻿using Capstone.ApiResponseObjects;
 using Capstone.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Capstone.Controllers
 {
     [ApiController]
-    //[EnableCors("AllowSpecificOrigin")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -30,15 +33,19 @@ namespace Capstone.Controllers
         [Route("/api/user")]
         public UserDataResponse GetMyUserInfo()
         {
-            int userId = GetUserFromJwt();
+            int userId = GetUserIdFromJwt();
             return packagingHelper.PackageUser(userId, p => p.User.UserId == userId);
         }
 
-        private int GetUserFromJwt()
+        [HttpPost]
+        [Route("/api/user/{id}/profile")]
+        public ActionResult UpdateProfilePic([FromBody] string value, int id)
         {
-            throw new NotImplementedException();
+            //return value;
+            _context.Users.FirstOrDefault(u => u.UserId == id).ProfileUrl = value;
+            _context.SaveChanges();
+            return Ok();
         }
-
         // GET api/<UserController>/:id
         //[HttpGet("{id}")]
         //public ActionResult<UserDataResponse> Get(int id)
@@ -60,11 +67,28 @@ namespace Capstone.Controllers
 
         //}
 
-        //// DELETE api/<UserController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<UserController>/5
+        [HttpDelete]
+        [Route("/api/user/{id}")]
+        public ActionResult Delete(int id)
+        {
+            User user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (user != null)
+            {
+                user.IsDeleted = true;
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
+        private int GetUserIdFromJwt()
+        {
+            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+            return int.Parse(userIdStr);
+        }
 
     }
 }

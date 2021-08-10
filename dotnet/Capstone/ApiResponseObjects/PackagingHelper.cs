@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Capstone.ApiResponseObjects
 {
@@ -17,14 +16,19 @@ namespace Capstone.ApiResponseObjects
         }
         public UserDataResponse PackageUser(int id, Expression<Func<Photo, bool>> predicate)
         {
-            User user = _context.Users.First(u => u.UserId == id);
-            UserDataResponse data = new UserDataResponse();
-            data.UserProfileUrl = user.ProfileUrl;
-            data.UserId = user.UserId;
-            data.Username = user.Username;
-            data.Firstname = user.FirstName;
-            data.Lastname = user.LastName;
-            data.Photos = PackagePhotos(predicate);
+            User user = _context.Users.Where(u => u.IsDeleted == false).FirstOrDefault(u => u.UserId == id);
+            if (user == null)
+                return null;
+
+            UserDataResponse data = new()
+            {
+                UserProfileUrl = user.ProfileUrl,
+                UserId = user.UserId,
+                Username = user.Username,
+                Firstname = user.FirstName,
+                Lastname = user.LastName,
+                Photos = PackagePhotos(predicate)
+            };
 
             return data;
         }
@@ -36,26 +40,21 @@ namespace Capstone.ApiResponseObjects
                 .Include(p => p.PhotoFavorites)
                 .Include(p => p.PhotoComments)
                 .ThenInclude(c => c.User)
+                .Where(p => p.IsDeleted == false)
                 .FirstOrDefault(p => p.PhotoId == photoId);
 
-            if (photo != null)
-            {
-                return new PhotoDataResponse
-                {
-                    PhotoId = photo.PhotoId,
-                    Url = photo.Url,
-                    UserId = photo.UserId,
-                    Comments = photo.PhotoComments.Select(c => PackageComment(c)).ToList(),
-                    //Comments = null,
-                    Likes = photo.PhotoLikes.Select(p => p.UserId).ToList(),
-                    Favorites = photo.PhotoFavorites.Select(p => p.UserId).ToList()
-                };
-            }
-            else
-            {
+            if (photo == null)
                 return null;
-            }
 
+            return new PhotoDataResponse
+            {
+                PhotoId = photo.PhotoId,
+                Url = photo.Url,
+                UserId = photo.UserId,
+                Comments = photo.PhotoComments.Select(c => PackageComment(c)).ToList(),
+                Likes = photo.PhotoLikes.Select(p => p.UserId).ToList(),
+                Favorites = photo.PhotoFavorites.Select(p => p.UserId).ToList()
+            };
         }
         public List<PhotoDataResponse> PackagePhotos(Expression<Func<Photo, bool>> predicate)
         {
@@ -65,6 +64,7 @@ namespace Capstone.ApiResponseObjects
                 .Include(p => p.PhotoComments)
                 .ThenInclude(c => c.User)
                 .Where(predicate)
+                .Where(p => p.IsDeleted == false)
                 .OrderByDescending(p => p.CreatedDate)
                 .ToList();
 
