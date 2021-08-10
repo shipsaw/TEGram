@@ -21,14 +21,15 @@ namespace Capstone.Controllers
         public UserController(ApplicationDbContext context)
         {
             _context = context;
-            packagingHelper = new PackagingHelper(context);
         }
 
         [HttpGet]
         [Route("/api/user/{id}")]
         public UserDto GetUserById(int id)
         {
-            return _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == id).MapUserToDto();
+            return _context.Users.AsNoTracking()
+                .Include(u => u.Photos)
+                .FirstOrDefault(u => u.UserId == id).MapUserToDto();
         }
 
         [HttpGet]
@@ -36,7 +37,19 @@ namespace Capstone.Controllers
         public UserDto GetMyUserInfo()
         {
             int userId = GetUserIdFromJwt();
-            return _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == userId).MapUserToDto();
+            return _context.Users.AsNoTracking()
+                .Include(u => u.Photos)
+                .FirstOrDefault(u => u.UserId == userId).MapUserToDto();
+        }
+
+        [HttpPost]
+        [Route("/api/user/{id}/profile")]
+        public ActionResult UpdateProfilePic([FromBody] string value, int id)
+        {
+            //return value;
+            _context.Users.FirstOrDefault(u => u.UserId == id).ProfileUrl = value;
+            _context.SaveChanges();
+            return Ok();
         }
         // GET api/<UserController>/:id
         //[HttpGet("{id}")]
