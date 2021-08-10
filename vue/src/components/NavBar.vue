@@ -76,7 +76,6 @@ export default {
 
 }
 
-
 .logo-pic {
   border-radius: 90%;
   height: 150px;

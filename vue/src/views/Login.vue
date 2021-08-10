@@ -33,8 +33,10 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
+      <div class="loginDiv">
+      <router-link :to="{ name: 'register' }">Need an account? </router-link>
       <button class="login-button" type="submit">Sign in</button>
+      </div>
     </form>
   </div>
 </template>
@@ -73,8 +75,6 @@ export default {
             this.invalidCredentials = true;
           }
         });
-
-
     }
   }
 };
@@ -87,13 +87,22 @@ export default {
 }
 
 .form-control{
-
   margin-top: 50px;
 
 }
+  
+.login-button{
+  background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
+  opacity: .8;
+}
 
-  .login-button{
-    background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
-  }
+.login-button:hover{
+  background-image: linear-gradient(to right, orange, yellow, yellow, green);
+  opacity: .9;
+}
+
+.loginDiv{
+  margin-top: 20px;
+}
 
 </style>
