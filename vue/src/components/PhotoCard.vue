@@ -71,7 +71,7 @@ export default {
       }
 
       return commentArray;
-    },
+    }
   },
 
   methods: {
