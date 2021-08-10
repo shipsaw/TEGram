@@ -24,6 +24,9 @@
           :class="isFavorited ? 'starYellow' : 'starGray'"
         ></b-icon>
       </div>
+      <div class="likesBar">
+        Likes: {{likesNumber}}
+      </div>
       comments
 <div class="comment-section" v-for="c in displayComments" :key="c.username">
          {{c.username}} : 
@@ -50,6 +53,7 @@ export default {
     return {
       isLiked: false,
       isFavorited: false,
+      likesNumber: Number,
     };
   },
   //target only the last two comments
@@ -83,8 +87,10 @@ export default {
       photoService.updateUserLikes(id).then((response) => {
         if (response.data) {
           this.isLiked = true;
+          this.likesNumber += 1;
         } else {
           this.isLiked = false;
+          this.likesNumber -= 1;
         }
       });
     },
@@ -111,6 +117,7 @@ export default {
     } else {
       this.isFavorited = false;
     }
+    this.likesNumber = this.pic.likes.length
   },
 };
 </script>
@@ -182,6 +189,13 @@ export default {
   height: 100%;
   width: 95%;
   margin-bottom: 40px;
+}
+
+.likesBar{
+  display:block;
+  text-align: start;
+  margin-left: 5px;
+  font-family: Verdana, Tahoma, sans-serif;
 }
 </style>
 

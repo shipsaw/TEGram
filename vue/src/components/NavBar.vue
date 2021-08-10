@@ -58,16 +58,12 @@ export default {
 }
 
 .dropdown-toggle{
-
-      background-image: linear-gradient(to right, green, yellow, orange,  orange, yellow, green);
-
+  background-image: linear-gradient(to right, green, yellow, orange,  orange, yellow, green);
+  opacity: .8;
 }
 .dropown-toggle:hover{
   background-image: linear-gradient(to right, orange, yellow, green);
-
-
 }
-
 
 .logo-pic {
   border-radius: 90%;
