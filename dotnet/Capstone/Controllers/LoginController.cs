@@ -3,7 +3,8 @@ using Capstone.Models;
 using Capstone.Security;
 using System.Linq;
 using System.Security.Claims;
-using Capstone.ApiResponseObjects;
+using Microsoft.EntityFrameworkCore;
+using Capstone.DataTransferObjects;
 
 namespace Capstone.Controllers
 {
@@ -13,14 +14,12 @@ namespace Capstone.Controllers
         private readonly ITokenGenerator tokenGenerator;
         private readonly IPasswordHasher passwordHasher;
         private readonly ApplicationDbContext _context;
-        private readonly PackagingHelper packagingHelper;
 
         public LoginController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, ApplicationDbContext context)
         {
             tokenGenerator = _tokenGenerator;
             passwordHasher = _passwordHasher;
             _context = context;
-            packagingHelper = new PackagingHelper(context);
         }
 
         [HttpPost]
@@ -38,7 +37,14 @@ namespace Capstone.Controllers
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
-                UserDataResponse packagedUser = packagingHelper.PackageUser(user.UserId, p => p.User.UserId == user.UserId);
+                UserDto packagedUser = _context.Users
+                    .AsNoTracking()
+                    .Include(u => u.Photos)
+                    .Include(u => u.UserComments)
+                    .Include(u => u.UserLikes)
+                    .Include(u => u.UserFavorites)
+                    .FirstOrDefault(u => u.UserId == user.UserId)
+                    .MapUserToDto();
 
                 // Create a ReturnUser object to return to the client
                 LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };
@@ -69,7 +75,8 @@ namespace Capstone.Controllers
                 Username = userParam.Username,
                 PasswordHash = passwordHash.Password,
                 Salt = passwordHash.Salt,
-                Role = userParam.Role
+                Role = userParam.Role,
+                ProfileUrl = "https://tegramprofilephotobucket.s3.us-east-2.amazonaws.com/blankprofilephoto.png"
             };
 
             var retUser = _context.Users.Add(user);
