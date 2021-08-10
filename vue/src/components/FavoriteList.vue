@@ -40,28 +40,13 @@ methods:{
 </script>
 
 <style>
-.big-parent {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 50px;
-}
+
 
 h1 {
   text-align: center;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.4);
 }
 
-#grid-tile {
-  height: 200px;
-  width: 200px;
-  display: flex;
-  background-color: white;
-  border-radius: 1%;
-  margin: 3px;
-  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
-}
 img {
   height: 100%;
   width: auto;

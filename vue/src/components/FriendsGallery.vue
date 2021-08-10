@@ -44,6 +44,6 @@ methods:{
 opacity: 1;
 }
 .gallery-img:hover{
-  opacity: 0.5;
+  opacity: 0.6;
 }
 </style>
