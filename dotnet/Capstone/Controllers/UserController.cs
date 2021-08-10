@@ -28,7 +28,7 @@ namespace Capstone.Controllers
         [Route("/api/user/{id}")]
         public UserDto GetUserById(int id)
         {
-            return _context.Users.AsNoTracking().MapUserToDto().FirstOrDefault(u => u.UserId == id);
+            return _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == id).MapUserToDto();
         }
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace Capstone.Controllers
         public UserDto GetMyUserInfo()
         {
             int userId = GetUserIdFromJwt();
-            return _context.Users.AsNoTracking().MapUserToDto().FirstOrDefault(u => u.UserId == userId);
+            return _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == userId).MapUserToDto();
         }
         // GET api/<UserController>/:id
         //[HttpGet("{id}")]

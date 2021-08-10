@@ -30,7 +30,7 @@ namespace Capstone.Controllers
         [Route("/api/photo/{id}")]
         public ActionResult<PhotoDto> Get(int id)
         {
-            return _context.Photos.AsNoTracking().MapPhotoToDto().FirstOrDefault(p => p.PhotoId == id);
+            return _context.Photos.AsNoTracking().FirstOrDefault(p => p.PhotoId == id).MapPhotoToDto();
         }
 
         // Get the universal photo feed
@@ -40,7 +40,7 @@ namespace Capstone.Controllers
         [Route("/api/photo/feed")]
         public ActionResult<List<PhotoDto>> GetFeed()
         {
-            return _context.Photos.AsNoTracking().MapPhotoToDto().ToList();
+            return _context.Photos.AsNoTracking().MapPhotoQueryToDto().ToList();
         }
 
         [HttpGet]
@@ -54,7 +54,7 @@ namespace Capstone.Controllers
                 .AsNoTracking()
                 .Include(p => p.PhotoFavorites)
                 .Where(p => p.PhotoFavorites.Any(u => u.UserId == userId))
-                .MapPhotoToDto()
+                .MapPhotoQueryToDto()
                 .ToList();
         }
 
@@ -62,7 +62,7 @@ namespace Capstone.Controllers
         // POST /api/photo
         [HttpPost]
         [Route("/api/photo")]
-        public ActionResult<PhotoDataResponse> PostPhoto([FromBody] string photoUrl)
+        public ActionResult PostPhoto([FromBody] string photoUrl)
         {
             int userId = GetUserIdFromJwt();
 
@@ -75,8 +75,7 @@ namespace Capstone.Controllers
                 _context.Photos.Add(newPhoto);
                 _context.SaveChanges();
 
-                return packagingHelper.PackagePhoto(newPhoto.PhotoId);
-        }
+            return Ok();
         }
 
         // POST api/<ValuesController>
@@ -167,7 +166,7 @@ namespace Capstone.Controllers
         }
         private int GetUserIdFromJwt()
         {
-            string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
+        string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";
             return int.Parse(userIdStr);
         }
     }

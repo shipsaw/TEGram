@@ -43,8 +43,11 @@ namespace Capstone.Controllers
                 UserDto packagedUser = _context.Users
                     .AsNoTracking()
                     .Include(u => u.Photos)
-                    .MapUserToDto()
-                    .FirstOrDefault(u => u.UserId == user.UserId);
+                    .Include(u => u.UserComments)
+                    .Include(u => u.UserLikes)
+                    .Include(u => u.UserFavorites)
+                    .FirstOrDefault(u => u.UserId == user.UserId)
+                    .MapUserToDto();
 
                 // Create a ReturnUser object to return to the client
                 LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };
