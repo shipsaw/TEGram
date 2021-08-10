@@ -1,16 +1,21 @@
 <template>
   <div id="background">
-    <h1>'s Photo Gallery</h1>
+    <h1>{{ userObject.username }}'s Photo Gallery</h1>
+
     <div class="big-parent">
-    
+      <div class="parent" v-for="obj in userObject.photos" :key="obj.photoId">
+        <div id="grid-tile">
+          <img class="gallery-img" @click="sharePhotoId(obj.photoId)" :src="obj.url" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import photoService from "@/services/PhotoService.js";
+import photoService from "@/services/PhotoService.js";
 export default {
-    name: 'friends-gallery',
+  name: "friends-gallery",
   data() {
     return {
       userObject: {},
@@ -18,48 +23,27 @@ export default {
     };
   },
 
-  // import user info by userId
-  //make call to server to get user object -- loop thru feed and filter out pic by userId?
-
+methods:{
+  sharePhotoId(id) {
+      this.$router.push({ name: "full-details", params: { data: id } });
+    },
+},
 
   created() {
     this.userId = this.$route.params.data;
 
-    // photoService.get(this.userId).then((response) => {
-    //   this.userObject = response.data;
-    // });
+    photoService.get(this.userId).then((response) => {
+      this.userObject = response.data;
+    });
   },
 };
 </script>
 
 <style>
-/* 
-.gallery-grid {
-  display: flex;
-  background-color: lightgreen;
-} */
-
-.big-parent {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 50px;
+.gallery-img{
+opacity: 1;
 }
-
-#grid-tile {
-  height: 200px;
-  width: 200px;
-  display: flex;
-  background-color: white;
-  border-radius: 1%;
-  margin: 3px;
-  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
-}
-img {
-  height: 100%;
-  width: auto;
-  margin: auto;
-  overflow: hidden;
+.gallery-img:hover{
+  opacity: 0.5;
 }
 </style>

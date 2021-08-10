@@ -1,12 +1,7 @@
 ﻿using Capstone.ApiResponseObjects;
 using Capstone.Models;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,12 +18,25 @@ namespace Capstone.Controllers
             _context = context;
             packagingHelper = new PackagingHelper(context);
         }
-        // GET: api/<UserController>
+
+        [HttpGet]
+        [Route("/api/user/{id}")]
+        public UserDataResponse GetUserById(int id)
+        {
+            return packagingHelper.PackageUser(id, p => p.User.UserId == id);
+        }
+
         [HttpGet]
         [Route("/api/user")]
-        public IEnumerable<string> Get()
+        public UserDataResponse GetMyUserInfo()
         {
-            return _context.Users.Select(u => u.FirstName).ToList();
+            int userId = GetUserFromJwt();
+            return packagingHelper.PackageUser(userId, p => p.User.UserId == userId);
+        }
+
+        private int GetUserFromJwt()
+        {
+            throw new NotImplementedException();
         }
 
         // GET api/<UserController>/:id

@@ -34,7 +34,7 @@
         required
       />
       <router-link :to="{ name: 'register' }">Need an account?</router-link>
-      <button type="submit">Sign in</button>
+      <button class="login-button" type="submit">Sign in</button>
     </form>
   </div>
 </template>
@@ -89,5 +89,11 @@ export default {
 .form-control{
 
   margin-top: 50px;
+
 }
+
+  .login-button{
+    background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
+  }
+
 </style>

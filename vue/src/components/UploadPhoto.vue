@@ -37,7 +37,7 @@ Paste</textarea
             value="profilePic"
             v-model="checked"
           />
-          <label for="profile-photo">Make Profile Photo</label>
+          <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>
         </div>
         <div id="results"></div>
         <br />
@@ -51,6 +51,7 @@ Paste</textarea
 </template>
 
 <style>
+
 .upload {
   display: grid;
   margin-left: 15%;
@@ -72,6 +73,10 @@ Paste</textarea
   border-radius: 2px;
 }
 
+.button:hover {
+  background-image: linear-gradient(yellow, orange, orange);
+}
+
 label {
   margin: 3px;
 }
@@ -81,18 +86,33 @@ input[type="checkbox"] {
 }
 
 .button-upload {
-  background-image: linear-gradient(to right, orange, yellow, yellow, green);
+  background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
 }
+
+.button-upload:hover {
+  background-image: linear-gradient(to right, orange, yellow, green);
+}
+
+.checkbox-label {
+  font: large;
+}
+
+.checkbox-label:hover {
+  color: green;
+}
+
 </style>
 
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.961.0.min.js"></script>
 
 <script>
+import photoService from '../services/PhotoService.js';
+
 export default {
   data() {
     return {
-      checked: "",
+      checked: false,
       fileDrop: null,
     };
   },
@@ -166,10 +186,44 @@ export default {
             } else {
               // display uploaded photo
               output.src = URL.createObjectURL(file);
-              if (checked === true) {
-                // TODO upload photoURL to User table in Database
-              } else {
-                // TODO upload photoURL to Photos table in Database
+              // generate the upload URL for the photo
+              const uploadURL = "https://" + bucketName + ".s3." + bucketRegion + ".amazonaws.com/" + photoKey;
+              console.log("Upload URL: " + uploadURL);
+              // update database with photo URL and whether checked is true or
+              let profileCheckBox = document.getElementById("profile-photo");
+              // update the profile photo scenario
+              if (profileCheckBox.checked) {
+                photoService.addProfilePhoto(uploadURL).then(response => {
+                  if (true)  //change later maybe
+                  {
+                    console.log("Database updated! Added Photo to Profile");
+                  }
+                }).catch(error => {
+                  if(error.response){
+                    console.log("Error updating database for new profile photo. Response:" + error.response.statusText);
+                  } else if (error.request){
+                    console.log("Error contacting the server:" + error.request.statusText);
+                  } else {
+                    console.log("ERROR");
+                  }
+                });               
+              } 
+              // update the photo gallery scenario
+              else {
+                photoService.addGalleryPhoto(uploadURL).then(response => {
+                  if (true)  //change later maybe
+                  {
+                    console.log("Database updated! Added Photo to Gallery");
+                  }
+                }).catch(error => {
+                  if(error.response){
+                    console.log("Error updating database for new photo. Response:" + error.response.statusText);
+                  } else if (error.request){
+                    console.log("Error contacting the server:" + error.request.statusText);
+                  } else {
+                    console.log("ERROR");
+                  }
+                });                               
               }
             }
           });
@@ -177,9 +231,6 @@ export default {
           results.innerHTML = "Nothing to upload.";
         }
       }
-    },
-    makeProfilePic() {
-      //
     },
   },
 };

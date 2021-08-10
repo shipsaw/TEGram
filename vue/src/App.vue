@@ -23,10 +23,18 @@ export default {
 
 <style>
 
+img{
+opacity: 1;
+}
+img:hover{
+  opacity: 0.5;
+}
+
 .app{ 
   background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
     background-size: cover;
     height: 100%;
     padding-bottom: 50px;
 }
+
 </style>

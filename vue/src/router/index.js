@@ -108,6 +108,15 @@ const router = new Router({
             meta: {
                 requiresAuth: false
             }
+        },
+
+        {
+            path: "/api/photo",
+            name: 'photo',
+            component: UploadPhoto,
+            meta: {
+                requiresAuth: false
+            }
         }
 
     ]

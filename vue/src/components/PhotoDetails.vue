@@ -6,9 +6,7 @@
 
     <div class="comments">
       <div
-        v-for="comment in currentPhoto.comments"
-        v-bind:key="comment.commentId"
-      >
+        v-for="comment in currentPhoto.comments" v-bind:key="comment.commentId">
         {{ comment.username }} :
         {{ comment.content }}
         <hr />
