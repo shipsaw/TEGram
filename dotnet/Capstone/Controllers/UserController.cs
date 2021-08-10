@@ -52,10 +52,12 @@ namespace Capstone.Controllers
         //{
         //}
 
-        //// PUT api/<UserController>/5
-        //[HttpPut("{id}")]
+        // PUT api/<UserController>/5
+        //[HttpPut]
+        //[Route("api/user/{id}/profile")]
         //public void Put(int id, [FromBody] string value)
         //{
+
         //}
 
         //// DELETE api/<UserController>/5
