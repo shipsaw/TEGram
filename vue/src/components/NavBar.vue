@@ -2,7 +2,7 @@
   <div>
     <nav class="nav-div">
       <router-link v-bind:to="{ name: 'home' }" >  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
-      
+      <router-link v-bind:to="{name: 'upload' }"> <img src="https://tegramprofilephotobucket.s3.us-east-2.amazonaws.com/cutekitten.jfif" class="profile-photo" /> </router-link>
 
       <b-container  >
         <b-dropdown  class="dropdown ">
@@ -35,6 +35,13 @@ export default {
 </script>
 
 <style>
+
+.profile-photo {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
 .nav-div {
   display: flex;
   flex-direction: row;
@@ -61,9 +68,10 @@ export default {
 
       background-image: linear-gradient(to right, green, yellow, orange,  orange, yellow, green);
 
+
 }
-.dropown-toggle:hover{
-  background-image: linear-gradient(to right, orange, yellow, green);
+.dropdown-toggle:hover{
+  background-image: linear-gradient(to right, green, yellow, orange, yellow, green);
 
 
 }

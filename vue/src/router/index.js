@@ -85,7 +85,7 @@ const router = new Router({
             }
         },
         {
-            path: "/api/User/newPhoto",
+            path: "/api/User/:id/profile",
             name: "new-photo",
             component: UploadPhoto,
             meta: {
