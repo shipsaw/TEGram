@@ -58,6 +58,7 @@ Paste</textarea
 
 <script>
 import photoService from '../services/PhotoService.js';
+import store from '../store/index.js'
 
 export default {
   data() {
@@ -68,10 +69,7 @@ export default {
     };
   },
   methods: {
-    updateProfilePic(newUrl) {
-      this.$store.commit('NEW_PROFILE_PICTURE', newUrl);
-    },
-    uploadFile() {
+    uploadFile () {
       let fileChooser = document.getElementById("file-chooser");
       //var button = document.getElementById("upload-button");
       let results = document.getElementById("results");
@@ -143,6 +141,7 @@ export default {
               output.src = URL.createObjectURL(file);
               // generate the upload URL for the photo
               const uploadURL = "https://" + bucketName + ".s3." + bucketRegion + ".amazonaws.com/" + photoKey;
+              store.commit('NEW_PROFILE_PICTURE', uploadURL);
               console.log("Upload URL: " + uploadURL);
               // update database with photo URL and whether checked is true or
               let profileCheckBox = document.getElementById("profile-photo");
@@ -151,8 +150,6 @@ export default {
                 photoService.addProfilePhoto(uploadURL, userId).then((response) => {
                   if (response.status === 201)  //change later maybe
                   {
-                    this.newUrl = uploadURL;
-                    updateProfilePic(this.newUrl);
                     console.log("Database updated! Added Photo to Profile");
                   }
                 }).catch(error => {

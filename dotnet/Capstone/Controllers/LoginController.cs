@@ -37,17 +37,17 @@ namespace Capstone.Controllers
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
-                UserDto packagedUser = _context.Users
-                    .AsNoTracking()
-                    .Include(u => u.Photos)
-                    .Include(u => u.UserComments)
-                    .Include(u => u.UserLikes)
-                    .Include(u => u.UserFavorites)
-                    .FirstOrDefault(u => u.UserId == user.UserId)
-                    .MapUserToDto();
+                _context.Entry(user).Collection(user => user.Photos).Load();
+                foreach (var photo in user.Photos)
+                {
+                    _context.Entry(photo).Collection(photo => photo.PhotoComments).Load();
+                    _context.Entry(photo).Collection(photo => photo.PhotoFavorites).Load();
+                    _context.Entry(photo).Collection(photo => photo.PhotoLikes).Load();
+                }
+
 
                 // Create a ReturnUser object to return to the client
-                LoginResponse retUser = new LoginResponse() { User = packagedUser, Token = token };
+                LoginResponse retUser = new LoginResponse() { User = user.MapUserToDto(), Token = token };
 
                 // Switch to 200 OK
                 result = Ok(retUser);
