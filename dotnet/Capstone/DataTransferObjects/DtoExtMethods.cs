@@ -19,7 +19,7 @@ namespace Capstone.DataTransferObjects
                 UserProfileUrl = user.ProfileUrl,
                 Firstname = user.FirstName,
                 Lastname = user.LastName,
-                Photos = user.Photos.OrderByDescending(p => p.CreatedDate).MapPhotoListToDto().ToList()
+                Photos = user.Photos.MapPhotoListToDto().ToList()
             };
         }
 
