@@ -35,9 +35,15 @@ namespace Capstone.Controllers
         public UserDto GetMyUserInfo()
         {
             int userId = GetUserIdFromJwt();
-            return _context.Users.AsNoTracking()
-                .Include(u => u.Photos)
-                .FirstOrDefault(u => u.UserId == userId).MapUserToDto();
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+                _context.Entry(user).Collection(user => user.Photos).Load();
+                foreach (var photo in user.Photos)
+                {
+                    _context.Entry(photo).Collection(photo => photo.PhotoComments).Load();
+                    _context.Entry(photo).Collection(photo => photo.PhotoFavorites).Load();
+                    _context.Entry(photo).Collection(photo => photo.PhotoLikes).Load();
+                }
+            return user.MapUserToDto();
         }
 
         [HttpPost]
