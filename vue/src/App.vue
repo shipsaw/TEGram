@@ -31,6 +31,8 @@ img:hover{
 }
 
 .app{ 
+
+
   background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
     background-size: cover;
     height: 100%;

@@ -3,7 +3,7 @@
     <nav class="nav-div">
       <router-link v-bind:to="{ name: 'home' }" >  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
       <!-- user's profile photo -->
-      <router-link v-bind:to="{name: 'home' }"> <img v-bind:src="$store.state.user.userProfileUrl" class="profile-photo" /> </router-link>
+      <router-link v-bind:to="{name: 'home', params:{data: $store.state.user.userId} }"> <img v-bind:src="$store.state.user.userProfileUrl" class="profile-photo" /> </router-link>
       <b-container  >
         <b-dropdown  class="dropdown ">
           <b-dropdown-item id="button-style">

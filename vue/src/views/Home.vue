@@ -31,6 +31,7 @@ h2{
 
 .home{
   background: rgba(25, 153, 46, 0.25);
+
   width: 80%;
   margin: auto;
   text-align: center;
