@@ -23,7 +23,7 @@ namespace Capstone.Controllers
         }
 
         // Get photo by specific photo ID
-        //GET api/<ValuesController>/5
+        //GET api/photo/{id}
         [HttpGet]
         [Route("/api/photo/{id}")]
         public ActionResult<PhotoDto> Get(int id)
