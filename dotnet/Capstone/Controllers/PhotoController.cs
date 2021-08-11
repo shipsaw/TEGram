@@ -38,7 +38,13 @@ namespace Capstone.Controllers
         [Route("/api/photo/feed")]
         public ActionResult<List<PhotoDto>> GetFeed()
         {
-            return _context.Photos.AsNoTracking().MapPhotoQueryToDto().ToList();
+            return _context.Photos.AsNoTracking()
+                .Include(p => p.PhotoComments)
+                .ThenInclude(c => c.User)
+                .Include(p => p.PhotoLikes)
+                .Include(p => p.PhotoFavorites)
+                .OrderByDescending(p => p.CreatedDate)
+                .MapPhotoQueryToDto().ToList();
         }
 
         [HttpGet]
