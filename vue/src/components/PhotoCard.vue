@@ -125,13 +125,16 @@ export default {
 <style>
 
 .comment-section{
+ font-family:'Arial Narrow', Arial, sans-serif;
+ background-color: rgba(46, 59, 47, 0.055); 
+ margin-bottom: 5px; 
+ margin-top: 5px;
  border-bottom: 2px solid gray;
  text-align:left;
 }
 
 .polaroid {
   height: 100%;
-  margin-top: 5px;
 }
 
 .heartGray,
@@ -173,7 +176,9 @@ export default {
 
 .photo-single {
   height: auto;
-  width: 100%;
+  width: 80%;
+  margin-left: 5px;
+  margin-right: 5px;
   max-width: 650px;
   box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
 }
@@ -187,7 +192,7 @@ export default {
   flex-direction: column;
   margin: auto;
   height: 100%;
-  width: 95%;
+  width: 80%;
   margin-bottom: 40px;
 }
 
@@ -195,7 +200,7 @@ export default {
   display:block;
   text-align: start;
   margin-left: 5px;
-  font-family: Verdana, Tahoma, sans-serif;
+  font-family:'Arial Narrow', Arial, sans-serif;
 }
 </style>
 

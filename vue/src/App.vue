@@ -32,10 +32,9 @@ img:hover{
 
 .app{ 
   background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
-    background-size: cover;
-    height: 100%;
-    padding-bottom: 50px;
-    opacity: .9;
+  height: 950px;
+  padding-bottom: 50px;
+  opacity: .9;
 }
 
 </style>

@@ -42,11 +42,11 @@ data(){
 <style>
 .home-div {
   background: rgba(25, 153, 46, 0);
-  height: 910px;
+  height: 100vh;
   width: 80%;
   margin: auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-radius: 1%;
   overflow-y: auto;
   display: flex;
