@@ -14,15 +14,11 @@ namespace Capstone.Models
         {
             base.OnModelCreating(builder);
 
+            // Sets photo created dateTime to the moment it was uploaded to the DB
             builder.Entity<Photo>()
                 .Property(p => p.CreatedDate)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("GETUTCDATE()");
-
-            //builder.Entity<User>()
-            //    .HasMany(u => u.UserLikes)
-            //    .WithMany(u => u.PhotoLikes)
-            //    .UsingEntity(j => j.ToTable("PhotoUser"));
         }
 
         public DbSet<User> Users { get; set; }
