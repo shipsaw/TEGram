@@ -1,10 +1,13 @@
 <template>
   <div id="background">
-    <h1>{{ userObject.username }}'s Photo Gallery</h1>
-
+    <h1 v-if="isNotLoading">{{ userObject.username }}'s Photo Gallery</h1>
     <div class="big-parent">
+      <!-- load screen -->
+        <div class="loading" v-if="isLoading">
+            <img class="load-image" src="../images/yellow2.jpg" />
+        </div>
       <div class="parent" v-for="obj in userObject.photos" :key="obj.photoId">
-        <div id="grid-tile">
+        <div id="grid-tile"> 
           <img class="gallery-img" @click="sharePhotoId(obj.photoId)" :src="obj.url" />
         </div>
       </div>
@@ -20,6 +23,8 @@ export default {
     return {
       userObject: {},
       userId: 0,
+      isLoading: true,
+      isNotLoading: false
     };
   },
 
@@ -34,6 +39,8 @@ methods:{
 
     photoService.get(this.userId).then((response) => {
       this.userObject = response.data;
+      this.isLoading = false;
+      this.isNotLoading = true;
     });
   },
 };
@@ -45,5 +52,8 @@ opacity: 1;
 }
 .gallery-img:hover{
   opacity: 0.6;
+}
+.load-image{
+  border-radius: 15px;
 }
 </style>

@@ -1,7 +1,13 @@
 <template>
+
   <div id="background">
-    <h1>{{ userObject.username }}'s Photo Gallery</h1>
-    <div class="big-parent">
+    <div class="loading" v-if="isLoading">
+      <img src="../images/matrix.gif" />
+    </div>
+    <div>
+      <h1>{{ userObject.username }}'s Photo Gallery</h1> 
+    </div>
+    <div class="big-parent">       
       <div class="parent" v-for="obj in userObject.photos" :key="obj.photoId">
         <div id="grid-tile">
           <img @click="sharePhotoId(obj.photoId)" :src="obj.photoId" />
@@ -9,6 +15,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -18,6 +25,7 @@ export default {
     return {
       userObject: {},
       userId: 0,
+      isLoading: true
     };
   },
   methods: {
@@ -30,6 +38,7 @@ export default {
 
     photoService.get(this.userId).then((response) => {
       this.userObject = response.data;
+      this.isLoading = false;
     });
   },
 };
