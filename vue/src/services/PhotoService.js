@@ -83,6 +83,12 @@ export default {
         return http.post(`/api/photo/${id}/comment`, "\"" + comment + "\"", {
             headers: { "Content-Type": "application/json", "Authorization": `Bearer ${store.state.token}` }
         })
+    },
+
+    deletePhoto(id) {
+        return http.delete(`/api/photo/${id}`, {
+            headers: { "Authorization": `Bearer ${store.state.token}` }
+        })
     }
 
 }

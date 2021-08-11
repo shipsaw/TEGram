@@ -21,6 +21,9 @@
         <div>
           <button v-on:click="submitForm()" type="submit" class="btn btn-success">Submit</button>
         </div>
+         <div>
+          <button v-on:click="deletePhoto(currentPhoto.photoId)" type="submit" class="btn btn-success">Delete</button>
+        </div>
       </form>
     </div>
   </div>
@@ -57,7 +60,21 @@ export default {
               this.$router.push({ name: "full-details", params: { data: id } });
         }
       })
-    }
+    },
+
+    deletePhoto(id){
+      photoService.deletePhoto(id).then(response =>{
+        if(response.status === 200){
+            // this.$store.commit("DELETE_PHOTO", id);
+              this.$router.push({ name: "home"});
+
+        }
+     
+     
+     })
+
+      }
+    
   },
     
   created() {

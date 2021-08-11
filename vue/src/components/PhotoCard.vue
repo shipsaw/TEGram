@@ -28,7 +28,7 @@
         Likes: {{likesNumber}}
       </div>
       comments
-<div class="comment-section" v-for="c in displayComments" :key="c.username">
+<div class="comment-section" v-for="c in displayComments" :key="c.commentID">
          {{c.username}} : 
       {{ c.content }}
     </div>
