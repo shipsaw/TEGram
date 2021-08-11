@@ -24,8 +24,9 @@ export default {
 <style>
 
 img{
-opacity: 1;
+opacity: 1; 
 }
+
 img:hover{
   opacity: 0.7;
 }
@@ -37,5 +38,19 @@ img:hover{
     padding-bottom: 50px;
     opacity: .9;
 }
+
+/* for tablet */
+@media only screen and (min-width: 600px) {
+
+
+}
+
+/* for desktop */
+@media only screen and (min-width: 768px) {
+
+
+
+}
+
 
 </style>
