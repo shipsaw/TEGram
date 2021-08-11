@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -32,18 +33,19 @@ namespace Capstone.Controllers
 
         [HttpGet]
         [Route("/api/user")]
-        public UserDto GetMyUserInfo()
+        public List<PhotoDto> GetMyUserInfo()
         {
-            int userId = GetUserIdFromJwt();
-            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
-                _context.Entry(user).Collection(user => user.Photos).Load();
-                foreach (var photo in user.Photos)
-                {
-                    _context.Entry(photo).Collection(photo => photo.PhotoComments).Load();
-                    _context.Entry(photo).Collection(photo => photo.PhotoFavorites).Load();
-                    _context.Entry(photo).Collection(photo => photo.PhotoLikes).Load();
-                }
-            return user.MapUserToDto();
+            //int userId = GetUserIdFromJwt();
+            //var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            //    _context.Entry(user).Collection(user => user.Photos).Load();
+            //    foreach (var photo in user.Photos)
+            //    {
+            //        _context.Entry(photo).Collection(photo => photo.PhotoComments).Load();
+            //        _context.Entry(photo).Collection(photo => photo.PhotoFavorites).Load();
+            //        _context.Entry(photo).Collection(photo => photo.PhotoLikes).Load();
+            //    }
+            //return user.MapUserToDto();
+            return _context.Photos.OrderByDescending(p => p.CreatedDate).MapPhotoQueryToDto().ToList();
         }
 
         [HttpPost]
