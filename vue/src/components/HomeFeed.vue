@@ -4,7 +4,7 @@
     
     <div class="home-div">
       <div class="loading" v-if="isLoading">
-      <img src="../images/yellow2.jpg" />
+      <img class="load-image" src="../images/yellow2.jpg" />
     </div>
       <div v-for="pic in photoList" v-bind:key="pic.photoId">
         <photo-card v-bind:pic="pic" />
@@ -55,5 +55,9 @@ data(){
 
 .home-div::-webkit-scrollbar {
   display: none;
+}
+
+.load-image{
+  border-radius: 15px;
 }
 </style>
