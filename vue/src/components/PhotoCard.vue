@@ -1,8 +1,6 @@
 <template>
   <div class="card">
     <div class="polaroid">
-
-
       <img
         @click="sharePhotoId(pic.photoId)"
         class="photo-single"
@@ -10,37 +8,39 @@
       />
 
       <div class="icons">
-        <b-icon
-          id="heartIcon"
-          icon="heart-fill"
-          title="like photo"
-          class="heartGray"
-          @click="updateLikes(pic.photoId)"
-          :class="isLiked ? 'heartRed' : 'heartGray'"
-        ></b-icon>
+        <div class="heart-components">
+          <b-icon
+            id="heartIcon"
+            icon="heart-fill"
+            title="like photo"
+            class="heartGray"
+            @mousedown="updateLikes(pic.photoId)"
+            :class="isLiked ? 'heartRed' : 'heartGray'"
+          ></b-icon>
+          {{ likesNumber }}
+        </div>
         <b-icon
           icon="star-fill"
           title="add to favorites"
-          @click="updateFavorites(pic.photoId)"
+          @mousedown="updateFavorites(pic.photoId)"
           class="starGray"
           :class="isFavorited ? 'starYellow' : 'starGray'"
         ></b-icon>
       </div>
 
-      
       <div class="likesBar">
-        Likes: {{likesNumber}}
+        <div
+          class="comment-section"
+          v-for="c in displayComments"
+          :key="c.commentID"
+        >
+          {{ c.username }} :
+          {{ c.content }}
+        </div>
       </div>
-      comments
-<div class="comment-section" v-for="c in displayComments" :key="c.commentID">
-         {{c.username}} : 
-      {{ c.content }}
-    </div>
-
     </div>
 
     <!-- display first two comments from comment object inside photo obj -->
-    
   </div>
   <!-- in feed: pic, who posted it, first two comments -->
 </template>
@@ -68,18 +68,17 @@ export default {
       let commentArray = [];
 
       if (this.pic.comments != [] && this.pic.comments.length >= 1) {
-         commentArray.push(this.pic.comments[this.pic.comments.length - 1])
+        commentArray.push(this.pic.comments[this.pic.comments.length - 1]);
         // commentArray.push(this.pic.comments[this.pic.comments.length - 1].content);
-       
       }
 
       if (this.pic.comments != [] && this.pic.comments.length >= 2) {
-         commentArray.push(this.pic.comments[this.pic.comments.length - 2])
+        commentArray.push(this.pic.comments[this.pic.comments.length - 2]);
         // commentArray.push(this.pic.comments[this.pic.comments.length - 2].content);
       }
 
       return commentArray;
-    }
+    },
   },
 
   methods: {
@@ -121,28 +120,41 @@ export default {
     } else {
       this.isFavorited = false;
     }
-    this.likesNumber = this.pic.likes.length
+    this.likesNumber = this.pic.likes.length;
   },
 };
 </script>
 
 <style>
-
-.comment-section{
-font-family:'Arial Narrow', Arial, sans-serif;
- background-color: rgba(46, 59, 47, 0.055); 
- margin-bottom: 5px; 
- margin-top: 5px;
- border-bottom: 2px solid gray;
- text-align:left;
+.comment-section {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  /* background-color: rgba(46, 59, 47, 0.055);  */
+  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-left: 5px;
+  text-align: left;
 }
 
 .polaroid {
   height: 100%;
-  margin-top: 5px;
+  margin: -1px -1px -1px -1px;
 }
 
-.heartGray,
+.heartGray {
+  color: gray;
+  float: left;
+  height: 30px;
+  width: auto;
+  margin: 10px;
+}
+
+.heart-components {
+  font-size: 33px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
 .starGray {
   color: gray;
   float: left;
@@ -151,16 +163,17 @@ font-family:'Arial Narrow', Arial, sans-serif;
   margin: 10px;
 }
 
-.starGray:hover,
-.heartGray:hover {
-  color: pink;
+@media only screen and (min-width: 769px) {
+  .starGray:hover,
+  .heartGray:hover {
+    color: pink;
+  }
+  .heartRed:hover {
+    color: gold;
+  }
 }
 
 .heartRed {
-  color: gold;
-}
-
-.heartRed:hover {
   color: gold;
 }
 
@@ -177,35 +190,43 @@ font-family:'Arial Narrow', Arial, sans-serif;
   background-image: linear-gradient(to bottom right, lightgray, gray);
   height: 55px;
   margin-top: 5px;
+  border-radius: 5px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-between;
 }
 
 .photo-single {
   height: auto;
-  width: 80%;
-  margin-left: 5px;
-  margin-right: 5px;
-  max-width: 650px;
+  width: 100%;
+  /* max-width: 850px; */
   box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
 }
 
 .picCard {
-  width: 100%;
   border: 2px solid gray;
 }
 .card {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  height: 100%;
-  width: 80%;
-  margin-bottom: 40px;
+  /* display: flex;
+  flex-direction: column; */
+  height: 0%;
+  width: 100%;
+  margin: 40px;
 }
 
-.likesBar{
-  display:block;
+.likesBar {
+  /* display:block; */
+  margin-top: 5px;
+  display: flex;
   text-align: start;
-  margin-left: 5px;
-  font-family:'Arial Narrow', Arial, sans-serif;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  background-color: whitesmoke;
+  border-radius: 6px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+img {
+  border-radius: 1%;
 }
 </style>
 
