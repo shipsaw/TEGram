@@ -3,13 +3,15 @@
     <!-- <div class="large-12 medium-12 small-12 cell"> -->
       <div class="upload-container">
         <br />
+        <div class="mobile-only-hide">
         <button id="drop-box">
-          <div id="target-drag-drop" v-cloak @drop.prevent="acceptFile" @dragover.prevent>
+          <div  id="target-drag-drop" v-cloak @drop.prevent="acceptFile" @dragover.prevent>
             Drag and Drop Here
           </div>
         </button>
         OR ...
-        <br><br>
+        </div>
+        <br>
         <input class="button" type="file" id="file-chooser" @mousedown="clearDragDrop" />
         <br><br>
         <div class="flexy">
@@ -248,10 +250,20 @@ img {
 
 }
 
+@media only screen and (max-width: 768px){
+  .mobile-only-hide {
+    display: none;
+  }
+}
+
 /* for tablet */
 @media only screen and (min-width: 600px) {
   img {
     max-width: 500px;
+  }
+
+  .mobile-only-hide {
+    display: on
   }
 }
 
