@@ -7,8 +7,10 @@
     <div class="comments">
       <div
         v-for="comment in currentPhoto.comments" v-bind:key="comment.commentId">
-        {{ comment.username }} :
-        {{ comment.content }}
+        <div class="comment-box">
+        {{ comment }}
+        </div>
+        
         <hr />
       </div>
     </div>
@@ -53,11 +55,12 @@ export default {
     },
 
     submitForm() {
+       this.currentPhoto.comments.push(this.content)
       let id = this.photoIdNumber;
       photoService.addNewComment(this.content, id)
       .then(response => {
         if(response.status === 200){
-              this.$router.push({ name: "full-details", params: { data: id } });
+              // this.$router.push({ name: "home"});
         }
       })
     },
@@ -65,7 +68,6 @@ export default {
     deletePhoto(id){
       photoService.deletePhoto(id).then(response =>{
         if(response.status === 200){
-            // this.$store.commit("DELETE_PHOTO", id);
               this.$router.push({ name: "home"});
 
         }
@@ -104,6 +106,7 @@ export default {
   padding: 20px;
   border: 2px solid black;
   margin-top: 70px;
+  width: 500px;
 }
 
 .commentBox {
