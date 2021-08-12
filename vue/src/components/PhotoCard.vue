@@ -10,6 +10,7 @@
       />
 
       <div class="icons">
+        <div class="heart-components">
         <b-icon
           id="heartIcon"
           icon="heart-fill"
@@ -18,6 +19,8 @@
           @click="updateLikes(pic.photoId)"
           :class="isLiked ? 'heartRed' : 'heartGray'"
         ></b-icon>
+        {{likesNumber}}
+        </div>
         <b-icon
           icon="star-fill"
           title="add to favorites"
@@ -29,12 +32,11 @@
 
       
       <div class="likesBar">
-        Likes: {{likesNumber}}
-      </div>
-      comments
 <div class="comment-section" v-for="c in displayComments" :key="c.commentID">
          {{c.username}} : 
       {{ c.content }}
+
+      </div>
     </div>
 
     </div>
@@ -129,21 +131,34 @@ export default {
 <style>
 
 .comment-section{
-font-family:'Arial Narrow', Arial, sans-serif;
- background-color: rgba(46, 59, 47, 0.055); 
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+font-weight: 500;
+ /* background-color: rgba(46, 59, 47, 0.055);  */
  margin-bottom: 5px; 
  margin-top: 5px;
- border-bottom: 2px solid gray;
+ margin-left: 5px;
  text-align:left;
 }
 
 .polaroid {
   height: 100%;
-  margin-top: 5px;
+  margin: -1px -1px -1px -1px;
 }
 
-.heartGray,
-.starGray {
+.heartGray {
+  color: gray;
+  float: left;
+  height: 30px;
+  width: auto;
+  margin: 10px;
+}
+
+.heart-components {
+  font-size: 33px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.starGray
+{
   color: gray;
   float: left;
   height: 30px;
@@ -177,35 +192,46 @@ font-family:'Arial Narrow', Arial, sans-serif;
   background-image: linear-gradient(to bottom right, lightgray, gray);
   height: 55px;
   margin-top: 5px;
+  border-radius: 5px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-between;
 }
 
 .photo-single {
   height: auto;
-  width: 80%;
-  margin-left: 5px;
-  margin-right: 5px;
-  max-width: 650px;
+  width: 100%;
+  /* max-width: 850px; */
   box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
 }
 
 .picCard {
-  width: 100%;
   border: 2px solid gray;
 }
 .card {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  height: 100%;
-  width: 80%;
-  margin-bottom: 40px;
+  /* display: flex;
+  flex-direction: column; */
+  height: 0%;
+  width: 100%;
+  margin: 40px;
 }
 
 .likesBar{
-  display:block;
+  /* display:block; */
+  margin-top: 5px;
+  display: flex;
   text-align: start;
-  margin-left: 5px;
   font-family:'Arial Narrow', Arial, sans-serif;
+  background-color: whitesmoke;
+  border-radius: 6px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+img {
+  border-radius: 1%;
+}
+
+.polaroid {
 }
 </style>
 

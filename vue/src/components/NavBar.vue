@@ -52,6 +52,9 @@ export default {
   background: rgba(25, 153, 46, 0.25);
   height: 120px;
   width: 100%;
+  border-bottom-style: solid;
+  border-width: 4px;
+  border-color: slategrey;
 }
 
 .dropdown {
