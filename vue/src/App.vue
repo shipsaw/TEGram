@@ -36,6 +36,7 @@ img:hover{
 
   background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
   height: 950px;
+  background-size: cover;
   padding-bottom: 50px;
   /* opacity: 90%; */
   position: fixed;
