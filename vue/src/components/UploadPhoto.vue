@@ -10,7 +10,7 @@
         </button>
         OR ...
         <br><br>
-        <input class="button" type="file" id="file-chooser" />
+        <input class="button" type="file" id="file-chooser" @mousedown="clearDragDrop" />
         <br><br>
         <div class="flexy">
           <input
@@ -59,6 +59,9 @@ export default {
     };
   },
   methods: {
+    clearDragDrop(){
+      this.fileDrop = [];
+    },
     acceptFile(e) {
         let filesDroppedIn = e.dataTransfer.files;
         console.log(filesDroppedIn[0].name);
@@ -76,7 +79,7 @@ export default {
       let file = null;
       // get file for a drag and drop image
 
-      if (this.fileDrop) {
+      if (this.fileDrop.length != 0) {
         console.log("load dropped file");
         if (this.fileDrop.type.match("image.*")) {
            file = this.fileDrop;
