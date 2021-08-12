@@ -20,23 +20,24 @@
             value="profilePic"
             v-model="checked"
           />
-          <!-- <div class="checkbox-div">          -->
           <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>          
-          <!-- <p class="notification">- provide square image for best experience -</p> -->
-          <p>- provide square image for best experience -</p>
         </div>
         <br>
         <button class="button button-upload" @click="uploadFile">
           Upload Photo
         </button>
-        
-        <div id="results"></div>
+        <div class="photo-holder" id="results">
         <br />
         <div>
-          <img id="output" />
+          
         </div>
+        
+        </div>
+      
       </div>
-    <!-- </div> -->
+      <div class="image-div">
+    <img id="output" />
+   </div>
   </div>
 </template>
 
@@ -220,19 +221,28 @@ export default {
 
 img {
   max-width: 400px;
+  margin: auto;
+  display: flex;
+  align-self: center;
 }
+
+.img-div {
+  display: flex;
+  justify-self: center;
+}
+
 .output {
-  max-width: 1000px;
+  max-width: 800px;
 }
 
 .main-container {
+  width: 100%;
   display: flex;
-  border-color: green;
+  flex-direction: column;
   border-width: 3px;
   border-radius: 10px;
   margin-top: 15px;
-  margin-left: 10%;
-  margin-right: 10%;
+
 }
 
 /* for tablet */
@@ -240,27 +250,23 @@ img {
   img {
     max-width: 500px;
   }
-
-  .main-container {
-    margin-left: 20%;
-    margin-right: 20%
-  }
 }
 
 /* for desktop */
 @media only screen and (min-width: 768px) {
   img {
-    max-width: 1000px;
+    max-width: 800px;
   }
-
-  .main-container {
-    margin-left: 35%;
-    margin-right: 35%;
-  }
-
 }
 
-
+.upload-container {
+  background-color: rgb(255,0,0,0.2);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  align-self: center;
+}
 
 
 
@@ -302,12 +308,12 @@ input[type="checkbox"] {
     yellow,
     yellow,
     yellow,
-    green
+    orange
   );
 }
 
 .button-upload:hover {
-  background-image: linear-gradient(to right, orange, yellow, green);
+  background-image: linear-gradient(to right, brown, orange, yellow, yellow, yellow, orange, brown);
 }
 
 .checkbox-label {
@@ -315,7 +321,6 @@ input[type="checkbox"] {
 }
 
 .checkbox-label:hover {
-  color: green;
-  opacity: 1;
+  color: brown;
 }
 </style>
