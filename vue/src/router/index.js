@@ -6,7 +6,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import HomeFeed from '@/components/HomeFeed.vue'
-import Gallery from '@/views/Gallery.vue'
+
 import FavoriteList from '@/components/FavoriteList.vue'
 import UploadPhoto from '@/components/UploadPhoto.vue'
 import PhotoDetails from '@/components/PhotoDetails.vue'
@@ -68,14 +68,7 @@ const router = new Router({
             }
 
         },
-        {
-            path: "/api/User/gallery",
-            name: "user-gallery",
-            component: Gallery,
-            meta: {
-                requiresAuth: false
-            }
-        },
+
         {
             path: "/api/User/favorites",
             name: "user-faves",

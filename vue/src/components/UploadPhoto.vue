@@ -20,10 +20,17 @@
             value="profilePic"
             v-model="checked"
           />
+<<<<<<< HEAD
           <!-- <div class="checkbox-div">          -->
           <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>          
           <!-- <p class="notification">- provide square image for best experience -</p> -->
           <!-- </div> -->
+=======
+          <label class="checkbox-label" for="profile-photo"
+            >Make Profile Photo</label
+          >
+          <p>- provide square image for best experience -</p>
+>>>>>>> 5c42615dbf6e68a1882f908df9a0a1ffb7568f97
         </div>
         <br>
         <button class="button button-upload" @click="uploadFile">
@@ -46,8 +53,8 @@
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.961.0.min.js"></script>
 
 <script>
-import photoService from '../services/PhotoService.js';
-import store from '../store/index.js'
+import photoService from "../services/PhotoService.js";
+import store from "../store/index.js";
 
 export default {
   data() {
@@ -143,11 +150,22 @@ export default {
               // display uploaded photo
               output.src = URL.createObjectURL(file);
               // generate the upload URL for the photo
-              const uploadURL = "https://" + bucketName + ".s3." + bucketRegion + ".amazonaws.com/" + photoKey;
-              store.commit('NEW_PROFILE_PICTURE', uploadURL);
+              const uploadURL =
+                "https://" +
+                bucketName +
+                ".s3." +
+                bucketRegion +
+                ".amazonaws.com/" +
+                photoKey;
+
               console.log("Upload URL: " + uploadURL);
               // update database with photo URL and whether checked is true or
               let profileCheckBox = document.getElementById("profile-photo");
+              
+              if (profileCheckBox.checked) {
+                store.commit("NEW_PROFILE_PICTURE", uploadURL);
+              }
+
               // update the profile photo scenario
               if (profileCheckBox.checked) {
                 photoService.addProfilePhoto(uploadURL, userId).then((response) => {
@@ -167,20 +185,29 @@ export default {
               } 
               // update the photo gallery scenario
               else {
-                photoService.addGalleryPhoto(uploadURL).then(response => {
-                  if (true)  //change later maybe
-                  {
-                    console.log("Database updated! Added Photo to Gallery");
-                  }
-                }).catch(error => {
-                  if(error.response){
-                    console.log("Error updating database for new photo. Response:" + error.response.statusText);
-                  } else if (error.request){
-                    console.log("Error contacting the server:" + error.request.statusText);
-                  } else {
-                    console.log("ERROR");
-                  }
-                });                               
+                photoService
+                  .addGalleryPhoto(uploadURL)
+                  .then((response) => {
+                    if (true) {
+                      //change later maybe
+                      console.log("Database updated! Added Photo to Gallery");
+                    }
+                  })
+                  .catch((error) => {
+                    if (error.response) {
+                      console.log(
+                        "Error updating database for new photo. Response:" +
+                          error.response.statusText
+                      );
+                    } else if (error.request) {
+                      console.log(
+                        "Error contacting the server:" +
+                          error.request.statusText
+                      );
+                    } else {
+                      console.log("ERROR");
+                    }
+                  });
               }
             }
           });
@@ -195,11 +222,16 @@ export default {
 </script>
 
 <style>
+<<<<<<< HEAD
 
 /* default for mobile view */
 
 img {
   max-width: 400px;
+=======
+.output {
+  max-width: 1000px;
+>>>>>>> 5c42615dbf6e68a1882f908df9a0a1ffb7568f97
 }
 
 .main-container {
@@ -273,7 +305,14 @@ input[type="checkbox"] {
 }
 
 .button-upload {
-  background-image: linear-gradient(to right, orange, yellow, yellow, yellow, green);
+  background-image: linear-gradient(
+    to right,
+    orange,
+    yellow,
+    yellow,
+    yellow,
+    green
+  );
 }
 
 .button-upload:hover {
@@ -288,5 +327,4 @@ input[type="checkbox"] {
   color: green;
   opacity: 1;
 }
-
 </style>

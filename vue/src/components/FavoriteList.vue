@@ -7,7 +7,7 @@
         v-for="pic in favoritesList"
         v-bind:key="pic.url">
         <div id="grid-tile">
-          <img :src="pic.url" />
+          <img @click="sharePhotoId(pic.photoId)" :src="pic.url" />
         </div>
       </div>
     </div>
@@ -32,7 +32,9 @@ favoritesList:[]
   },
 methods:{
 
-//delete photo on-click?
+ sharePhotoId(id) {
+      this.$router.push({ name: "full-details", params: { data: id } });
+    },
 
 }
 

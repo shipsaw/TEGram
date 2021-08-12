@@ -4,7 +4,7 @@
     
     <div class="home-div">
       <div class="loading" v-if="isLoading">
-      <img class="load-image" src="../images/yellow2.jpg" />
+      <img class="load-image" src="../images/matrix.gif" />
     </div>
       <div v-for="pic in photoList" v-bind:key="pic.photoId">
         <photo-card v-bind:pic="pic" />
