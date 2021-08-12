@@ -37,13 +37,7 @@ namespace Capstone.Controllers
             {
                 // Create an authentication token
                 string token = tokenGenerator.GenerateToken(user.UserId, user.Username, user.Role);
-                _context.Entry(user).Collection(user => user.Photos).Load();
-                foreach (var photo in user.Photos)
-                {
-                    _context.Entry(photo).Collection(photo => photo.PhotoComments).Load();
-                    _context.Entry(photo).Collection(photo => photo.PhotoFavorites).Load();
-                    _context.Entry(photo).Collection(photo => photo.PhotoLikes).Load();
-                }
+                user = ControllerHelper.AddDataToUser(_context, user.UserId);
 
 
                 // Create a ReturnUser object to return to the client
