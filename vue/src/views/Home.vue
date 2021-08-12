@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h2>Welcome, {{ this.$store.state.user.username }}!</h2>
-    <h3>See what's new: </h3>
+    <h4>See what's new: </h4>
     
 <home-feed/>
 
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style>
-h2, h3{
+h2, h4{
   color: white;
   text-align: center;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.4) ;
@@ -31,7 +31,7 @@ h2{
 
 .home{
   background: rgba(25, 153, 46, 0.25);
-  width: 80%;
+  width: 70%;
   margin: auto;
   text-align: center;
   border-radius: 1%;

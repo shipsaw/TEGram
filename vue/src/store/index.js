@@ -70,8 +70,15 @@ export default new Vuex.Store({
             state.photo = data;
         },
 
-        NEW_PROFILE_PICTURE (state, newUrl) {
+        NEW_PROFILE_PICTURE(state, newUrl) {
             state.user.userProfileUrl = newUrl;
-        }
+        },
+
+        DELETE_PHOTO(state, id) {
+            state.user.photos.splice(
+                state.user.photos.findIndex(photo => photo.photoId === id),
+                1
+            )
+        },
     }
 })

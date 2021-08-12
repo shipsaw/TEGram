@@ -3,11 +3,13 @@
     <nav class="nav-div">
       <router-link v-bind:to="{ name: 'home' }" >  <img src="@/images/logo.png" class="logo-pic" />   </router-link>&nbsp;&nbsp;
       <!-- user's profile photo -->
-      <router-link v-bind:to="{name: 'home' }"> <img v-bind:src="$store.state.user.userProfileUrl" class="profile-photo" /> </router-link>
+      <router-link v-bind:to="{name: 'friends-gallery' }"> <img v-bind:src="$store.state.user.userProfileUrl" class="profile-photo" /> </router-link>
       <b-container  >
         <b-dropdown  class="dropdown ">
-          <b-dropdown-item id="button-style">
-            <router-link v-bind:to="{name: 'friends-gallery', params:{data: $store.state.user.userId}}">My Gallery</router-link>
+          <b-dropdown-item id="button-style"></b-dropdown-item>
+                      <b-dropdown-item>  <router-link v-bind:to="{name: 'home'}">Home</router-link></b-dropdown-item>
+
+            <b-dropdown-item><router-link v-bind:to="{name: 'friends-gallery', params:{data: $store.state.user.userId}}">My Gallery</router-link>
                   </b-dropdown-item>
           <b-dropdown-item>  <router-link v-bind:to="{name: 'user-faves'}">My Favorites</router-link></b-dropdown-item>
            <b-dropdown-item>  <router-link v-bind:to="{name: 'new-photo'}">Add Photo</router-link></b-dropdown-item>
@@ -25,12 +27,11 @@ export default {
     return {};
   },
    
-
-  // computed: {
-  //   profileURL() {
-  //     return this.$store.state.user.userProfileUrl;
-  //   },
-  // },
+   computed: {
+     profileURL() {
+       return this.$store.state.user.userProfileUrl;
+     },
+  },
 };
 </script>
 

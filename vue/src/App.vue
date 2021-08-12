@@ -24,18 +24,32 @@ export default {
 <style>
 
 img{
-opacity: 1;
+opacity: 1; 
 }
+
 img:hover{
   opacity: 0.7;
 }
 
 .app{ 
   background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
-    background-size: cover;
-    height: 100%;
-    padding-bottom: 50px;
-    opacity: .9;
+  height: 950px;
+  padding-bottom: 50px;
+  opacity: .9;
 }
+
+/* for tablet */
+@media only screen and (min-width: 600px) {
+
+
+}
+
+/* for desktop */
+@media only screen and (min-width: 768px) {
+
+
+
+}
+
 
 </style>

@@ -2,29 +2,15 @@
   <div class="container">
     <div class="large-12 medium-12 small-12 cell">
       <div class="upload">
-        <!-- 
-          alternate input and button options are commented out in the following few lines
-          -->
-        <!-- <input type="file" id="file-chooser" accept="image/*" @change="uploadFile" ref="file" />
-       -->
-        <!-- <br />
-        <textarea
-          id="target-drag-drop"
-          rows="3"
-          @drop.prevent="uploadFile"
-          v-bind="fileDrop"
-        >
-        Drag and Drop</textarea> -->
-        <!--
-          copy Paste not currently functional -->
-        <!-- <br />
-        <textarea id="target-paste" @paste="uploadFile" v-bind="fileDrop">
-Paste</textarea
-        > -->
+        <br />
+        <button id="drop-box">
+          <div id="target-drag-drop" v-cloak @drop.prevent="acceptFile" @dragover.prevent>
+            Drag and Drop Here
+          </div>
+        </button>
         <br />
         <input class="button" type="file" id="file-chooser" />
         <br />
-        <!-- <button id="upload-button">Upload to S3</button> -->
         <button class="button button-upload" @click="uploadFile">
           Upload Photo
         </button>
@@ -43,7 +29,6 @@ Paste</textarea
         <div id="results"></div>
         <br />
         <div>
-          <!--the below image tag will display the photo if it is uploaded -->
           <img id="output" />
         </div>
       </div>
@@ -64,20 +49,34 @@ export default {
   data() {
     return {
       checked: false,
-      fileDrop: null,
+      fileDrop: [],
       newUrl: "",
     };
   },
   methods: {
-    uploadFile () {
+    acceptFile(e) {
+        let filesDroppedIn = e.dataTransfer.files;
+        console.log(filesDroppedIn[0].name);
+        if (filesDroppedIn[0].type.match("image.*")) {
+          let fileDisplay = filesDroppedIn[0];
+          const displayImage = document.getElementById('output');
+          displayImage.src = URL.createObjectURL(fileDisplay);
+        }
+        this.fileDrop = filesDroppedIn[0];
+    },
+    uploadFile() {
       let fileChooser = document.getElementById("file-chooser");
       //var button = document.getElementById("upload-button");
       let results = document.getElementById("results");
       let file = null;
+      // get file for a drag and drop image
+
       if (this.fileDrop) {
-        if (this.fileDrop[i].type.match("image.*")) {
-          file = this.fileDrop[0];
+        console.log("load dropped file");
+        if (this.fileDrop.type.match("image.*")) {
+           file = this.fileDrop;
         }
+      // otherwise get file from file select button
       } else {
         if (fileChooser.files[0].type.match("image.*")) {
           file = fileChooser.files[0];
@@ -147,8 +146,8 @@ export default {
               let profileCheckBox = document.getElementById("profile-photo");
               // update the profile photo scenario
               if (profileCheckBox.checked) {
-                photoService.addProfilePhoto(uploadURL, userId).then(response => {
-                  if (true)  //change later maybe
+                photoService.addProfilePhoto(uploadURL, userId).then((response) => {
+                  if (response.status === 201)  //change later maybe
                   {
                     console.log("Database updated! Added Photo to Profile");
                   }
@@ -188,6 +187,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style>
@@ -204,6 +204,10 @@ export default {
 
 .flexy {
   display: inline-block;
+}
+
+.drop-box {
+  background: white;
 }
 
 .target-drag-drop {
