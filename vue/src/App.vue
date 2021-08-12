@@ -37,7 +37,7 @@ img:hover{
   background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
   height: 950px;
   padding-bottom: 50px;
-  opacity: 90%;
+  /* opacity: 90%; */
   position: fixed;
   width: 100%;
   height: 100%;

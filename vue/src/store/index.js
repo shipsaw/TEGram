@@ -52,9 +52,7 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         },
         SET_USER(state, user) {
-            console.log(user);
             state.user = user;
-            console.log(state.user)
             localStorage.setItem('user', JSON.stringify(user));
 
         },
