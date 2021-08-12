@@ -45,6 +45,7 @@ export default {
 
 .nav-div {
   display: flex;
+  position: static;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

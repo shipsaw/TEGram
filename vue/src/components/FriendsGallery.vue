@@ -4,7 +4,7 @@
     <div class="big-parent">
       <!-- load screen -->
         <div class="loading" v-if="isLoading">
-            <img class="load-image" src="../images/yellow2.jpg" />
+            <img class="load-image" src="../images/matrix.gif" />
         </div>
       <div class="parent" v-for="obj in userObject.photos" :key="obj.photoId">
         <div id="grid-tile"> 
