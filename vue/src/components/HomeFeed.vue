@@ -72,7 +72,7 @@ export default {
 
 @media only screen and (min-width: 769px) {
   .feedItem {
-    width: 50%;
+    width: 35%;
   }
 }
 

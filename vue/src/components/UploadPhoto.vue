@@ -23,10 +23,6 @@
           <!-- <div class="checkbox-div">          -->
           <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>          
           <!-- <p class="notification">- provide square image for best experience -</p> -->
-          <!-- </div> -->
-          <label class="checkbox-label" for="profile-photo"
-            >Make Profile Photo</label
-          >
           <p>- provide square image for best experience -</p>
         </div>
         <br>

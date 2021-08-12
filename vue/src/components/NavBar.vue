@@ -129,33 +129,34 @@ export default {
   /* flex-direction: row; */
   /* justify-content: space-between; */
   align-items: center;
-  background: rgba(25, 153, 46, 0.25);
+  background:white;
+  opacity: .5;
   height: 120px;
   width: 100%;
   border-bottom-style: solid;
   border-width: 4px;
-  border-color: slategrey;
+  border-color: black;
 }
 
 .dropdown-toggle {
   background-image: linear-gradient(
     to right,
-    green,
-    yellow,
+    brown,
+    /* yellow,
     orange,
     orange,
-    yellow,
-    green
+    yellow, */
+    brown
   );
 }
 .dropdown-toggle:hover {
   background-image: linear-gradient(
     to right,
-    green,
-    yellow,
+    brown,
+    /* yellow,
     orange,
-    yellow,
-    green
+    yellow, */
+    brown
   );
 }
 </style>
