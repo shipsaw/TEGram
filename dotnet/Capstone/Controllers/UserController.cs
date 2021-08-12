@@ -26,26 +26,15 @@ namespace Capstone.Controllers
         [Route("/api/user/{id}")]
         public UserDto GetUserById(int id)
         {
-            return _context.Users.AsNoTracking()
-                .Include(u => u.Photos)
-                .FirstOrDefault(u => u.UserId == id).MapUserToDto();
+            return ControllerHelper.AddDataToUser(_context, id).MapUserToDto();
         }
 
         [HttpGet]
         [Route("/api/user")]
         public List<PhotoDto> GetMyUserInfo()
         {
-            //int userId = GetUserIdFromJwt();
-            //var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
-            //    _context.Entry(user).Collection(user => user.Photos).Load();
-            //    foreach (var photo in user.Photos)
-            //    {
-            //        _context.Entry(photo).Collection(photo => photo.PhotoComments).Load();
-            //        _context.Entry(photo).Collection(photo => photo.PhotoFavorites).Load();
-            //        _context.Entry(photo).Collection(photo => photo.PhotoLikes).Load();
-            //    }
-            //return user.MapUserToDto();
-            return _context.Photos.OrderByDescending(p => p.CreatedDate).MapPhotoQueryToDto().ToList();
+            int userId = GetUserIdFromJwt();
+            return ControllerHelper.AddDataToUser(_context, userId).Photos.MapPhotoListToDto().ToList();
         }
 
         [HttpPost]
@@ -57,32 +46,6 @@ namespace Capstone.Controllers
             _context.SaveChanges();
             return Ok();
         }
-        // GET api/<UserController>/:id
-        //[HttpGet("{id}")]
-        //public ActionResult<UserDataResponse> Get(int id)
-        //{
-        //    return null;
-        //}
-
-        //// POST api/<UserController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        // PUT api/<UserController>/5
-        //[HttpPut]
-        //[Route("api/user/{id}/profile")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-
-        //}
-
-        //// DELETE api/<UserController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
         private int GetUserIdFromJwt()
         {
             string userIdStr = HttpContext.User?.FindFirstValue("sub")?.ToString() ?? "-1";

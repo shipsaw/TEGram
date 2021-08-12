@@ -38,7 +38,8 @@ namespace Capstone.Controllers
         [Route("/api/photo/feed")]
         public ActionResult<List<PhotoDto>> GetFeed()
         {
-            return _context.Photos.AsNoTracking()
+            return _context.Photos
+                .AsNoTracking()
                 .Include(p => p.PhotoComments)
                 .ThenInclude(c => c.User)
                 .Include(p => p.PhotoLikes)
@@ -47,9 +48,10 @@ namespace Capstone.Controllers
                 .MapPhotoQueryToDto().ToList();
         }
 
+        // Get the user's favorites
+        // Get /api/photo/favorites
         [HttpGet]
         [Route("/api/photo/favorites")]
-        //[Route("/")]
         public ActionResult<List<PhotoDto>> GetFavorites()
         {
             int userId = GetUserIdFromJwt();
@@ -82,7 +84,8 @@ namespace Capstone.Controllers
             return Ok();
         }
 
-        // POST api/<ValuesController>
+        // Post a comment to the provided photo
+        // POST api/photo/{id}/comment
         [HttpPost]
         [Route("/api/photo/{id}/comment")]
         public ActionResult PostComment([FromBody] string value, int id)
@@ -96,7 +99,9 @@ namespace Capstone.Controllers
         }
 
         // Put request to update photo likes / favorites
-        [HttpPut] // Pass the fact we want to change like in the query string
+        // Pass the fact we want to change like in the query string
+        // PUT /api/photo/{id}
+        [HttpPut] 
         [Route("/api/photo/{id}")]
         public bool Put(int id, string action)
         {
@@ -112,6 +117,7 @@ namespace Capstone.Controllers
             return false;
         }
 
+        // Delete the provided photo if it belongs to the user
         // DELETE api/<UserController>/5
         [HttpDelete]
         [Route("/api/photo/{id}")]
