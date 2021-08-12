@@ -1,20 +1,17 @@
 <template>
-  <div class="container">
-    <div class="large-12 medium-12 small-12 cell">
-      <div class="upload">
+  <div class="main-container">
+    <!-- <div class="large-12 medium-12 small-12 cell"> -->
+      <div class="upload-container">
         <br />
         <button id="drop-box">
           <div id="target-drag-drop" v-cloak @drop.prevent="acceptFile" @dragover.prevent>
             Drag and Drop Here
           </div>
         </button>
-        <br />
+        OR ...
+        <br><br>
         <input class="button" type="file" id="file-chooser" />
-        <br />
-        <button class="button button-upload" @click="uploadFile">
-          Upload Photo
-        </button>
-        <br />
+        <br><br>
         <div class="flexy">
           <input
             type="checkbox"
@@ -23,16 +20,23 @@
             value="profilePic"
             v-model="checked"
           />
-          <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>
-          <p>- provide square image for best experience -</p>
+          <!-- <div class="checkbox-div">          -->
+          <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>          
+          <!-- <p class="notification">- provide square image for best experience -</p> -->
+          <!-- </div> -->
         </div>
+        <br>
+        <button class="button button-upload" @click="uploadFile">
+          Upload Photo
+        </button>
+        
         <div id="results"></div>
         <br />
         <div>
           <img id="output" />
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -192,22 +196,57 @@ export default {
 
 <style>
 
-.output {
-  max-width: 1000px;
+/* default for mobile view */
+
+img {
+  max-width: 400px;
 }
 
-.upload {
-  display: grid;
-  margin-left: 15%;
-  margin-right: 15%;
+.main-container {
+  display: flex;
+  border-color: green;
+  border-width: 3px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
+
+/* for tablet */
+@media only screen and (min-width: 600px) {
+  img {
+    max-width: 500px;
+  }
+
+  .main-container {
+    margin-left: 20%;
+    margin-right: 20%
+  }
+}
+
+/* for desktop */
+@media only screen and (min-width: 768px) {
+  img {
+    max-width: 1000px;
+  }
+
+  .main-container {
+    margin-left: 35%;
+    margin-right: 35%;
+  }
+
+}
+
+
+
+
 
 .flexy {
   display: inline-block;
 }
 
 .drop-box {
-  background: white;
+  height: 300px;
 }
 
 .target-drag-drop {
@@ -217,7 +256,6 @@ export default {
 .button {
   width: 225px;
   background-image: linear-gradient(yellow, orange);
-  opacity: 0.8;
   border-radius: 2px;
 }
 
@@ -231,6 +269,7 @@ label {
 
 input[type="checkbox"] {
   margin-right: 5px;
+  opacity: 1;
 }
 
 .button-upload {
@@ -247,6 +286,7 @@ input[type="checkbox"] {
 
 .checkbox-label:hover {
   color: green;
+  opacity: 1;
 }
 
 </style>
