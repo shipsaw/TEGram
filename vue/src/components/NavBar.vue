@@ -130,7 +130,7 @@ export default {
   /* justify-content: space-between; */
   align-items: center;
   background:white;
-  opacity: .5;
+  opacity: .7;
   height: 120px;
   width: 100%;
   border-bottom-style: solid;
