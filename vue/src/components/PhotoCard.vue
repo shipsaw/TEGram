@@ -1,6 +1,8 @@
 <template>
   <div class="card">
     <div class="polaroid">
+
+
       <img
         @click="sharePhotoId(pic.photoId)"
         class="photo-single"
@@ -24,6 +26,8 @@
           :class="isFavorited ? 'starYellow' : 'starGray'"
         ></b-icon>
       </div>
+
+      
       <div class="likesBar">
         Likes: {{likesNumber}}
       </div>
@@ -125,7 +129,7 @@ export default {
 <style>
 
 .comment-section{
- font-family:'Arial Narrow', Arial, sans-serif;
+font-family:'Arial Narrow', Arial, sans-serif;
  background-color: rgba(46, 59, 47, 0.055); 
  margin-bottom: 5px; 
  margin-top: 5px;
@@ -135,6 +139,7 @@ export default {
 
 .polaroid {
   height: 100%;
+  margin-top: 5px;
 }
 
 .heartGray,

@@ -74,11 +74,6 @@ export default new Vuex.Store({
             state.user.userProfileUrl = newUrl;
         },
 
-        DELETE_PHOTO(state, id) {
-            state.user.photos.splice(
-                state.user.photos.findIndex(photo => photo.photoId === id),
-                1
-            )
-        },
+
     }
 })

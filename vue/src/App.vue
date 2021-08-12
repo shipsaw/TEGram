@@ -32,6 +32,8 @@ img:hover{
 }
 
 .app{ 
+
+
   background-image:url("images/yellow.jpg"), url("images/yellow2.jpg");
   height: 950px;
   padding-bottom: 50px;
