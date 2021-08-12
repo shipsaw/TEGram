@@ -20,17 +20,14 @@
             value="profilePic"
             v-model="checked"
           />
-<<<<<<< HEAD
           <!-- <div class="checkbox-div">          -->
           <label class="checkbox-label" for="profile-photo">Make Profile Photo</label>          
           <!-- <p class="notification">- provide square image for best experience -</p> -->
           <!-- </div> -->
-=======
           <label class="checkbox-label" for="profile-photo"
             >Make Profile Photo</label
           >
           <p>- provide square image for best experience -</p>
->>>>>>> 5c42615dbf6e68a1882f908df9a0a1ffb7568f97
         </div>
         <br>
         <button class="button button-upload" @click="uploadFile">
@@ -222,16 +219,14 @@ export default {
 </script>
 
 <style>
-<<<<<<< HEAD
 
 /* default for mobile view */
 
 img {
   max-width: 400px;
-=======
+}
 .output {
   max-width: 1000px;
->>>>>>> 5c42615dbf6e68a1882f908df9a0a1ffb7568f97
 }
 
 .main-container {
