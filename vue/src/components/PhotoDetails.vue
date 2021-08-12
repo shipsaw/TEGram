@@ -5,12 +5,17 @@
     </div>
 
     <div class="comments">
+
+
       <div
-        v-for="comment in currentPhoto.comments" v-bind:key="comment.commentId">
-        <div class="comment-box">
-        {{ comment }}
-        </div>
+        v-for="comment in commentsList"
+        v-bind:key="comment.commentId"
+      >
         
+          {{ comment.username }} :
+            {{ comment.content }}
+     
+
         <hr />
       </div>
     </div>
@@ -19,12 +24,28 @@
       <form v-on:submit.prevent class="commentForm">
         <p style="white-space: pre-line"></p>
         <br />
-        <textarea v-model="content" class="commentBox" placeholder="Add a comment..."></textarea>
+        <textarea
+          v-model="content"
+          class="commentBox"
+          placeholder="Add a comment..."
+        ></textarea>
         <div>
-          <button v-on:click="submitForm()" type="submit" class="btn btn-success">Submit</button>
+          <button
+            v-on:click="submitForm()"
+            type="submit"
+            class="btn btn-success"
+          >
+            Submit
+          </button>
         </div>
-         <div>
-          <button v-on:click="deletePhoto(currentPhoto.photoId)" type="submit" class="btn btn-success">Delete</button>
+        <div>
+          <button
+            v-on:click="deletePhoto(currentPhoto.photoId)"
+            type="submit"
+            class="btn btn-success"
+          >
+            Delete
+          </button>
         </div>
       </form>
     </div>
@@ -38,6 +59,8 @@ export default {
     return {
       photoIdNumber: 0,
       currentPhoto: {},
+      photoList: [],
+      commentsList: [],
       content: "",
     };
   },
@@ -50,40 +73,47 @@ export default {
       });
     },
 
+    submitForm() {
+      let id = this.photoIdNumber;
+      photoService.addNewComment(this.content, id).then((response) => {
+        if (response.status === 200) {
+          // this.currentPhoto.comments.push(this.content)
+          //push to home
+          this.$router.go();
+        }
+      });
+    },
+
     shareUserId(id) {
       this.$router.push({ name: "friends-gallery", params: { data: id } });
     },
 
-    submitForm() {
-       this.currentPhoto.comments.push(this.content)
-      let id = this.photoIdNumber;
-      photoService.addNewComment(this.content, id)
-      .then(response => {
-        if(response.status === 200){
-              // this.$router.push({ name: "home"});
+    deletePhoto(id) {
+      photoService.deletePhoto(id).then((response) => {
+        if (response.status === 200) {
+          this.$router.push({ name: "home" });
         }
-      })
+      });
     },
-
-    deletePhoto(id){
-      photoService.deletePhoto(id).then(response =>{
-        if(response.status === 200){
-              this.$router.push({ name: "home"});
-
+    loadComments(){
+      this.photoList.forEach(pic => {
+        if(pic.photoId === this.photoIdNumber){
+         this.commentsList = pic.comments;
         }
-     
-     
-     })
-
-      }
-    
+      });
+    }
   },
-    
+
   created() {
-    this.photoIdNumber = this.$route.params.data; 
+    this.photoIdNumber = this.$route.params.data;
     this.getCurrentPhoto();
-  }
-    
+
+    photoService.getPhotos().then((response) => {
+      this.photoList = response.data;
+
+      this.loadComments();
+    });
+  },
 };
 </script>
 
@@ -114,6 +144,5 @@ export default {
   height: 100px;
   margin-bottom: 15px;
 }
-
 </style>
 
