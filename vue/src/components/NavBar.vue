@@ -129,8 +129,7 @@ export default {
   /* flex-direction: row; */
   /* justify-content: space-between; */
   align-items: center;
-  background:white;
-  opacity: .5;
+  background-color:rgba(255,255,255,0.4);
   height: 120px;
   width: 100%;
   border-bottom-style: solid;
@@ -139,24 +138,11 @@ export default {
 }
 
 .dropdown-toggle {
-  background-image: linear-gradient(
-    to right,
-    brown,
-    /* yellow,
-    orange,
-    orange,
-    yellow, */
-    brown
-  );
+   background-image: linear-gradient(to bottom right, orange, brown);
+  
 }
 .dropdown-toggle:hover {
-  background-image: linear-gradient(
-    to right,
-    brown,
-    /* yellow,
-    orange,
-    yellow, */
-    brown
-  );
+  background-image: linear-gradient(to bottom right, orange, orange, brown);
+  
 }
 </style>

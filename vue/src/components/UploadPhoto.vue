@@ -76,7 +76,7 @@ export default {
       let file = null;
       // get file for a drag and drop image
 
-      if (this.fileDrop) {
+      if (this.fileDrop.length != 0) {
         console.log("load dropped file");
         if (this.fileDrop.type.match("image.*")) {
            file = this.fileDrop;

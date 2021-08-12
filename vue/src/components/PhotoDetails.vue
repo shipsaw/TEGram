@@ -35,18 +35,18 @@
             type="submit"
             class="btn btn-success"
           >
-            Submit
+            Submit Comment
           </button>
-        </div>
-        <div>
-          <button
+
+              <button
             v-on:click="deletePhoto(currentPhoto.photoId)"
             type="submit"
-            class="btn btn-success"
+            class="btn btn-danger"
           >
-            Delete
+            Delete This Photo
           </button>
         </div>
+      
       </form>
     </div>
   </div>
@@ -118,11 +118,24 @@ export default {
 </script>
 
 <style>
+
+.btn{
+  margin-right: 10px;
+   background-image: linear-gradient(to bottom right, orange, brown);
+}
+.btn:hover{
+   background-image: linear-gradient(to bottom right, orange, orange, brown);
+  
+}
+.app {
+     overflow: auto;
+}
 .photo-details {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
+  min-height: 100vh;
 }
 .photo-url {
   height: 400px;
@@ -143,6 +156,8 @@ export default {
   width: 500px;
   height: 100px;
   margin-bottom: 15px;
+  
 }
+
 </style>
 

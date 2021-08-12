@@ -29,13 +29,11 @@
       </div>
 
       <div class="likesBar">
-        <div
-          class="comment-section"
-          v-for="c in displayComments"
-          :key="c.commentID"
+        <div class="comment-section" v-for="c in displayComments" :key="c.commentID"
         >
           {{ c.username }} :
           {{ c.content }}
+        <hr>
         </div>
       </div>
     </div>
@@ -127,6 +125,7 @@ export default {
 
 <style>
 .comment-section {
+
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: 500;
@@ -135,6 +134,7 @@ export default {
   margin-top: 5px;
   margin-left: 5px;
   text-align: left;
+
 }
 
 .polaroid {
@@ -143,7 +143,7 @@ export default {
 }
 
 .heartGray {
-  color: gray;
+  color: rgb(240, 224, 224);
   float: left;
   height: 30px;
   width: auto;
@@ -156,7 +156,7 @@ export default {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .starGray {
-  color: gray;
+  color:rgb(240, 224, 224);;
   float: left;
   height: 30px;
   width: auto;
@@ -187,7 +187,7 @@ export default {
 
 .icons {
   border-top: 2px solid gray;
-  background-image: linear-gradient(to bottom right, lightgray, gray);
+  background-image: linear-gradient(to bottom right, orange, brown);
   height: 55px;
   margin-top: 5px;
   border-radius: 5px;
@@ -211,13 +211,14 @@ export default {
   flex-direction: column; */
   height: 0%;
   width: 100%;
-  margin: 40px;
+  margin-top: 40px;
 }
 
 .likesBar {
   /* display:block; */
   margin-top: 5px;
   display: flex;
+  flex-direction: column;
   text-align: start;
   font-family: "Arial Narrow", Arial, sans-serif;
   background-color: whitesmoke;
