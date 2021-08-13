@@ -29,11 +29,14 @@
       </div>
 
       <div class="likesBar">
-        <div class="comment-section" v-for="c in displayComments" :key="c.commentID"
+        <div
+          class="comment-section"
+          v-for="c in displayComments"
+          :key="c.commentID"
         >
           {{ c.username }} :
           {{ c.content }}
-        <hr>
+          <hr />
         </div>
       </div>
     </div>
@@ -85,25 +88,29 @@ export default {
     },
 
     updateLikes(id) {
-      photoService.updateUserLikes(id).then((response) => {
-        if (response.data) {
-          this.isLiked = true;
-          this.likesNumber += 1;
-        } else {
-          this.isLiked = false;
-          this.likesNumber -= 1;
-        }
-      });
+      if (this.$store.state.user.userId != undefined) {
+        photoService.updateUserLikes(id).then((response) => {
+          if (response.data) {
+            this.isLiked = true;
+            this.likesNumber += 1;
+          } else {
+            this.isLiked = false;
+            this.likesNumber -= 1;
+          }
+        });
+      }
     },
 
     updateFavorites(id) {
-      photoService.updateUserFavorites(id).then((response) => {
-        if (response.data) {
-          this.isFavorited = true;
-        } else {
-          this.isFavorited = false;
-        }
-      });
+      if (this.$store.state.user.userId != undefined) {
+        photoService.updateUserFavorites(id).then((response) => {
+          if (response.data) {
+            this.isFavorited = true;
+          } else {
+            this.isFavorited = false;
+          }
+        });
+      }
     },
   },
   mounted() {
@@ -125,7 +132,6 @@ export default {
 
 <style>
 .comment-section {
-
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: 500;
@@ -134,7 +140,6 @@ export default {
   margin-top: 5px;
   margin-left: 5px;
   text-align: left;
-
 }
 
 .polaroid {
@@ -156,7 +161,7 @@ export default {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .starGray {
-  color:rgb(240, 224, 224);;
+  color: rgb(240, 224, 224);
   float: left;
   height: 30px;
   width: auto;
