@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="comment-form-holder">
       <form v-on:submit.prevent class="commentForm">
         <p style="white-space: pre-line"></p>
         <br />
@@ -164,6 +164,83 @@ export default {
   margin-bottom: 15px;
   
 }
+
+@media only screen and (max-width: 700px){
+  img {
+    max-width: 550px;
+  }
+  .comments {
+    max-width: 550px;
+  }
+  .comment-form-holder {
+    max-width: 550px;
+  }
+  .commentBox {
+    max-width: 550px;
+  }
+}
+
+
+@media only screen and (max-width: 500px){
+  img {
+    max-width: 450px;
+  }
+  .comments {
+    max-width: 450px;
+  }
+  .comment-form-holder {
+    max-width: 450px;
+  }
+  .commentBox {
+    max-width: 450px;
+  }
+}
+
+@media only screen and (max-width: 400px){
+  img {
+    max-width: 350px;
+  }
+  .comments {
+    max-width: 350px;
+  }
+  .comment-form-holder {
+    max-width: 350px;
+  }
+  .commentBox {
+    max-width: 350px;
+  }
+}
+
+@media only screen and (max-width: 360px){
+  img {
+    max-width: 330px;
+  }
+  .comments {
+    max-width: 330px;
+  }
+  .comment-form-holder {
+    max-width: 330px;
+  }
+  .commentBox {
+    max-width: 330px;
+  }
+}
+
+@media only screen and (max-width: 335px){
+  img {
+    max-width: 310px;
+  }
+  .comments {
+    max-width: 310px;
+  }
+  .comment-form-holder {
+    max-width: 310px;
+  }
+  .commentBox {
+    max-width: 310px;
+  }
+}
+
 
 </style>
 
