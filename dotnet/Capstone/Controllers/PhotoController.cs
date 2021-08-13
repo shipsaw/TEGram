@@ -24,6 +24,7 @@ namespace Capstone.Controllers
 
         // Get photo by specific photo ID
         //GET api/photo/{id}
+        [AllowAnonymous]
         [HttpGet]
         [Route("/api/photo/{id}")]
         public ActionResult<PhotoDto> Get(int id)
