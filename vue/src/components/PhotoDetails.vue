@@ -5,9 +5,16 @@
     </div>
 
     <div class="comments">
-      <div v-for="comment in commentsList" v-bind:key="comment.commentId">
-        {{ comment.username }} :
-        {{ comment.content }}
+
+
+      <div
+        v-for="comment in commentsList"
+        v-bind:key="comment.commentId"
+      >
+        
+          {{ comment.username }} :
+            {{ comment.content }}
+     
 
         <hr />
       </div>
@@ -31,7 +38,7 @@
             Submit Comment
           </button>
 
-          <button
+              <button
             v-on:click="deletePhoto(currentPhoto.photoId)"
             type="submit"
             class="btn btn-danger"
@@ -40,6 +47,7 @@
             Delete This Photo
           </button>
         </div>
+      
       </form>
     </div>
   </div>
@@ -61,7 +69,7 @@ export default {
   computed: {
     isMyPhoto: function () {
       return this.$store.state.user.userId == this.currentPhoto.userId;
-    },
+    }
   },
 
   methods: {
@@ -93,13 +101,13 @@ export default {
         }
       });
     },
-    loadComments() {
-      this.photoList.forEach((pic) => {
-        if (pic.photoId === this.photoIdNumber) {
-          this.commentsList = pic.comments;
+    loadComments(){
+      this.photoList.forEach(pic => {
+        if(pic.photoId === this.photoIdNumber){
+         this.commentsList = pic.comments;
         }
       });
-    },
+    }
   },
 
   created() {
@@ -116,31 +124,30 @@ export default {
 </script>
 
 <style>
-.btn {
+
+.btn{
   margin-right: 10px;
-  background-image: linear-gradient(to bottom right, orange, brown);
+   background-image: linear-gradient(to bottom right, orange, brown);
 }
-.btn:hover {
-  background-image: linear-gradient(to bottom right, orange, orange, brown);
+.btn:hover{
+   background-image: linear-gradient(to bottom right, orange, orange, brown);
+  
 }
 .app {
-  overflow: auto;
+     overflow: auto;
 }
 .photo-details {
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
-  align-content: center;
+  align-items: center;
   height: 100%;
-  /* min-height: 100vh; */
+  min-height: 100vh;
 }
+.photo-url {
+  height: 400px;
 
-@media only screen and (min-width: 769px) {
-  .photo-url {
-    width: 90%;
-    /* box-shadow: 3px 3px rgba(0, 0, 0, 0.4); */
-    margin-top: 60px;
-  }
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 60px;
 }
 .comments {
   background-color: rgb(255, 255, 250);
@@ -155,24 +162,85 @@ export default {
   width: 500px;
   height: 100px;
   margin-bottom: 15px;
+  
 }
 
-@media only screen and (max-width: 768px) {
-  .photo-url {
-    width: 90%;
-    min-width: none;
-  }
-
+@media only screen and (max-width: 700px){
   img {
-    min-width: none;
-    width: 90%;
-  }
-  .commentBox {
-    width: 90%;
+    max-width: 550px;
   }
   .comments {
-    width: 90%;
+    max-width: 550px;
+  }
+  .comment-form-holder {
+    max-width: 550px;
+  }
+  .commentBox {
+    max-width: 550px;
   }
 }
+
+
+@media only screen and (max-width: 500px){
+  img {
+    max-width: 450px;
+  }
+  .comments {
+    max-width: 450px;
+  }
+  .comment-form-holder {
+    max-width: 450px;
+  }
+  .commentBox {
+    max-width: 450px;
+  }
+}
+
+@media only screen and (max-width: 400px){
+  img {
+    max-width: 350px;
+  }
+  .comments {
+    max-width: 350px;
+  }
+  .comment-form-holder {
+    max-width: 350px;
+  }
+  .commentBox {
+    max-width: 350px;
+  }
+}
+
+@media only screen and (max-width: 360px){
+  img {
+    max-width: 330px;
+  }
+  .comments {
+    max-width: 330px;
+  }
+  .comment-form-holder {
+    max-width: 330px;
+  }
+  .commentBox {
+    max-width: 330px;
+  }
+}
+
+@media only screen and (max-width: 335px){
+  img {
+    max-width: 310px;
+  }
+  .comments {
+    max-width: 310px;
+  }
+  .comment-form-holder {
+    max-width: 310px;
+  }
+  .commentBox {
+    max-width: 310px;
+  }
+}
+
+
 </style>
 
