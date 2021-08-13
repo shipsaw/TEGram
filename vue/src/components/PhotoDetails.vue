@@ -42,6 +42,7 @@
             v-on:click="deletePhoto(currentPhoto.photoId)"
             type="submit"
             class="btn btn-danger"
+            v-show="isMyPhoto"
           >
             Delete This Photo
           </button>
@@ -65,6 +66,11 @@ export default {
     };
   },
   name: "full-details",
+  computed: {
+    isMyPhoto: function () {
+      return this.$store.state.user.userId == this.currentPhoto.userId;
+    }
+  },
 
   methods: {
     getCurrentPhoto() {
