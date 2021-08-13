@@ -1,18 +1,18 @@
 <template>
   <div>
     <nav class="nav-div">
-      <router-link v-bind:to="{ name: 'home' }">
+      <router-link v-bind:to="{ name: 'pic-feed' }">
         <img src="@/images/logo.png" class="logo-pic" /> </router-link
       >&nbsp;&nbsp;
       <!-- user's profile photo -->
       <router-link
         v-bind:to="{
-          name: 'friends-gallery',
+          name: this.pathOrLogin('friends-gallery'),
           params: { data: $store.state.user.userId },
         }"
       >
         <img
-          v-bind:src="$store.state.user.userProfileUrl"
+          v-bind:src="this.profileURL"
           class="profile-photo"
         />
       </router-link>
@@ -28,19 +28,19 @@
           <b-dropdown-item
             ><router-link
               v-bind:to="{
-                name: 'friends-gallery',
+                name: this.pathOrLogin('friends-gallery'),
                 params: { data: $store.state.user.userId },
               }"
               >My Gallery</router-link
             >
           </b-dropdown-item>
           <b-dropdown-item>
-            <router-link v-bind:to="{ name: 'user-faves' }"
+            <router-link v-bind:to="{ name: this.pathOrLogin('user-faves') }"
               >My Favorites</router-link
             ></b-dropdown-item
           >
           <b-dropdown-item>
-            <router-link v-bind:to="{ name: 'new-photo' }"
+            <router-link v-bind:to="{ name: this.pathOrLogin('new-photo') }"
               >Add Photo</router-link
             ></b-dropdown-item
           >
@@ -65,10 +65,23 @@ export default {
 
   computed: {
     profileURL() {
+      if(this.$store.state.user.userProfileUrl != undefined) {
       return this.$store.state.user.userProfileUrl;
+      } else {
+        return "https://tegramprofilephotobucket.s3.us-east-2.amazonaws.com/blankprofilephoto.png";
+      }
     },
   },
-};
+  methods: {
+    pathOrLogin: function(path) {
+      if(this.$store.state.user.userProfileUrl != undefined) {
+        return path;
+      } else {
+        return 'login';
+      }
+    }
+  },
+}
 </script>
 
 <style>
