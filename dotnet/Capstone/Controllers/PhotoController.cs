@@ -40,6 +40,7 @@ namespace Capstone.Controllers
         {
             return _context.Photos
                 .AsNoTracking()
+                .Where(p => p.IsDeleted == false)
                 .Include(p => p.PhotoComments)
                 .ThenInclude(c => c.User)
                 .Include(p => p.PhotoLikes)
@@ -58,6 +59,7 @@ namespace Capstone.Controllers
 
             return _context.Photos
                 .AsNoTracking()
+                .Where(p => p.IsDeleted == false)
                 .Include(p => p.PhotoFavorites)
                 .Where(p => p.PhotoFavorites.Any(u => u.UserId == userId))
                 .MapPhotoQueryToDto()
@@ -124,7 +126,7 @@ namespace Capstone.Controllers
         public ActionResult Delete(int id)
         {
             int requestingUserId = GetUserIdFromJwt();
-            Photo photo = _context.Photos.Include(p => p.UserId).FirstOrDefault(u => u.PhotoId == id);
+            Photo photo = _context.Photos.FirstOrDefault(u => u.PhotoId == id);
             if (photo != null && requestingUserId == photo.UserId)
             {
                 photo.IsDeleted = true;
